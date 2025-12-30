@@ -1,10 +1,37 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
+import { I18nextProvider } from 'react-i18next'
+import i18n from 'i18next'
+import { initReactI18next } from 'react-i18next'
 import LandingPage from '../LandingPage'
 
+// Initialize i18n for tests
+i18n.use(initReactI18next).init({
+  resources: {
+    en: {
+      translation: {
+        landing: {
+          title: 'Be Your Golf',
+          description: 'Free golf style assessment',
+          startButton: 'Start Free Assessment',
+        },
+      },
+    },
+  },
+  lng: 'en',
+  fallbackLng: 'en',
+  interpolation: {
+    escapeValue: false,
+  },
+})
+
 const renderWithRouter = (component: React.ReactElement): void => {
-  render(<BrowserRouter>{component}</BrowserRouter>)
+  render(
+    <I18nextProvider i18n={i18n}>
+      <BrowserRouter>{component}</BrowserRouter>
+    </I18nextProvider>
+  )
 }
 
 describe('LandingPage', () => {

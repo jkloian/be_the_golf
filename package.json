@@ -3,6 +3,7 @@
   "type": "module",
   "devDependencies": {
     "@playwright/test": "^1.57.0",
+    "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.1",
     "@testing-library/user-event": "^14.6.1",
@@ -39,6 +40,16 @@
     "rails_admin": "3.3.0"
   },
   "scripts": {
-    "lint": "eslint app/javascript"
+    "lint": "eslint app/javascript",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:ci": "jest --ci --coverage --watchAll=false",
+    "test:all": "yarn test && yarn test:e2e",
+    "test:e2e": "playwright test --project=chromium --project=firefox",
+    "test:e2e:webkit": "playwright test --project=webkit",
+    "test:e2e:all": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed"
   }
 }
