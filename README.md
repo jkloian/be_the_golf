@@ -103,16 +103,18 @@ be_the_golf/
 
 5. **Start the development server:**
    ```bash
-   # Terminal 1: Rails server
+   # Using foreman/overmind (recommended - runs both Rails and Vite)
    bin/dev
 
    # Or separately:
-   # Terminal 1: Rails
+   # Terminal 1: Rails (uses PORT from .env.development)
    rails server
 
-   # Terminal 2: Vite
+   # Terminal 2: Vite (uses VITE_RUBY_PORT from .env.development)
    bin/vite dev
    ```
+
+   **Note**: The `PORT` and `VITE_RUBY_PORT` environment variables control which ports Rails and Vite listen on. These are read from `.env.development` automatically via `dotenv-rails`.
 
 6. **Access the application:**
    - Frontend: http://localhost:3000
@@ -144,12 +146,36 @@ be_the_golf/
 
 See `.env.example` for all required variables:
 
+### Application Ports
+- `VITE_RUBY_PORT` - Vite dev server port (default: 3039, used in development)
+- `PORT` - Rails server port (default: 3000)
+- `PLAYWRIGHT_RAILS_SERVER_PORT` - Rails server port for E2E tests (default: 3001)
+
+### Database Configuration
 - `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `DB_HOST`, `DB_PORT` - PostgreSQL configuration
+
+### Rails Configuration
 - `RAILS_MASTER_KEY` - Rails master key for encrypted credentials
 - `SECRET_KEY_BASE` - Rails secret key base
+
+### Other Configuration
 - `CORS_ALLOWED_ORIGINS` - Comma-separated list of allowed CORS origins
 - `FRONTEND_URL` - Frontend URL for share links
 - `VITE_API_URL` - API URL for frontend (defaults to same origin)
+
+### Port Management
+
+The application uses environment variables to control which ports Rails and Vite listen on:
+
+- **Development**: 
+  - Vite dev server uses `VITE_RUBY_PORT` (read by vite-ruby automatically)
+  - Rails server uses `PORT` (configured in `config/puma.rb`)
+  
+- **Test/E2E**: 
+  - Vite dev server uses `VITE_RUBY_PORT`
+  - Rails server uses `PLAYWRIGHT_RAILS_SERVER_PORT` for test isolation
+
+This allows multiple projects to run simultaneously without port conflicts. Set these in your `.env.development`, `.env.test`, or `.env.production` files.
 
 ## API Documentation
 

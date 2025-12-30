@@ -1,5 +1,7 @@
 import { defineConfig, devices } from '@playwright/test'
 
+const railsPort = process.env.PLAYWRIGHT_RAILS_SERVER_PORT || 3001
+
 export default defineConfig({
   testDir: './e2e',
   fullyParallel: true,
@@ -8,7 +10,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL: `http://localhost:${railsPort}`,
     trace: 'on-first-retry',
   },
   projects: [
@@ -19,7 +21,7 @@ export default defineConfig({
   ],
   webServer: {
     command: 'docker-compose up',
-    url: 'http://localhost:3000',
+    url: `http://localhost:${railsPort}`,
     reuseExistingServer: !process.env.CI,
   },
 })
