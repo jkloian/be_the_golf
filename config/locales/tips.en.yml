@@ -1,0 +1,32 @@
+en:
+  tips:
+    styles:
+      D:
+        practice:
+          - "Give them challenging targets, time-pressure drills, and score-based games."
+          - "Provide specific drills with measurable targets and use stats tracking."
+        play:
+          - "Build a game plan with clear attack holes and safe holes."
+          - "Use a hole-by-hole strategy and avoid overthinking by limiting pre-shot checkpoints."
+      I:
+        practice:
+          - "Use varied games, "up-and-down" challenges, and creative shot-shaping drills."
+          - "Keep sessions engaging and fun."
+        play:
+          - "Use cues that keep them relaxed and upbeat."
+          - "Encourage a simple, feel-based swing thought, not heavy mechanics."
+      S:
+        practice:
+          - "Use repetition with a consistent routine, small incremental changes, and rhythm-focused drills."
+          - "Protect their tempo and routine."
+        play:
+          - "Encourage them to manage expectations, play to safe areas, and accept pars as wins."
+          - "Protect their tempo and routine."
+      C:
+        practice:
+          - "Provide specific drills with measurable targets, use stats tracking, and video or numbers where possible."
+          - "Use specific drills with measurable targets."
+        play:
+          - "Build a hole-by-hole game plan."
+          - "Guard against over-thinking by limiting them to one or two key checkpoints before each shot."
+

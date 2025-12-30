@@ -1,0 +1,58 @@
+en:
+  personas:
+    D:
+      name: "Relentless Attacker"
+      style_summary: "Bold, competitive, loves big moments and tough shots. Wants to beat targets and opponents, not just play along."
+      example_pro_male: "Tiger Woods"
+      example_pro_female: "Annika Sörenstam"
+    I:
+      name: "Charismatic Shotmaker"
+      style_summary: "Energetic, expressive, plays with feel and flair. Enjoys the social side and the creative challenge of different shots."
+      example_pro_male: "Rickie Fowler"
+      example_pro_female: "Michelle Wie West"
+    S:
+      name: "Smooth Rhythm Player"
+      style_summary: "Calm, unhurried, loves a repeatable swing and steady pace. Wins by consistency more than fireworks."
+      example_pro_male: "Ernie Els"
+      example_pro_female: "Inbee Park"
+    C:
+      name: "Master Strategist"
+      style_summary: "Precise, methodical, detail-focused. Loves smart course management, tight technique, and disciplined decision-making."
+      example_pro_male: "Bernhard Langer"
+      example_pro_female: "Jin Young Ko"
+    DI:
+      name: "Electric Playmaker"
+      style_summary: "Attacking and expressive. Loves to go for it, feeds off excitement, and can produce spectacular runs of birdies."
+      example_pro_male: "Rory McIlroy"
+      example_pro_female: "Lexi Thompson"
+    DS:
+      name: "Controlled Aggressor"
+      style_summary: "Competitive and tough, but with a composed exterior. Picks spots to attack while generally staying patient and solid."
+      example_pro_male: "Brooks Koepka"
+      example_pro_female: "Ariya Jutanugarn"
+    DC:
+      name: "Attacking Analyst"
+      style_summary: "Combines a killer instinct with careful planning. Uses strategy and data to choose when and how to attack."
+      example_pro_male: "Jon Rahm"
+      example_pro_female: "Lorena Ochoa"
+    IS:
+      name: "Positive Rhythm Player"
+      style_summary: "Friendly, upbeat, and steady. Needs a good vibe and stable tempo; can be a great team partner and momentum player."
+      example_pro_male: "Jordan Spieth"
+      example_pro_female: "Danielle Kang"
+    IC:
+      name: "Imaginative Planner"
+      style_summary: "Creative but thoughtful. Enjoys shaping shots and trying things, yet still values information, structure, and a plan."
+      example_pro_male: "Phil Mickelson"
+      example_pro_female: "Lydia Ko"
+    SC:
+      name: "Steady Technician"
+      style_summary: "Highly consistent and technically reliable. Wins by fairways, greens, and smart decisions rather than hero shots."
+      example_pro_male: "Jim Furyk"
+      example_pro_female: "Inbee Park"
+    BALANCED:
+      name: "Complete Game Planner"
+      style_summary: "Fairly balanced Drive, Inspire, Steady, and Control. Can attack or lay up, play by feel or by plan, and adapt to the course and conditions."
+      example_pro_male: "Jack Nicklaus"
+      example_pro_female: "Nelly Korda"
+
