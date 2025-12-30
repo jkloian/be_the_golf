@@ -448,6 +448,7 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   foreman
+  haml
   haml-lint
   image_processing (~> 1.2)
   jbuilder

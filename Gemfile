@@ -16,6 +16,8 @@ gem "dotenv-rails"
 gem "rack-cors"
 # Admin interface
 gem "rails_admin"
+# HAML template engine
+gem "haml"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
