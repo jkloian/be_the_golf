@@ -3,7 +3,7 @@ require "fileutils"
 require 'dotenv'
 
 Dotenv.load('.env.development')
-puts "------: " + ENV["PORT"]
+
 # Ensure all needed build directories exist
 FileUtils.mkdir_p "app/assets/builds"
 

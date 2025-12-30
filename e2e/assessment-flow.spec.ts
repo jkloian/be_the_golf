@@ -4,7 +4,10 @@ test.describe('Assessment Flow', () => {
   test('complete assessment flow from landing to results', async ({ page }) => {
     // Start at landing page
     await page.goto('/')
-    await expect(page.locator('text=Be Your Golf')).toBeVisible()
+    // Wait for React app to load
+    await page.waitForSelector('#app', { state: 'attached' })
+    await page.waitForLoadState('networkidle')
+    await expect(page.locator('text=Be Your Golf')).toBeVisible({ timeout: 10000 })
 
     // Click start button
     await page.click('text=Start Free Assessment')

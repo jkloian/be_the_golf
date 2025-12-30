@@ -14,4 +14,8 @@ Rails.application.routes.draw do
       get "assessments/public/:public_token", to: "assessments#show_public"
     end
   end
+
+  # Catch-all route for React Router (must be last)
+  get "*path", to: "application#index", constraints: ->(req) { !req.path.start_with?("/rails") }
+  root "application#index"
 end

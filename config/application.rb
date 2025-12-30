@@ -11,8 +11,10 @@ module BeTheGolf
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.1
 
-    # API-only mode - no views, no asset pipeline
+    # API-only mode - but we need to serve the React app, so we allow HTML rendering
     config.api_only = true
+    # Enable ActionController::Base for serving HTML (needed for React app)
+    config.action_controller.include_all_helpers = true
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.

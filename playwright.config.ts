@@ -8,7 +8,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
+  reporter: 'list',
   use: {
     baseURL: `http://localhost:${railsPort}`,
     trace: 'on-first-retry',
@@ -28,9 +28,12 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'docker-compose up',
-    url: `http://localhost:${railsPort}`,
+    command: `RAILS_ENV=test PORT=${railsPort} bundle exec rails server -b 0.0.0.0`,
+    url: `http://localhost:${railsPort}/up`,
     reuseExistingServer: !process.env.CI,
+    timeout: 120 * 1000,
+    stdout: 'ignore',
+    stderr: 'pipe',
   },
 })
 
