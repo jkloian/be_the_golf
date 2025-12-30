@@ -3,8 +3,27 @@ require 'rails_helper'
 RSpec.describe AssessmentSession, type: :model do
   describe 'validations' do
     it { is_expected.to validate_presence_of(:gender) }
-    it { is_expected.to validate_inclusion_of(:gender).in_array(%w[male female unspecified]) }
-    it { is_expected.to validate_uniqueness_of(:public_token) }
+
+    it 'validates gender is one of the enum values' do
+      session = build(:assessment_session, gender: 'male')
+      expect(session).to be_valid
+
+      session.gender = 'female'
+      expect(session).to be_valid
+
+      session.gender = 'unspecified'
+      expect(session).to be_valid
+
+      expect {
+        session.gender = 'invalid'
+      }.to raise_error(ArgumentError, "'invalid' is not a valid gender")
+    end
+
+    it 'validates uniqueness of public_token' do
+      create(:assessment_session, public_token: 'test-token')
+      duplicate = build(:assessment_session, public_token: 'test-token')
+      expect(duplicate).not_to be_valid
+    end
   end
 
   describe 'associations' do

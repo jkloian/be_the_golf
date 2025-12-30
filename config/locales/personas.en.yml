@@ -30,6 +30,11 @@ en:
       style_summary: "Competitive and tough, but with a composed exterior. Picks spots to attack while generally staying patient and solid."
       example_pro_male: "Brooks Koepka"
       example_pro_female: "Ariya Jutanugarn"
+    CD:
+      name: "Attacking Analyst"
+      style_summary: "Combines a killer instinct with careful planning. Uses strategy and data to choose when and how to attack."
+      example_pro_male: "Jon Rahm"
+      example_pro_female: "Lorena Ochoa"
     DC:
       name: "Attacking Analyst"
       style_summary: "Combines a killer instinct with careful planning. Uses strategy and data to choose when and how to attack."

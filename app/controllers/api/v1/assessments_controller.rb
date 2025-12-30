@@ -40,23 +40,27 @@ module Api
 
         # Validate responses
         responses = response_params[:responses]
-        validate_responses!(responses)
+        validation_error = validate_responses(responses)
+        if validation_error
+          render json: validation_error, status: :bad_request
+          return
+        end
 
         # Save responses
         responses.each do |response_data|
           AssessmentResponse.create!(
             assessment_session: session,
-            frame_index: response_data[:frame_index],
-            most_choice_key: response_data[:most_choice_key],
-            least_choice_key: response_data[:least_choice_key]
+            frame_index: response_data["frame_index"] || response_data[:frame_index],
+            most_choice_key: response_data["most_choice_key"] || response_data[:most_choice_key],
+            least_choice_key: response_data["least_choice_key"] || response_data[:least_choice_key]
           )
         end
 
         # Score the assessment
         response_array = responses.map do |r|
           {
-            most_choice_key: r[:most_choice_key],
-            least_choice_key: r[:least_choice_key]
+            most_choice_key: r["most_choice_key"] || r[:most_choice_key],
+            least_choice_key: r["least_choice_key"] || r[:least_choice_key]
           }
         end
         scoring_result = AssessmentScorer.score(response_array)
@@ -126,10 +130,6 @@ module Api
         end
 
         # Generate tips
-        primary_style = session.score_d > session.score_i ? :D : :I
-        primary_style = session.send("score_#{primary_style}") > session.score_s ? primary_style : :S
-        primary_style = session.send("score_#{primary_style}") > session.score_c ? primary_style : :C
-
         scores = {
           D: session.score_d,
           I: session.score_i,
@@ -137,6 +137,7 @@ module Api
           C: session.score_c
         }
         sorted = scores.sort_by { |_k, v| -v }
+        primary_style = sorted[0][0]
         secondary_style = sorted[1][0]
 
         tips = TipsGenerator.generate(
@@ -176,38 +177,39 @@ module Api
         params.permit(responses: [ :frame_index, :most_choice_key, :least_choice_key ])
       end
 
-      def validate_responses!(responses)
-        raise ActionController::ParameterMissing, "responses" if responses.blank?
+      def validate_responses(responses)
+        return { error: "Validation Failed", message: "responses parameter is required" } if responses.blank?
 
         if responses.length != 16
-          render json: { error: "Validation Failed", message: "Exactly 16 responses are required" }, status: :bad_request
-          return
+          return { error: "Validation Failed", message: "Exactly 16 responses are required" }
         end
 
-        frame_indices = responses.filter_map { |r| r[:frame_index] }.sort
+        # ActionController::Parameters uses string keys, but also supports symbol access
+        frame_indices = responses.filter_map { |r| (r["frame_index"] || r[:frame_index]).to_i }.sort
         expected_indices = (1..16).to_a
 
         unless frame_indices == expected_indices
-          render json: { error: "Validation Failed", message: "All frame indices from 1 to 16 must be present" }, status: :bad_request
-          return
+          return { error: "Validation Failed", message: "All frame indices from 1 to 16 must be present" }
         end
 
         responses.each do |response|
-          unless %w[A B C D].include?(response[:most_choice_key])
-            render json: { error: "Validation Failed", message: "Invalid most_choice_key: #{response[:most_choice_key]}" }, status: :bad_request
-            return
+          most_key = response["most_choice_key"] || response[:most_choice_key]
+          least_key = response["least_choice_key"] || response[:least_choice_key]
+
+          unless %w[A B C D].include?(most_key)
+            return { error: "Validation Failed", message: "Invalid most_choice_key: #{most_key}" }
           end
 
-          unless %w[A B C D].include?(response[:least_choice_key])
-            render json: { error: "Validation Failed", message: "Invalid least_choice_key: #{response[:least_choice_key]}" }, status: :bad_request
-            return
+          unless %w[A B C D].include?(least_key)
+            return { error: "Validation Failed", message: "Invalid least_choice_key: #{least_key}" }
           end
 
-          if response[:most_choice_key] == response[:least_choice_key]
-            render json: { error: "Validation Failed", message: "most_choice_key and least_choice_key must be different" }, status: :bad_request
-            return
+          if most_key == least_key
+            return { error: "Validation Failed", message: "most_choice_key and least_choice_key must be different" }
           end
         end
+
+        nil
       end
 
       def session_json(session, include_scores: false, include_persona: false)

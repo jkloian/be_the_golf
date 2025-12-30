@@ -9,7 +9,13 @@ RSpec.describe AssessmentResponse, type: :model do
     it { is_expected.to validate_inclusion_of(:most_choice_key).in_array(%w[A B C D]) }
     it { is_expected.to validate_presence_of(:least_choice_key) }
     it { is_expected.to validate_inclusion_of(:least_choice_key).in_array(%w[A B C D]) }
-    it { is_expected.to validate_uniqueness_of(:frame_index).scoped_to(:assessment_session_id) }
+
+    it 'validates uniqueness of frame_index scoped to assessment_session_id' do
+      session = create(:assessment_session)
+      create(:assessment_response, assessment_session: session, frame_index: 1)
+      duplicate = build(:assessment_response, assessment_session: session, frame_index: 1)
+      expect(duplicate).not_to be_valid
+    end
   end
 
   describe 'custom validations' do

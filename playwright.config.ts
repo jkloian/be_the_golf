@@ -1,6 +1,18 @@
 import { defineConfig, devices } from '@playwright/test'
+import dotenv from 'dotenv';
+import fs from 'fs';
 
-const railsPort = process.env.PLAYWRIGHT_RAILS_SERVER_PORT || 3001
+// Load .env.test if it exists
+if (fs.existsSync('.env.test')) {
+  dotenv.config({ path: '.env.test' });
+  console.log('📁 Playwright: Loaded .env.test configuration');
+} else {
+  console.log('ℹ️  Playwright: Using default test configuration (no .env.test found)');
+}
+
+// Get port configuration with fallbacks
+const railsPort = process.env.PLAYWRIGHT_RAILS_SERVER_PORT || 3001;
+const baseURL = `http://localhost:${railsPort}`;
 
 export default defineConfig({
   testDir: './e2e',
@@ -28,8 +40,8 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: `RAILS_ENV=test PORT=${railsPort} bundle exec rails server -b 0.0.0.0`,
-    url: `http://localhost:${railsPort}/up`,
+    command: `bundle exec rails server -e test -p ${railsPort}`,
+    url: baseURL,
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
     stdout: 'ignore',

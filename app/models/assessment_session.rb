@@ -6,7 +6,7 @@ class AssessmentSession < ApplicationRecord
 
   before_validation :generate_public_token, on: :create
 
-  enum gender: {
+  enum :gender, {
     male: "male",
     female: "female",
     unspecified: "unspecified"

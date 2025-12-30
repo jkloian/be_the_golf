@@ -7,7 +7,7 @@ import { initReactI18next } from 'react-i18next'
 import LandingPage from '../LandingPage'
 
 // Initialize i18n for tests
-i18n.use(initReactI18next).init({
+void i18n.use(initReactI18next).init({
   resources: {
     en: {
       translation: {

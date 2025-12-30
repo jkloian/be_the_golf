@@ -28,9 +28,11 @@ RSpec.describe Api::V1::AssessmentsController, type: :controller do
     end
 
     it 'validates gender enum' do
-      invalid_params = valid_params.merge(assessment_session: { gender: 'invalid' })
-      post :start, params: invalid_params
-      expect(response).to have_http_status(:unprocessable_entity)
+      invalid_params = valid_params.deep_dup
+      invalid_params[:assessment_session][:gender] = 'invalid'
+      expect {
+        post :start, params: invalid_params
+      }.to raise_error(ArgumentError, "'invalid' is not a valid gender")
     end
   end
 

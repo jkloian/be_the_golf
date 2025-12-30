@@ -3,6 +3,6 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   def index
-    render 'index', layout: 'application'
+    render "index", layout: "application"
   end
 end

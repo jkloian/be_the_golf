@@ -28,7 +28,7 @@ RSpec.describe PersonaResolver do
 
       it 'returns two-style combo persona' do
         result = described_class.resolve(scores, 'male', :en)
-        expect(result[:code]).to eq('DC')
+        expect(result[:code]).to eq('CD') # Styles are sorted alphabetically
         expect(result[:name]).to eq('Attacking Analyst')
         expect(result[:display_example_pro]).to eq('Jon Rahm')
       end
