@@ -12,6 +12,10 @@ gem "pg", "~> 1.5"
 gem "vite_rails"
 # Environment variable management
 gem "dotenv-rails"
+# CORS support for API
+gem "rack-cors"
+# Admin interface
+gem "rails_admin"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"

@@ -180,27 +180,32 @@ module Api
         raise ActionController::ParameterMissing, 'responses' if responses.blank?
 
         if responses.length != 16
-          raise ActionController::BadRequest, 'Exactly 16 responses are required'
+          render json: { error: 'Validation Failed', message: 'Exactly 16 responses are required' }, status: :bad_request
+          return
         end
 
         frame_indices = responses.map { |r| r[:frame_index] }.compact.sort
         expected_indices = (1..16).to_a
 
         unless frame_indices == expected_indices
-          raise ActionController::BadRequest, 'All frame indices from 1 to 16 must be present'
+          render json: { error: 'Validation Failed', message: 'All frame indices from 1 to 16 must be present' }, status: :bad_request
+          return
         end
 
         responses.each do |response|
           unless %w[A B C D].include?(response[:most_choice_key])
-            raise ActionController::BadRequest, "Invalid most_choice_key: #{response[:most_choice_key]}"
+            render json: { error: 'Validation Failed', message: "Invalid most_choice_key: #{response[:most_choice_key]}" }, status: :bad_request
+            return
           end
 
           unless %w[A B C D].include?(response[:least_choice_key])
-            raise ActionController::BadRequest, "Invalid least_choice_key: #{response[:least_choice_key]}"
+            render json: { error: 'Validation Failed', message: "Invalid least_choice_key: #{response[:least_choice_key]}" }, status: :bad_request
+            return
           end
 
           if response[:most_choice_key] == response[:least_choice_key]
-            raise ActionController::BadRequest, 'most_choice_key and least_choice_key must be different'
+            render json: { error: 'Validation Failed', message: 'most_choice_key and least_choice_key must be different' }, status: :bad_request
+            return
           end
         end
       end

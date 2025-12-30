@@ -31,5 +31,11 @@ module BeTheGolf
     config.i18n.default_locale = :en
     config.i18n.available_locales = [:en]
     config.i18n.fallbacks = true
+
+    # Middleware required for rails_admin (even in API-only mode)
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Flash
+    config.middleware.use Rack::MethodOverride
+    config.middleware.use ActionDispatch::Session::CookieStore, { key: "_be_the_golf_session" }
   end
 end
