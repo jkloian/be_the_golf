@@ -9,7 +9,6 @@ class CreateAssessmentResponses < ActiveRecord::Migration[8.1]
       t.timestamps
     end
 
-    add_index :assessment_responses, [:assessment_session_id, :frame_index], unique: true, name: 'index_assessment_responses_on_session_and_frame'
+    add_index :assessment_responses, [ :assessment_session_id, :frame_index ], unique: true, name: 'index_assessment_responses_on_session_and_frame'
   end
 end
-

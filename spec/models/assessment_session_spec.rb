@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe AssessmentSession, type: :model do
   describe 'validations' do
-    it { should validate_presence_of(:gender) }
-    it { should validate_inclusion_of(:gender).in_array(%w[male female unspecified]) }
-    it { should validate_uniqueness_of(:public_token) }
+    it { is_expected.to validate_presence_of(:gender) }
+    it { is_expected.to validate_inclusion_of(:gender).in_array(%w[male female unspecified]) }
+    it { is_expected.to validate_uniqueness_of(:public_token) }
   end
 
   describe 'associations' do
-    it { should have_many(:assessment_responses).dependent(:destroy) }
+    it { is_expected.to have_many(:assessment_responses).dependent(:destroy) }
   end
 
   describe 'callbacks' do
@@ -24,13 +24,13 @@ RSpec.describe AssessmentSession, type: :model do
     let!(:in_progress_session) { create(:assessment_session) }
 
     it 'returns completed sessions' do
-      expect(AssessmentSession.completed).to include(completed_session)
-      expect(AssessmentSession.completed).not_to include(in_progress_session)
+      expect(described_class.completed).to include(completed_session)
+      expect(described_class.completed).not_to include(in_progress_session)
     end
 
     it 'returns in-progress sessions' do
-      expect(AssessmentSession.in_progress).to include(in_progress_session)
-      expect(AssessmentSession.in_progress).not_to include(completed_session)
+      expect(described_class.in_progress).to include(in_progress_session)
+      expect(described_class.in_progress).not_to include(completed_session)
     end
   end
 
@@ -46,4 +46,3 @@ RSpec.describe AssessmentSession, type: :model do
     end
   end
 end
-

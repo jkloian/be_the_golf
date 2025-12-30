@@ -2,14 +2,14 @@ require 'rails_helper'
 
 RSpec.describe AssessmentResponse, type: :model do
   describe 'validations' do
-    it { should belong_to(:assessment_session) }
-    it { should validate_presence_of(:frame_index) }
-    it { should validate_inclusion_of(:frame_index).in_array((1..16).to_a) }
-    it { should validate_presence_of(:most_choice_key) }
-    it { should validate_inclusion_of(:most_choice_key).in_array(%w[A B C D]) }
-    it { should validate_presence_of(:least_choice_key) }
-    it { should validate_inclusion_of(:least_choice_key).in_array(%w[A B C D]) }
-    it { should validate_uniqueness_of(:frame_index).scoped_to(:assessment_session_id) }
+    it { is_expected.to belong_to(:assessment_session) }
+    it { is_expected.to validate_presence_of(:frame_index) }
+    it { is_expected.to validate_inclusion_of(:frame_index).in_array((1..16).to_a) }
+    it { is_expected.to validate_presence_of(:most_choice_key) }
+    it { is_expected.to validate_inclusion_of(:most_choice_key).in_array(%w[A B C D]) }
+    it { is_expected.to validate_presence_of(:least_choice_key) }
+    it { is_expected.to validate_inclusion_of(:least_choice_key).in_array(%w[A B C D]) }
+    it { is_expected.to validate_uniqueness_of(:frame_index).scoped_to(:assessment_session_id) }
   end
 
   describe 'custom validations' do
@@ -21,4 +21,3 @@ RSpec.describe AssessmentResponse, type: :model do
     end
   end
 end
-

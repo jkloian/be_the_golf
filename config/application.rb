@@ -29,7 +29,7 @@ module BeTheGolf
 
     # Internationalization
     config.i18n.default_locale = :en
-    config.i18n.available_locales = [:en]
+    config.i18n.available_locales = [ :en ]
     config.i18n.fallbacks = true
 
     # Middleware required for rails_admin (even in API-only mode)

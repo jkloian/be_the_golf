@@ -23,12 +23,12 @@ RSpec.describe AssessmentScorer do
         { most_choice_key: 'C', least_choice_key: 'B' }, # S most, I least
         { most_choice_key: 'C', least_choice_key: 'B' },
         { most_choice_key: 'D', least_choice_key: 'A' }, # C most, D least
-        { most_choice_key: 'D', least_choice_key: 'A' },
+        { most_choice_key: 'D', least_choice_key: 'A' }
       ]
     end
 
     it 'calculates scores correctly' do
-      result = AssessmentScorer.score(responses)
+      result = described_class.score(responses)
 
       # D: 8 most, 0 least = 8 raw, score = (8 + 16) / 32 * 100 = 75
       expect(result[:scores][:D]).to eq(75)
@@ -41,7 +41,7 @@ RSpec.describe AssessmentScorer do
     end
 
     it 'returns raw counts' do
-      result = AssessmentScorer.score(responses)
+      result = described_class.score(responses)
 
       expect(result[:raw_counts][:most_d]).to eq(8)
       expect(result[:raw_counts][:least_d]).to eq(0)
@@ -50,4 +50,3 @@ RSpec.describe AssessmentScorer do
     end
   end
 end
-

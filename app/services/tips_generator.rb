@@ -36,4 +36,3 @@ class TipsGenerator
     }
   end
 end
-

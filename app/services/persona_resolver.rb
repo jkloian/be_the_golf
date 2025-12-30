@@ -8,26 +8,26 @@ class PersonaResolver
 
     # Determine persona code
     persona_code = if (max_score - min_score) <= 10
-                     'BALANCED'
-                   elsif primary_score >= 60 && (primary_score - secondary_score) >= 15
+                     "BALANCED"
+    elsif primary_score >= 60 && (primary_score - secondary_score) >= 15
                      primary_style.to_s
-                   else
+    else
                      # Two-style combo - sort styles alphabetically for consistency
-                     [primary_style.to_s, secondary_style.to_s].sort.join
-                   end
+                     [ primary_style.to_s, secondary_style.to_s ].sort.join
+    end
 
     # Load persona data from i18n
     persona_data = I18n.t("personas.#{persona_code}", locale: locale, raise: true)
 
     # Select display example pro based on gender
     display_example_pro = case gender
-                         when 'male'
+    when "male"
                            persona_data[:example_pro_male]
-                         when 'female'
+    when "female"
                            persona_data[:example_pro_female]
-                         else
+    else
                            persona_data[:example_pro_male] # Default to male for unspecified
-                         end
+    end
 
     {
       code: persona_code,
@@ -42,11 +42,10 @@ class PersonaResolver
     {
       code: persona_code,
       name: persona_code,
-      style_summary: '',
-      example_pro_male: '',
-      example_pro_female: '',
-      display_example_pro: ''
+      style_summary: "",
+      example_pro_male: "",
+      example_pro_female: "",
+      display_example_pro: ""
     }
   end
 end
-

@@ -4,10 +4,10 @@ module GolfAssessment
   # Map of option keys to DISC styles
   # Pattern: A=D, B=I, C=S, D=C for all frames
   OPTION_STYLE_MAP = {
-    'A' => :D,
-    'B' => :I,
-    'C' => :S,
-    'D' => :C
+    "A" => :D,
+    "B" => :I,
+    "C" => :S,
+    "D" => :C
   }.freeze
 
   def self.frames(locale = :en)
@@ -29,4 +29,3 @@ module GolfAssessment
     OPTION_STYLE_MAP[option_key.upcase]
   end
 end
-

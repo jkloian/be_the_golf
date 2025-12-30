@@ -6,7 +6,7 @@ RSpec.describe PersonaResolver do
       let(:scores) { { D: 50, I: 48, S: 52, C: 50 } }
 
       it 'returns BALANCED persona' do
-        result = PersonaResolver.resolve(scores, 'male', :en)
+        result = described_class.resolve(scores, 'male', :en)
         expect(result[:code]).to eq('BALANCED')
         expect(result[:name]).to eq('Complete Game Planner')
       end
@@ -16,7 +16,7 @@ RSpec.describe PersonaResolver do
       let(:scores) { { D: 75, I: 45, S: 40, C: 35 } }
 
       it 'returns single-style persona' do
-        result = PersonaResolver.resolve(scores, 'male', :en)
+        result = described_class.resolve(scores, 'male', :en)
         expect(result[:code]).to eq('D')
         expect(result[:name]).to eq('Relentless Attacker')
         expect(result[:display_example_pro]).to eq('Tiger Woods')
@@ -27,7 +27,7 @@ RSpec.describe PersonaResolver do
       let(:scores) { { D: 70, C: 65, I: 40, S: 35 } }
 
       it 'returns two-style combo persona' do
-        result = PersonaResolver.resolve(scores, 'male', :en)
+        result = described_class.resolve(scores, 'male', :en)
         expect(result[:code]).to eq('DC')
         expect(result[:name]).to eq('Attacking Analyst')
         expect(result[:display_example_pro]).to eq('Jon Rahm')
@@ -38,7 +38,7 @@ RSpec.describe PersonaResolver do
       let(:scores) { { D: 70, C: 65, I: 40, S: 35 } }
 
       it 'returns female pro example' do
-        result = PersonaResolver.resolve(scores, 'female', :en)
+        result = described_class.resolve(scores, 'female', :en)
         expect(result[:display_example_pro]).to eq('Lorena Ochoa')
       end
     end
@@ -47,10 +47,9 @@ RSpec.describe PersonaResolver do
       let(:scores) { { D: 70, C: 65, I: 40, S: 35 } }
 
       it 'defaults to male pro example' do
-        result = PersonaResolver.resolve(scores, 'unspecified', :en)
+        result = described_class.resolve(scores, 'unspecified', :en)
         expect(result[:display_example_pro]).to eq('Jon Rahm')
       end
     end
   end
 end
-

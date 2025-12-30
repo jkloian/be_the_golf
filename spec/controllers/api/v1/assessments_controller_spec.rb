@@ -75,4 +75,3 @@ RSpec.describe Api::V1::AssessmentsController, type: :controller do
     end
   end
 end
-

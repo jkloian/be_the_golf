@@ -13,7 +13,6 @@ class AssessmentResponse < ApplicationRecord
   def most_and_least_different
     return unless most_choice_key.present? && least_choice_key.present?
 
-    errors.add(:least_choice_key, 'must be different from most choice') if most_choice_key == least_choice_key
+    errors.add(:least_choice_key, "must be different from most choice") if most_choice_key == least_choice_key
   end
 end
-

@@ -7,9 +7,9 @@ class AssessmentSession < ApplicationRecord
   before_validation :generate_public_token, on: :create
 
   enum gender: {
-    male: 'male',
-    female: 'female',
-    unspecified: 'unspecified'
+    male: "male",
+    female: "female",
+    unspecified: "unspecified"
   }
 
   scope :completed, -> { where.not(completed_at: nil) }
@@ -25,4 +25,3 @@ class AssessmentSession < ApplicationRecord
     self.public_token ||= SecureRandom.urlsafe_base64(16)
   end
 end
-

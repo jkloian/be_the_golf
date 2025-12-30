@@ -28,7 +28,7 @@ module Api
         }, status: :created
       rescue ActiveRecord::RecordInvalid => e
         render json: {
-          error: 'Validation Failed',
+          error: "Validation Failed",
           message: e.message,
           details: e.record.errors.full_messages
         }, status: :unprocessable_entity
@@ -98,7 +98,7 @@ module Api
           completed_at: Time.current
         )
 
-        frontend_url = ENV.fetch('FRONTEND_URL', request.base_url)
+        frontend_url = ENV.fetch("FRONTEND_URL", request.base_url)
 
         render json: {
           assessment_session: session_json(session, include_scores: true, include_persona: true),
@@ -107,7 +107,7 @@ module Api
         }, status: :ok
       rescue ActiveRecord::RecordInvalid => e
         render json: {
-          error: 'Validation Failed',
+          error: "Validation Failed",
           message: e.message,
           details: e.record.errors.full_messages
         }, status: :unprocessable_entity
@@ -119,8 +119,8 @@ module Api
 
         unless session.completed?
           render json: {
-            error: 'Assessment Not Completed',
-            message: 'This assessment has not been completed yet.'
+            error: "Assessment Not Completed",
+            message: "This assessment has not been completed yet."
           }, status: :unprocessable_entity
           return
         end
@@ -173,38 +173,38 @@ module Api
       end
 
       def response_params
-        params.permit(responses: [:frame_index, :most_choice_key, :least_choice_key])
+        params.permit(responses: [ :frame_index, :most_choice_key, :least_choice_key ])
       end
 
       def validate_responses!(responses)
-        raise ActionController::ParameterMissing, 'responses' if responses.blank?
+        raise ActionController::ParameterMissing, "responses" if responses.blank?
 
         if responses.length != 16
-          render json: { error: 'Validation Failed', message: 'Exactly 16 responses are required' }, status: :bad_request
+          render json: { error: "Validation Failed", message: "Exactly 16 responses are required" }, status: :bad_request
           return
         end
 
-        frame_indices = responses.map { |r| r[:frame_index] }.compact.sort
+        frame_indices = responses.filter_map { |r| r[:frame_index] }.sort
         expected_indices = (1..16).to_a
 
         unless frame_indices == expected_indices
-          render json: { error: 'Validation Failed', message: 'All frame indices from 1 to 16 must be present' }, status: :bad_request
+          render json: { error: "Validation Failed", message: "All frame indices from 1 to 16 must be present" }, status: :bad_request
           return
         end
 
         responses.each do |response|
           unless %w[A B C D].include?(response[:most_choice_key])
-            render json: { error: 'Validation Failed', message: "Invalid most_choice_key: #{response[:most_choice_key]}" }, status: :bad_request
+            render json: { error: "Validation Failed", message: "Invalid most_choice_key: #{response[:most_choice_key]}" }, status: :bad_request
             return
           end
 
           unless %w[A B C D].include?(response[:least_choice_key])
-            render json: { error: 'Validation Failed', message: "Invalid least_choice_key: #{response[:least_choice_key]}" }, status: :bad_request
+            render json: { error: "Validation Failed", message: "Invalid least_choice_key: #{response[:least_choice_key]}" }, status: :bad_request
             return
           end
 
           if response[:most_choice_key] == response[:least_choice_key]
-            render json: { error: 'Validation Failed', message: 'most_choice_key and least_choice_key must be different' }, status: :bad_request
+            render json: { error: "Validation Failed", message: "most_choice_key and least_choice_key must be different" }, status: :bad_request
             return
           end
         end
@@ -246,4 +246,3 @@ module Api
     end
   end
 end
-
