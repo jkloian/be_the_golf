@@ -13,30 +13,34 @@ export default function StartPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError(null)
 
-    try {
-      const handicapNum = handicap ? parseInt(handicap, 10) : undefined
-      const response = await api.startAssessment(
-        {
-          first_name: firstName || undefined,
-          gender,
-          handicap: handicapNum,
-        },
-        i18n.language
-      )
+    const submitAsync = async () => {
+      try {
+        const handicapNum = handicap ? parseInt(handicap, 10) : undefined
+        const response = await api.startAssessment(
+          {
+            first_name: firstName || undefined,
+            gender,
+            handicap: handicapNum,
+          },
+          i18n.language
+        )
 
-      // Store frames in sessionStorage for AssessmentPage to use
-      sessionStorage.setItem('assessment_frames', JSON.stringify(response.frames))
-      navigate(`/assessment/${response.assessment_session.id}`)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : t('common.error'))
-    } finally {
-      setLoading(false)
+        // Store frames in sessionStorage for AssessmentPage to use
+        sessionStorage.setItem('assessment_frames', JSON.stringify(response.frames))
+        void navigate(`/assessment/${response.assessment_session.id}`)
+      } catch (err) {
+        setError(err instanceof Error ? err.message : t('common.error'))
+      } finally {
+        setLoading(false)
+      }
     }
+
+    void submitAsync()
   }
 
   return (

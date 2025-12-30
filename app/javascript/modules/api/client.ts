@@ -9,10 +9,12 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || window.location.origin
 
 async function handleResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ message: 'An error occurred' }))
+    const error = (await response.json().catch(() => ({ message: 'An error occurred' }))) as {
+      message?: string
+    }
     throw new Error(error.message || `HTTP error! status: ${response.status}`)
   }
-  return response.json()
+  return response.json() as Promise<T>
 }
 
 export const api = {

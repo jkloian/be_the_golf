@@ -16,7 +16,13 @@ export default function LandingPage() {
         <p className="text-xl text-gray-700 mb-8">
           {t('landing.description')}
         </p>
-        <Button onClick={() => navigate('/start')} variant="primary" className="text-lg px-8 py-4">
+        <Button
+          onClick={() => {
+            void navigate('/start')
+          }}
+          variant="primary"
+          className="text-lg px-8 py-4"
+        >
           {t('landing.startButton')}
         </Button>
       </div>

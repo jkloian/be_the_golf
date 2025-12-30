@@ -17,8 +17,13 @@ AllCops:
     - 'spec/views/shared/*_template.rb'  # Template files, not actual specs
     - 'db/schema.rb'  # Auto-generated file
     - 'config/routes.rb'  # Routes file
-    - 'db/migrate/20250910003259_create_consulting_service_categories.rb'  # Historical migration with boolean column issue
-    - 'db/migrate/20250910175723_remove_assessment_id_from_questions.rb'  # Historical migration with NOT NULL column issue
+
+# RSpec configuration
+RSpec/MultipleExpectations:
+  Max: 5  # Allow up to 5 expectations per example (integration tests need more)
+
+RSpec/ExampleLength:
+  Max: 10  # Allow up to 10 lines per example
 
 # Enable additional useful rules
 Rails/UniqueValidationWithoutIndex:
@@ -36,4 +41,3 @@ Performance/MapCompact:
 
 Performance/UnfreezeString:
   Enabled: true
-

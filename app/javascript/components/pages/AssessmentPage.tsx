@@ -22,20 +22,26 @@ export default function AssessmentPage() {
 
   useEffect(() => {
     // Load frames from sessionStorage (set by StartPage)
-    const storedFrames = sessionStorage.getItem('assessment_frames')
-    if (storedFrames) {
-      try {
-        const parsedFrames = JSON.parse(storedFrames)
-        setFrames(parsedFrames)
-        setLoading(false)
-      } catch (err) {
-        setError('Failed to load assessment frames')
+    const loadFrames = () => {
+      const storedFrames = sessionStorage.getItem('assessment_frames')
+      if (storedFrames) {
+        try {
+          const parsedFrames = JSON.parse(storedFrames) as Frame[]
+          setFrames(parsedFrames)
+          setLoading(false)
+        } catch {
+          setError('Failed to load assessment frames')
+          setLoading(false)
+        }
+      } else {
+        setError('No assessment data found. Please start a new assessment.')
         setLoading(false)
       }
-    } else {
-      setError('No assessment data found. Please start a new assessment.')
-      setLoading(false)
     }
+
+    // Use setTimeout to defer state updates and avoid synchronous setState in effect
+    const timeoutId = setTimeout(loadFrames, 0)
+    return () => clearTimeout(timeoutId)
   }, [])
 
   const handleOptionClick = (optionKey: string) => {
@@ -58,6 +64,26 @@ export default function AssessmentPage() {
     }
   }
 
+  const handleFinish = async (finalResponses: AssessmentResponse[]) => {
+    if (!sessionId) return
+
+    setSubmitting(true)
+    setError(null)
+
+    try {
+      const response = await api.completeAssessment(
+        parseInt(sessionId, 10),
+        finalResponses,
+        i18n.language
+      )
+
+      void navigate(`/results/${response.assessment_session.public_token}`)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : t('common.error'))
+      setSubmitting(false)
+    }
+  }
+
   const handleNext = () => {
     if (mostSelected && leastSelected) {
       const currentFrame = frames[currentFrameIndex]
@@ -76,28 +102,8 @@ export default function AssessmentPage() {
         setMostSelected(null)
         setLeastSelected(null)
       } else {
-        handleFinish(updatedResponses)
+        void handleFinish(updatedResponses)
       }
-    }
-  }
-
-  const handleFinish = async (finalResponses: AssessmentResponse[]) => {
-    if (!sessionId) return
-
-    setSubmitting(true)
-    setError(null)
-
-    try {
-      const response = await api.completeAssessment(
-        parseInt(sessionId, 10),
-        finalResponses,
-        i18n.language
-      )
-
-      navigate(`/results/${response.assessment_session.public_token}`)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : t('common.error'))
-      setSubmitting(false)
     }
   }
 

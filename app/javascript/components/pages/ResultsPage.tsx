@@ -31,7 +31,7 @@ export default function ResultsPage() {
       }
     }
 
-    fetchData()
+    void fetchData()
   }, [publicToken, i18n.language, t])
 
   const handleCopyShare = () => {
@@ -43,7 +43,7 @@ export default function ResultsPage() {
       url: window.location.href,
     })
 
-    navigator.clipboard.writeText(shareText).then(() => {
+    void navigator.clipboard.writeText(shareText).then(() => {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     })
