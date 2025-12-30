@@ -25,16 +25,37 @@ test.describe('Assessment Flow', () => {
 
     // Complete all 16 frames
     for (let i = 1; i <= 16; i++) {
-      // Select first option as "Most"
-      await page.click('.border-gray-300:first-of-type')
-      // Select last option as "Least"
-      await page.click('.border-gray-300:last-of-type')
+      // Wait for current question to be visible
+      await expect(page.locator(`text=Question ${i} of 16`)).toBeVisible()
+      
+      // Select first option as "Most" - click the first card
+      const firstCard = page.locator('.border-gray-300').first()
+      await firstCard.click()
+      // Wait for selection to be applied
+      await page.waitForTimeout(200)
+      
+      // Select last option as "Least" - click the last card
+      const lastCard = page.locator('.border-gray-300').last()
+      await lastCard.click()
+      // Wait for selection to be applied
+      await page.waitForTimeout(200)
+      
+      // Wait for Next/Finish button to be enabled
+      const buttonText = i < 16 ? 'Next' : 'Finish'
+      const nextButton = page.locator(`button:has-text("${buttonText}")`)
+      await expect(nextButton).toBeEnabled()
+      
+      // Click the button and wait for navigation/update
+      await nextButton.click()
       
       if (i < 16) {
-        await page.click('text=Next')
-        await expect(page.locator(`text=Question ${i + 1} of 16`)).toBeVisible()
+        // Wait for the question text to update to the next question
+        await expect(page.locator(`text=Question ${i + 1} of 16`)).toBeVisible({ timeout: 10000 })
+        // Also wait a bit for React to fully update
+        await page.waitForTimeout(300)
       } else {
-        await page.click('text=Finish')
+        // Wait for navigation to results page
+        await expect(page).toHaveURL(/\/results\/[\w-]+/, { timeout: 10000 })
       }
     }
 
