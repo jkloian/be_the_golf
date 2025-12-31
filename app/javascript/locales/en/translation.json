@@ -7,14 +7,14 @@
   "start": {
     "title": "Start Your Assessment",
     "firstName": "First Name",
-    "firstNamePlaceholder": "Enter your first name (optional)",
+    "firstNamePlaceholder": "First name (optional)",
     "gender": "Gender",
     "genderMale": "Male",
     "genderFemale": "Female",
     "genderUnspecified": "Prefer not to say",
     "genderWarning": "If you choose this, we can't personalize the pro you 'play like'.",
     "handicap": "Handicap",
-    "handicapPlaceholder": "Enter your handicap (optional)",
+    "handicapPlaceholder": "Handicap (optional)",
     "handicapNote": "Leave blank if you don't have a handicap yet",
     "submit": "Start Assessment"
   },
