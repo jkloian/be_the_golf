@@ -188,21 +188,6 @@ export default function ResultsContent({
                     </motion.div>
                   ))}
                 </div>
-                {/* Stats tracking visual element */}
-                <div className="mt-6 pt-6 border-t border-neutral-border">
-                  <div className="flex items-center justify-between text-sm text-neutral-textSecondary">
-                    <span className="font-medium">Track your progress</span>
-                    <div className="flex gap-1">
-                      {[1, 2, 3].map((i) => (
-                        <div
-                          key={i}
-                          className="w-2 h-2 rounded-full"
-                          style={{ backgroundColor: `${personaColor}30` }}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
               </motion.div>
             </motion.div>
           ) : (
