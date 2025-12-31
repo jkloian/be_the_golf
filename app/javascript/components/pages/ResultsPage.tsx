@@ -6,7 +6,7 @@ import type { PublicAssessmentResponse } from '../../shared/types/assessment'
 import Button from '../shared/Button'
 import ProcessingResults from '../shared/ProcessingResults'
 import Toast from '../shared/Toast'
-import ResultsContent from './ResultsContent'
+import ResultsReveal from './ResultsReveal'
 
 // Minimum display duration for processing animation (in milliseconds)
 // Ensures all 4 loading phrases are shown (4 phrases × 2 seconds each = 8 seconds minimum)
@@ -85,7 +85,7 @@ export default function ResultsPage() {
   return (
     <>
       <Toast show={showToast} />
-      <ResultsContent data={data} onShare={handleCopyShare} />
+      <ResultsReveal data={data} onShare={handleCopyShare} />
     </>
   )
 }

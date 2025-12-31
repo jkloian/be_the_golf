@@ -5,7 +5,7 @@ import type { PublicAssessmentResponse } from '../../shared/types/assessment'
 import Button from '../shared/Button'
 import ProcessingResults from '../shared/ProcessingResults'
 import Toast from '../shared/Toast'
-import ResultsContent from './ResultsContent'
+import ResultsReveal from './ResultsReveal'
 
 // Minimum display duration for processing animation (in milliseconds)
 const MIN_PROCESSING_DISPLAY_MS = 4000 // 4 seconds
@@ -222,7 +222,7 @@ export default function DevResultsPage() {
   return (
     <>
       <Toast show={showToast} />
-      <ResultsContent
+      <ResultsReveal
         data={data}
         onShare={handleCopyShare}
         showDevBanner={true}
