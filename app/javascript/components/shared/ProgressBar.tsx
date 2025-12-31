@@ -9,9 +9,9 @@ export default function ProgressBar({ current, total }: ProgressBarProps) {
   const percentage = (current / total) * 100
 
   return (
-    <div className="w-full mb-8">
-      <div className="flex justify-between items-center mb-3">
-        <span className="text-sm font-medium text-neutral-textSecondary">
+    <div className="w-full mb-4 sm:mb-6 lg:mb-8">
+      <div className="flex justify-between items-center mb-2 sm:mb-3">
+        <span className="text-xs sm:text-sm font-medium text-neutral-textSecondary">
           Question {current} of {total}
         </span>
         <span className="text-xs text-neutral-textSecondary italic">

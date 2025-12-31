@@ -19,7 +19,7 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const baseClasses =
-    'inline-flex items-center justify-center gap-5 px-6 py-6 rounded-[16px] font-bold text-3xl transition-all duration-300 min-h-[72px] focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed'
+    'inline-flex items-center justify-center font-bold transition-all duration-300 min-h-[64px] sm:min-h-[72px] focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed px-4 py-4 sm:px-5 sm:py-5 lg:px-6 lg:py-6 text-xl sm:text-2xl lg:text-3xl rounded-lg sm:rounded-xl lg:rounded-2xl'
   
   const variantClasses = {
     primary:
@@ -44,12 +44,12 @@ export default function Button({
     >
       {loading ? (
         <>
-          <Loader2 className={`w-6 h-6 animate-spin ${textColorClass}`} />
+          <Loader2 className={`animate-spin ${textColorClass}`} />
           <span className={textColorClass}>Loading...</span>
         </>
       ) : (
         <>
-          {icon && <span className={`w-6 h-6 ${textColorClass}`}>{icon}</span>}
+          {icon && <span className={textColorClass}>{icon}</span>}
           <span className={textColorClass}>{children}</span>
         </>
       )}

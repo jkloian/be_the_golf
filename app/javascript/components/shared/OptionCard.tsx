@@ -38,8 +38,8 @@ export default function OptionCard({
           }
         }}
         className={`
-          relative p-5 rounded-xl cursor-pointer transition-all duration-300
-          min-h-[72px] flex items-center
+          relative cursor-pointer transition-all duration-300
+          min-h-[64px] sm:min-h-[72px] flex items-center p-3 sm:p-4 lg:p-5 rounded-lg sm:rounded-xl
           ${
             isMost
               ? 'bg-golf-light border-2 border-golf-emerald shadow-card'
@@ -50,9 +50,9 @@ export default function OptionCard({
           focus:outline-none focus:ring-2 focus:ring-golf-emerald focus:ring-offset-2
         `}
       >
-        <div className="flex-1 pr-4">
+        <div className="flex-1 pr-2 sm:pr-3 lg:pr-4">
           <p
-            className={`text-base leading-relaxed ${
+            className={`text-sm sm:text-base leading-relaxed ${
               isMost
                 ? 'text-golf-deep font-medium'
                 : isLeast
@@ -71,8 +71,8 @@ export default function OptionCard({
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
             className="flex-shrink-0"
           >
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-golf-emerald text-white rounded-full text-xs font-semibold">
-              <CheckCircle2 className="w-4 h-4" />
+            <div className="flex items-center bg-golf-emerald text-white rounded-full text-xs font-semibold px-2 py-1 sm:px-3 sm:py-1.5 space-x-1 sm:space-x-2">
+              <CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4" />
               <span>Most like me</span>
             </div>
           </motion.div>
@@ -85,8 +85,8 @@ export default function OptionCard({
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
             className="flex-shrink-0"
           >
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-neutral-textSecondary text-white rounded-full text-xs font-semibold">
-              <MinusCircle className="w-4 h-4" />
+            <div className="flex items-center bg-neutral-textSecondary text-white rounded-full text-xs font-semibold px-2 py-1 sm:px-3 sm:py-1.5 space-x-1 sm:space-x-2">
+              <MinusCircle className="w-3 h-3 sm:w-4 sm:h-4" />
               <span>Least like me</span>
             </div>
           </motion.div>

@@ -36,12 +36,12 @@ export default function ScoreBar({
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-      className="space-y-2"
+      className="space-y-1 sm:space-y-2"
     >
       <div className="flex justify-between items-center">
-        <span className="text-sm font-medium text-neutral-text">{label}</span>
+        <span className="text-xs sm:text-sm font-medium text-neutral-text">{label}</span>
         <motion.span
-          className="text-sm font-semibold text-neutral-textSecondary tabular-nums"
+          className="text-xs sm:text-sm font-semibold text-neutral-textSecondary tabular-nums"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: delay + 0.2, duration: 0.3 }}
@@ -49,9 +49,9 @@ export default function ScoreBar({
           {displayValue}%
         </motion.span>
       </div>
-      <div className="w-full bg-neutral-border rounded-full h-4 overflow-hidden">
+      <div className="w-full bg-neutral-border rounded-full h-3 sm:h-4 overflow-hidden">
         <motion.div
-          className={`bg-gradient-to-r ${colorClasses[color]} h-4 rounded-full`}
+          className={`bg-gradient-to-r ${colorClasses[color]} h-3 sm:h-4 rounded-full`}
           initial={{ width: 0 }}
           animate={{ width: `${value}%` }}
           transition={{

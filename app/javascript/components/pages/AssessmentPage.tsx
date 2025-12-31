@@ -139,7 +139,7 @@ export default function AssessmentPage() {
     <div className="min-h-screen bg-neutral-offwhite flex items-center justify-center py-8 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-3xl mx-auto">
         <motion.div
-          className="bg-neutral-surface rounded-2xl shadow-elevated p-8"
+          className="bg-neutral-surface shadow-elevated p-4 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={transition}
@@ -149,9 +149,9 @@ export default function AssessmentPage() {
             variants={fadeIn}
             initial="initial"
             animate="animate"
-              className="mb-12"
+              className="mb-6 sm:mb-8 lg:mb-12"
           >
-            <h2 className="text-2xl sm:text-3xl font-display font-bold text-neutral-text mb-3 leading-tight">
+            <h2 className="text-2xl sm:text-3xl font-display font-bold text-neutral-text mb-2 sm:mb-3 leading-tight">
               {t('assessment.question', {
                 current: currentFrameIndex + 1,
                 total: frames.length,
@@ -174,7 +174,7 @@ export default function AssessmentPage() {
               animate="animate"
               exit="exit"
               variants={fadeIn}
-              className="space-y-3 mb-8"
+              className="space-y-2 sm:space-y-3 mb-4 sm:mb-6 lg:mb-8"
             >
               {currentFrame.options.map((option, index) => {
                 const isMost = mostSelected === option.key
@@ -202,7 +202,7 @@ export default function AssessmentPage() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-xl mb-6 text-sm"
+                className="bg-red-50 border border-red-200 text-red-800 px-3 py-2 sm:px-4 sm:py-3 text-xs sm:text-sm rounded-lg sm:rounded-xl mb-4 sm:mb-6"
               >
                 {error}
               </motion.div>
@@ -221,7 +221,7 @@ export default function AssessmentPage() {
                 variant="primary"
                 disabled={!canProceed || submitting}
                 loading={submitting}
-                className="w-[60%]"
+                className="w-full sm:w-4/5 lg:w-3/5"
               >
                 {isLastFrame ? t('assessment.finish') : t('assessment.next')}
               </Button>
