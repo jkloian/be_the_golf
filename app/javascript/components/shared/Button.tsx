@@ -33,28 +33,24 @@ export default function Button({
   }
 
   const isWhiteText = variant === 'primary' || variant === 'secondary'
-  const buttonStyle = {
-    borderRadius: '16px',
-    color: isWhiteText ? 'white' : undefined,
-    ...style,
-  }
+  const textColorClass = isWhiteText ? 'text-white' : ''
 
   return (
     <button
       className={`${baseClasses} ${variantClasses[variant]} ${className}`}
-      style={buttonStyle}
+      style={style}
       disabled={disabled || loading}
       {...props}
     >
       {loading ? (
         <>
-          <Loader2 className="w-6 h-6 animate-spin" style={{ color: isWhiteText ? 'white' : undefined }} />
-          <span style={{ color: isWhiteText ? 'white' : undefined }}>Loading...</span>
+          <Loader2 className={`w-6 h-6 animate-spin ${textColorClass}`} />
+          <span className={textColorClass}>Loading...</span>
         </>
       ) : (
         <>
-          {icon && <span className="w-6 h-6" style={{ color: isWhiteText ? 'white' : undefined }}>{icon}</span>}
-          <span style={{ color: isWhiteText ? 'white' : undefined }}>{children}</span>
+          {icon && <span className={`w-6 h-6 ${textColorClass}`}>{icon}</span>}
+          <span className={textColorClass}>{children}</span>
         </>
       )}
     </button>

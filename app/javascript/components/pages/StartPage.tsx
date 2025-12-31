@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
 import { User, Users, HelpCircle, Target } from 'lucide-react'
 import { api } from '../../modules/api/client'
-import Button from '../shared/Button'
 import { fadeIn, slideUp, staggerContainer, transition } from '../../modules/animations/variants'
 
 export default function StartPage() {
@@ -55,8 +54,7 @@ export default function StartPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-neutral-offwhite via-golf-light/30 to-neutral-offwhite flex items-center justify-center p-4 sm:p-6 lg:p-8">
       <motion.div
-        className="w-full bg-white rounded-3xl shadow-elevated relative overflow-hidden"
-        style={{ maxWidth: '36rem', padding: '3.5rem' }}
+        className="w-full max-w-3xl p-14 bg-white rounded-3xl shadow-elevated relative overflow-hidden"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={transition}
@@ -89,8 +87,7 @@ export default function StartPage() {
 
           <motion.form
             onSubmit={handleSubmit}
-            className="mt-10"
-            style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}
+            className="mt-10 flex flex-col gap-8"
             variants={staggerContainer}
             initial="initial"
             animate="animate"
@@ -103,14 +100,13 @@ export default function StartPage() {
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
                 placeholder={t('start.firstNamePlaceholder')}
-                className="w-full px-8 py-7 border-2 border-neutral-border rounded-[16px] focus:ring-4 focus:ring-golf-emerald/20 focus:border-golf-emerald transition-all duration-300 bg-gradient-to-br from-white to-golf-light/20 text-neutral-text placeholder-neutral-textSecondary text-2xl font-medium shadow-soft hover:shadow-card min-h-[72px]"
-                style={{ borderRadius: '16px', fontSize: '1.5rem', lineHeight: '1.6' }}
+                className="w-full px-8 py-7 border-2 border-neutral-border rounded-[16px] focus:ring-4 focus:ring-golf-emerald/20 focus:border-golf-emerald transition-all duration-300 bg-gradient-to-br from-white to-golf-light/20 text-neutral-text placeholder-neutral-textSecondary text-2xl leading-relaxed font-medium shadow-soft hover:shadow-card min-h-[72px]"
               />
             </motion.div>
 
             {/* Gender - Pill Buttons */}
             <motion.div variants={slideUp} transition={{ ...transition, delay: 0.1 }}>
-              <div className="flex flex-wrap" style={{ gap: '1.5rem' }}>
+              <div className="flex flex-wrap gap-6">
                 {(['male', 'female', 'unspecified'] as const).map((g) => {
                   const Icon = genderIcons[g]
                   const isSelected = gender === g
@@ -129,10 +125,9 @@ export default function StartPage() {
                             : 'bg-white border-2 border-neutral-border text-neutral-text hover:border-golf-emerald hover:bg-gradient-to-br hover:from-golf-light/50 hover:to-white shadow-soft'
                         }
                       `}
-                      style={{ borderRadius: '16px', color: isSelected ? 'white' : undefined }}
                     >
-                      <Icon className={`w-6 h-6 ${isSelected ? 'text-white' : 'text-golf-emerald'}`} style={isSelected ? { color: 'white' } : undefined} />
-                      <span style={isSelected ? { color: 'white' } : undefined}>{t(`start.gender${g.charAt(0).toUpperCase() + g.slice(1)}`)}</span>
+                      <Icon className={`w-6 h-6 ${isSelected ? 'text-white' : 'text-golf-emerald'}`} />
+                      <span className={isSelected ? 'text-white' : ''}>{t(`start.gender${g.charAt(0).toUpperCase() + g.slice(1)}`)}</span>
                     </motion.button>
                   )
                 })}
@@ -144,7 +139,6 @@ export default function StartPage() {
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
                     className="mt-5 text-base text-accent-gold bg-gradient-to-r from-yellow-50 to-amber-50 border border-yellow-200 px-8 py-6 rounded-[16px] shadow-soft"
-                    style={{ borderRadius: '16px', padding: '1.5rem 2rem' }}
                   >
                     {t('start.genderWarning')}
                   </motion.p>
@@ -161,8 +155,7 @@ export default function StartPage() {
                 onChange={(e) => setHandicap(e.target.value)}
                 placeholder={t('start.handicapPlaceholder')}
                 min="0"
-                className="w-full px-8 py-7 border-2 border-neutral-border rounded-[16px] focus:ring-4 focus:ring-golf-emerald/20 focus:border-golf-emerald transition-all duration-300 bg-gradient-to-br from-white to-golf-light/20 text-neutral-text placeholder-neutral-textSecondary text-2xl font-medium shadow-soft hover:shadow-card min-h-[72px]"
-                style={{ borderRadius: '16px', fontSize: '1.5rem', lineHeight: '1.6' }}
+                className="w-full px-8 py-7 border-2 border-neutral-border rounded-[16px] focus:ring-4 focus:ring-golf-emerald/20 focus:border-golf-emerald transition-all duration-300 bg-gradient-to-br from-white to-golf-light/20 text-neutral-text placeholder-neutral-textSecondary text-2xl leading-relaxed font-medium shadow-soft hover:shadow-card min-h-[72px]"
               />
               <p className="mt-4 text-lg text-neutral-textSecondary leading-relaxed">{t('start.handicapNote')}</p>
             </motion.div>
@@ -175,7 +168,6 @@ export default function StartPage() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   className="bg-red-50 border border-red-200 text-red-800 px-6 py-4 rounded-[16px] text-lg shadow-soft"
-                  style={{ borderRadius: '16px' }}
                 >
                   {error}
                 </motion.div>
@@ -190,17 +182,16 @@ export default function StartPage() {
                 whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 className="bg-gradient-to-r from-golf-emerald to-[#15803d] text-white text-3xl font-bold py-6 rounded-[16px] shadow-lg shadow-golf-emerald/30 hover:shadow-xl hover:shadow-golf-emerald/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-5 min-h-[72px] px-8 w-[60%]"
-                style={{ borderRadius: '16px', color: 'white' }}
               >
                 {loading ? (
                   <>
                     <div className="w-6 h-6 border-3 border-white border-t-transparent rounded-full animate-spin" />
-                    <span style={{ color: 'white' }}>Starting...</span>
+                    <span className="text-white">Starting...</span>
                   </>
                 ) : (
                   <>
-                    <Target className="w-6 h-6" style={{ color: 'white' }} />
-                    <span style={{ color: 'white' }}>{t('start.submit')}</span>
+                    <Target className="w-6 h-6 text-white" />
+                    <span className="text-white">{t('start.submit')}</span>
                   </>
                 )}
               </motion.button>

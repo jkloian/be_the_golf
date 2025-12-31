@@ -78,10 +78,9 @@ export default function ResultsPage() {
 
   return (
     <div className="min-h-screen bg-neutral-offwhite p-4 sm:p-6">
-      <div className="mx-auto py-8" style={{ maxWidth: '48rem' }}>
+      <div className="mx-auto max-w-3xl py-8">
         <motion.div
-          className="bg-neutral-surface rounded-2xl shadow-elevated"
-          style={{ padding: '2rem' }}
+          className="bg-neutral-surface rounded-2xl shadow-elevated p-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={transition}
@@ -123,8 +122,7 @@ export default function ResultsPage() {
             variants={staggerContainer}
             initial="initial"
             animate="animate"
-            className="mb-12 bg-golf-light rounded-2xl border border-golf-emerald"
-            style={{ padding: '2rem' }}
+            className="mb-12 bg-golf-light rounded-2xl border border-golf-emerald p-8"
           >
             <motion.div variants={fadeIn} transition={transition} className="text-center mb-4">
               <h2 className="text-lg sm:text-xl font-semibold text-golf-deep mb-2">
@@ -162,8 +160,7 @@ export default function ResultsPage() {
             <motion.div
               variants={slideUp}
               transition={{ ...transition, delay: 0.3 }}
-              className="bg-neutral-offwhite rounded-xl border border-neutral-border"
-              style={{ padding: '2rem' }}
+              className="bg-neutral-offwhite rounded-xl border border-neutral-border p-8"
             >
               <div className="flex items-center gap-2 mb-4">
                 <Lightbulb className="w-5 h-5 text-accent-gold" />
@@ -184,8 +181,7 @@ export default function ResultsPage() {
             <motion.div
               variants={slideUp}
               transition={{ ...transition, delay: 0.4 }}
-              className="bg-neutral-offwhite rounded-xl border border-neutral-border"
-              style={{ padding: '2rem' }}
+              className="bg-neutral-offwhite rounded-xl border border-neutral-border p-8"
             >
               <div className="flex items-center gap-2 mb-4">
                 <Play className="w-5 h-5 text-golf-emerald" />
@@ -215,7 +211,7 @@ export default function ResultsPage() {
             <h3 className="text-xl sm:text-2xl font-display font-semibold text-neutral-text mb-4">
               {t('results.share.title')}
             </h3>
-            <div className="bg-neutral-offwhite rounded-xl mb-4 border border-neutral-border" style={{ padding: '1.5rem' }}>
+            <div className="bg-neutral-offwhite rounded-xl mb-4 border border-neutral-border p-6">
               <p className="text-sm sm:text-base text-neutral-textSecondary leading-relaxed">
                 {t('results.share.text', {
                   pro: assessment.persona.display_example_pro,

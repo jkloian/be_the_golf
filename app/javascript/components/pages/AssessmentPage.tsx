@@ -8,7 +8,7 @@ import OptionCard from '../shared/OptionCard'
 import Button from '../shared/Button'
 import ProgressBar from '../shared/ProgressBar'
 import LoadingSpinner from '../shared/LoadingSpinner'
-import { fadeIn, slideUp, transition } from '../../modules/animations/variants'
+import { fadeIn, transition } from '../../modules/animations/variants'
 
 export default function AssessmentPage() {
   const { sessionId } = useParams<{ sessionId: string }>()
@@ -127,7 +127,7 @@ export default function AssessmentPage() {
       <div className="min-h-screen flex items-center justify-center bg-neutral-offwhite">
         <div className="text-center">
           <p className="text-lg text-red-600 mb-4">{t('common.error')}</p>
-          <Button onClick={() => navigate('/start')} variant="primary">
+          <Button onClick={() => void navigate('/start')} variant="primary">
             {t('common.tryAgain')}
           </Button>
         </div>
@@ -137,10 +137,9 @@ export default function AssessmentPage() {
 
   return (
     <div className="min-h-screen bg-neutral-offwhite flex items-center justify-center py-8 px-4 sm:px-6 lg:px-8">
-      <div className="w-full mx-auto" style={{ maxWidth: '36rem' }}>
+      <div className="w-full max-w-3xl mx-auto">
         <motion.div
-          className="bg-neutral-surface rounded-2xl shadow-elevated"
-          style={{ padding: '2rem' }}
+          className="bg-neutral-surface rounded-2xl shadow-elevated p-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={transition}

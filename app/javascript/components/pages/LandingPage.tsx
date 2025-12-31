@@ -11,8 +11,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-neutral-offwhite flex items-center justify-center p-4 sm:p-6 lg:p-8">
       <motion.div
-        className="w-full text-center"
-        style={{ maxWidth: '42rem' }}
+        className="w-full max-w-2xl text-center"
         variants={staggerContainer}
         initial="initial"
         animate="animate"
@@ -28,8 +27,7 @@ export default function LandingPage() {
               xmlns="http://www.w3.org/2000/svg"
               width="144"
               height="144"
-              className="block"
-              style={{ display: 'block', width: '144px', height: '144px' }}
+              className="block w-36 h-36"
             >
               <circle cx="32" cy="32" r="30" fill="#1F6F54" />
               <ellipse cx="32" cy="40" rx="14" ry="6" fill="#0B1F17" />
@@ -51,8 +49,7 @@ export default function LandingPage() {
         <motion.p
           variants={slideUp}
           transition={{ ...transition, delay: 0.1 }}
-          className="text-lg sm:text-xl lg:text-2xl text-neutral-textSecondary mb-6 mx-auto leading-relaxed"
-          style={{ maxWidth: '42rem' }}
+          className="text-lg sm:text-xl lg:text-2xl text-neutral-textSecondary mb-6 mx-auto max-w-2xl leading-relaxed"
         >
           {t('landing.description')}
         </motion.p>
@@ -60,8 +57,7 @@ export default function LandingPage() {
         <motion.div
           variants={fadeIn}
           transition={{ ...transition, delay: 0.2 }}
-          className="flex justify-center"
-          style={{ marginTop: '2em' }}
+          className="flex justify-center mt-8"
         >
           <Button
             onClick={() => {

@@ -15,13 +15,6 @@ const colorClasses = {
   'disc-control': 'from-blue-500 to-blue-600',
 }
 
-const bgColorClasses = {
-  'disc-drive': 'bg-red-50',
-  'disc-inspire': 'bg-amber-50',
-  'disc-steady': 'bg-green-50',
-  'disc-control': 'bg-blue-50',
-}
-
 export default function ScoreBar({
   label,
   value,
