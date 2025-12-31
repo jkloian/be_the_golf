@@ -7,14 +7,14 @@
   "start": {
     "title": "Start Your Assessment",
     "firstName": "First Name",
-    "firstNamePlaceholder": "First name (optional)",
+    "firstNamePlaceholder": "Enter your first name (optional)",
     "gender": "Gender",
     "genderMale": "Male",
     "genderFemale": "Female",
     "genderUnspecified": "Prefer not to say",
     "genderWarning": "If you choose this, we can't personalize the pro you 'play like'.",
     "handicap": "Handicap",
-    "handicapPlaceholder": "Handicap (optional)",
+    "handicapPlaceholder": "Enter your handicap (optional)",
     "handicapNote": "Leave blank if you don't have a handicap yet",
     "submit": "Start Assessment"
   },
@@ -45,7 +45,18 @@
     "share": {
       "title": "Share Your Results",
       "text": "I just discovered I play golf like {{pro}} – my style is '{{persona}}'. Find your golf style at Be Your Golf: {{url}}",
-      "copy": "Copy to Clipboard"
+      "copy": "Copy to Clipboard",
+      "button": "Share Your Result"
+    },
+    "processing": {
+      "analyzing": "Analyzing your game style...",
+      "calculating": "Calculating your DISC profile...",
+      "matching": "Matching you with pros...",
+      "preparing": "Preparing your results..."
+    },
+    "hero": {
+      "youAre": "You are a",
+      "playsLike": "Plays like"
     }
   },
   "common": {
