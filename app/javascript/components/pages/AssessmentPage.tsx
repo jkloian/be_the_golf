@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { motion, AnimatePresence } from 'framer-motion'
 import { api } from '../../modules/api/client'
 import type { Frame, AssessmentResponse } from '../../shared/types/assessment'
-import Card from '../shared/Card'
+import OptionCard from '../shared/OptionCard'
 import Button from '../shared/Button'
 import ProgressBar from '../shared/ProgressBar'
+import LoadingSpinner from '../shared/LoadingSpinner'
+import { fadeIn, slideUp, transition } from '../../modules/animations/variants'
 
 export default function AssessmentPage() {
   const { sessionId } = useParams<{ sessionId: string }>()
@@ -113,84 +116,119 @@ export default function AssessmentPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-xl">{t('common.loading')}</p>
+      <div className="min-h-screen flex items-center justify-center bg-neutral-offwhite">
+        <LoadingSpinner text={t('common.loading')} size="lg" />
       </div>
     )
   }
 
   if (!currentFrame) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-xl text-red-600">{t('common.error')}</p>
+      <div className="min-h-screen flex items-center justify-center bg-neutral-offwhite">
+        <div className="text-center">
+          <p className="text-lg text-red-600 mb-4">{t('common.error')}</p>
+          <Button onClick={() => navigate('/start')} variant="primary">
+            {t('common.tryAgain')}
+          </Button>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 p-4">
-      <div className="max-w-4xl mx-auto">
-        <div className="bg-white rounded-lg shadow-lg p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            {t('assessment.question', { current: currentFrameIndex + 1, total: frames.length })}
-          </h2>
+    <div className="min-h-screen bg-neutral-offwhite flex items-center justify-center py-8 px-4 sm:px-6 lg:px-8">
+      <div className="w-full mx-auto" style={{ maxWidth: '36rem' }}>
+        <motion.div
+          className="bg-neutral-surface rounded-2xl shadow-elevated"
+          style={{ padding: '2rem' }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={transition}
+        >
+          {/* Question Header */}
+          <motion.div
+            variants={fadeIn}
+            initial="initial"
+            animate="animate"
+              className="mb-12"
+          >
+            <h2 className="text-2xl sm:text-3xl font-display font-bold text-neutral-text mb-3 leading-tight">
+              {t('assessment.question', {
+                current: currentFrameIndex + 1,
+                total: frames.length,
+              })}
+            </h2>
+            <p className="text-sm text-neutral-textSecondary leading-relaxed">
+              Select the option that is <strong className="text-neutral-text">most</strong> like
+              you and the one that is <strong className="text-neutral-text">least</strong> like you
+            </p>
+          </motion.div>
 
+          {/* Progress */}
           <ProgressBar current={currentFrameIndex + 1} total={frames.length} />
 
-          <div className="space-y-4 mb-6">
-            {currentFrame.options.map((option) => {
-              const isMost = mostSelected === option.key
-              const isLeast = leastSelected === option.key
-
-              return (
-                <Card
-                  key={option.key}
-                  onClick={() => handleOptionClick(option.key)}
-                  selected={isMost || isLeast}
-                  className={isMost ? 'border-blue-600 bg-blue-50' : isLeast ? 'border-red-600 bg-red-50' : ''}
-                >
-                  <div className="flex items-start">
-                    <div className="flex-1">
-                      <p className="text-gray-900">{option.text}</p>
-                    </div>
-                    <div className="ml-4 flex flex-col gap-2">
-                      {isMost && (
-                        <span className="text-xs font-semibold text-blue-600 bg-blue-100 px-2 py-1 rounded">
-                          {t('assessment.mostLike')}
-                        </span>
-                      )}
-                      {isLeast && (
-                        <span className="text-xs font-semibold text-red-600 bg-red-100 px-2 py-1 rounded">
-                          {t('assessment.leastLike')}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </Card>
-              )
-            })}
-          </div>
-
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4">
-              {error}
-            </div>
-          )}
-
-          <div className="flex justify-end">
-            <Button
-              onClick={handleNext}
-              variant="primary"
-              disabled={!canProceed || submitting}
+          {/* Options */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentFrameIndex}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              variants={fadeIn}
+              className="space-y-3 mb-8"
             >
-              {submitting
-                ? t('common.loading')
-                : isLastFrame
-                ? t('assessment.finish')
-                : t('assessment.next')}
-            </Button>
+              {currentFrame.options.map((option, index) => {
+                const isMost = mostSelected === option.key
+                const isLeast = leastSelected === option.key
+
+                return (
+                  <OptionCard
+                    key={option.key}
+                    onClick={() => handleOptionClick(option.key)}
+                    isMost={isMost}
+                    isLeast={isLeast}
+                    index={index}
+                  >
+                    {option.text}
+                  </OptionCard>
+                )
+              })}
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Error Message */}
+          <AnimatePresence>
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-xl mb-6 text-sm"
+              >
+                {error}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Next Button */}
+          <div className="flex justify-end pt-4 border-t border-neutral-border">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+            >
+              <Button
+                onClick={handleNext}
+                variant="primary"
+                disabled={!canProceed || submitting}
+                loading={submitting}
+                className="min-w-[140px]"
+              >
+                {isLastFrame ? t('assessment.finish') : t('assessment.next')}
+              </Button>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   )

@@ -2,3 +2,73 @@
 @tailwind components;
 @tailwind utilities;
 
+@theme {
+  /* Premium golf-inspired color palette */
+  --color-golf-deep: #0F3D2E;
+  --color-golf-emerald: #1F6F54;
+  --color-golf-light: #E8F5F0;
+  --color-golf-soft: #D4EDE4;
+  
+  /* Neutrals (calm, premium) */
+  --color-neutral-offwhite: #F7F9F8;
+  --color-neutral-surface: #FFFFFF;
+  --color-neutral-text: #0B1F17;
+  --color-neutral-textSecondary: #5F6F68;
+  --color-neutral-border: #E5EAE8;
+  --color-neutral-borderHover: #D1D9D5;
+  
+  /* Accent */
+  --color-accent-gold: #C9A24D;
+  
+  /* DISC colors */
+  --color-disc-drive: #c2410c;
+  --color-disc-inspire: #d97706;
+  --color-disc-steady: #16a34a;
+  --color-disc-control: #2563eb;
+  
+  /* Shadows */
+  --shadow-soft: 0 1px 3px 0 rgba(15, 61, 46, 0.08);
+  --shadow-card: 0 2px 8px 0 rgba(15, 61, 46, 0.06);
+  --shadow-cardHover: 0 4px 12px 0 rgba(15, 61, 46, 0.1);
+  --shadow-elevated: 0 8px 24px 0 rgba(15, 61, 46, 0.12);
+  
+  /* Border radius */
+  --radius-golf: 0.75rem;
+  
+  /* Transition duration */
+  --duration-golf: 300ms;
+  
+  /* Max widths for contained cards */
+  --width-xs: 20rem;
+  --width-sm: 24rem;
+  --width-md: 28rem;
+  --width-lg: 32rem;
+  --width-xl: 36rem;
+  --width-2xl: 42rem;
+  --width-3xl: 48rem;
+}
+
+@layer base {
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--color-neutral-text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Manrope', 'Inter', system-ui, sans-serif;
+    font-weight: 600;
+  }
+
+  /* Improve touch interactions on mobile */
+  button,
+  [role="button"],
+  a,
+  input,
+  select,
+  textarea {
+    touch-action: manipulation;
+  }
+}
+
