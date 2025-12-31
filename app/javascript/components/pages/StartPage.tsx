@@ -190,7 +190,6 @@ export default function StartPage() {
                   </>
                 ) : (
                   <>
-                    <Target className="w-6 h-6 text-white" />
                     <span className="text-white">{t('start.submit')}</span>
                   </>
                 )}
