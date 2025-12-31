@@ -36,8 +36,8 @@ function BadgePlaceholder() {
 }
 
 // Minimum display duration for processing animation (in milliseconds)
-// Adjust this value to control how long the animation is shown
-const MIN_PROCESSING_DISPLAY_MS = 4000 // 4 seconds
+// Ensures all 4 loading phrases are shown (4 phrases × 2 seconds each = 8 seconds minimum)
+const MIN_PROCESSING_DISPLAY_MS = 8500 // 8.5 seconds to show all phrases with buffer
 
 export default function ResultsPage() {
   const { publicToken } = useParams<{ publicToken: string }>()
