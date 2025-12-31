@@ -143,8 +143,8 @@ export default function StartPage() {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="mt-5 text-base text-accent-gold bg-gradient-to-r from-yellow-50 to-amber-50 border border-yellow-200 px-6 py-4 rounded-[16px] shadow-soft"
-                    style={{ borderRadius: '16px' }}
+                    className="mt-5 text-base text-accent-gold bg-gradient-to-r from-yellow-50 to-amber-50 border border-yellow-200 px-8 py-6 rounded-[16px] shadow-soft"
+                    style={{ borderRadius: '16px', padding: '1.5rem 2rem' }}
                   >
                     {t('start.genderWarning')}
                   </motion.p>
