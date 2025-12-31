@@ -224,14 +224,16 @@ export default function ResultsPage() {
                 })}
               </p>
             </div>
-            <Button
-              onClick={handleCopyShare}
-              variant="outline"
-              icon={copied ? <Check className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
-              className="w-full sm:w-auto"
-            >
-              {copied ? 'Copied!' : t('results.share.copy')}
-            </Button>
+            <div className="flex justify-center">
+              <Button
+                onClick={handleCopyShare}
+                variant="outline"
+                icon={copied ? <Check className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
+                className="w-[60%]"
+              >
+                {copied ? 'Copied!' : t('results.share.copy')}
+              </Button>
+            </div>
           </motion.div>
         </motion.div>
       </div>

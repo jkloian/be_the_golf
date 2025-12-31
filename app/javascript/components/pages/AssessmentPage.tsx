@@ -211,7 +211,7 @@ export default function AssessmentPage() {
           </AnimatePresence>
 
           {/* Next Button */}
-          <div className="flex justify-end pt-4 border-t border-neutral-border">
+          <div className="flex justify-center pt-4 border-t border-neutral-border">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -222,7 +222,7 @@ export default function AssessmentPage() {
                 variant="primary"
                 disabled={!canProceed || submitting}
                 loading={submitting}
-                className="min-w-[140px]"
+                className="w-[60%]"
               >
                 {isLastFrame ? t('assessment.finish') : t('assessment.next')}
               </Button>

@@ -122,7 +122,7 @@ export default function StartPage() {
                       whileHover={{ scale: 1.03, y: -2 }}
                       whileTap={{ scale: 0.97 }}
                       className={`
-                        flex items-center justify-center gap-3 px-8 py-5 rounded-[16px] text-lg font-semibold transition-all duration-300 min-h-[64px] flex-1 min-w-[140px]
+                        flex items-center justify-center gap-5 px-8 py-5 rounded-[16px] text-2xl font-bold transition-all duration-300 min-h-[64px] flex-1 min-w-[140px]
                         ${
                           isSelected
                             ? 'bg-gradient-to-br from-golf-emerald to-[#15803d] text-white shadow-lg shadow-golf-emerald/30'
@@ -183,13 +183,13 @@ export default function StartPage() {
             </AnimatePresence>
 
             {/* Submit Button */}
-            <motion.div variants={fadeIn} transition={{ ...transition, delay: 0.3 }} className="mt-4">
+            <motion.div variants={fadeIn} transition={{ ...transition, delay: 0.3 }} className="mt-4 flex justify-center">
               <motion.button
                 type="submit"
                 disabled={loading}
                 whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full bg-gradient-to-r from-golf-emerald to-[#15803d] text-white text-xl font-bold py-6 rounded-[16px] shadow-lg shadow-golf-emerald/30 hover:shadow-xl hover:shadow-golf-emerald/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 min-h-[72px]"
+                className="bg-gradient-to-r from-golf-emerald to-[#15803d] text-white text-3xl font-bold py-6 rounded-[16px] shadow-lg shadow-golf-emerald/30 hover:shadow-xl hover:shadow-golf-emerald/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-5 min-h-[72px] px-8 w-[60%]"
                 style={{ borderRadius: '16px', color: 'white' }}
               >
                 {loading ? (

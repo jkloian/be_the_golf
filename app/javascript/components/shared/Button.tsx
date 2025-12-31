@@ -15,34 +15,48 @@ export default function Button({
   icon,
   loading = false,
   disabled,
+  style,
   ...props
 }: ButtonProps) {
   const baseClasses =
-    'inline-flex items-center justify-center gap-2 px-6 py-3 rounded-golf font-semibold text-base transition-all duration-golf min-h-[44px] focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed'
+    'inline-flex items-center justify-center gap-5 px-6 py-6 rounded-[16px] font-bold text-3xl transition-all duration-300 min-h-[72px] focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed'
   
   const variantClasses = {
     primary:
-      'bg-golf-deep text-white hover:bg-golf-emerald hover:shadow-cardHover active:scale-[0.98] focus:ring-golf-emerald shadow-card',
+      'bg-gradient-to-r from-golf-emerald to-[#15803d] text-white hover:shadow-xl hover:shadow-golf-emerald/40 active:scale-[0.98] focus:ring-golf-emerald shadow-lg shadow-golf-emerald/30',
     secondary:
-      'bg-neutral-textSecondary text-white hover:bg-neutral-text hover:shadow-cardHover active:scale-[0.98] focus:ring-neutral-textSecondary shadow-card',
+      'bg-gradient-to-r from-golf-emerald to-[#15803d] text-white hover:shadow-xl hover:shadow-golf-emerald/40 active:scale-[0.98] focus:ring-golf-emerald shadow-lg shadow-golf-emerald/30',
     outline:
-      'border border-golf-emerald text-golf-deep hover:bg-golf-light hover:border-golf-deep active:scale-[0.98] focus:ring-golf-emerald bg-neutral-surface',
+      'border-2 border-golf-emerald text-golf-deep hover:bg-golf-light hover:border-golf-deep active:scale-[0.98] focus:ring-golf-emerald bg-neutral-surface',
     ghost:
       'text-golf-deep hover:bg-golf-light active:scale-[0.98] focus:ring-golf-emerald',
+  }
+
+  const isWhiteText = variant === 'primary' || variant === 'secondary'
+  const buttonStyle = {
+    borderRadius: '16px',
+    color: isWhiteText ? 'white' : undefined,
+    ...style,
   }
 
   return (
     <button
       className={`${baseClasses} ${variantClasses[variant]} ${className}`}
+      style={buttonStyle}
       disabled={disabled || loading}
       {...props}
     >
       {loading ? (
-        <Loader2 className="w-5 h-5 animate-spin" />
+        <>
+          <Loader2 className="w-6 h-6 animate-spin" style={{ color: isWhiteText ? 'white' : undefined }} />
+          <span style={{ color: isWhiteText ? 'white' : undefined }}>Loading...</span>
+        </>
       ) : (
-        icon && <span className="w-5 h-5">{icon}</span>
+        <>
+          {icon && <span className="w-6 h-6" style={{ color: isWhiteText ? 'white' : undefined }}>{icon}</span>}
+          <span style={{ color: isWhiteText ? 'white' : undefined }}>{children}</span>
+        </>
       )}
-      {children}
     </button>
   )
 }
