@@ -1,9 +1,11 @@
 import { defineConfig } from 'vite'
 import RubyPlugin from 'vite-plugin-rails'
+import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [
     RubyPlugin(),
+    tailwindcss(),
   ],
   resolve: {
     alias: {
