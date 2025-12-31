@@ -64,7 +64,7 @@ export default function StartPage() {
         {/* Subtle golf-themed background pattern */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-golf-emerald/5 to-transparent rounded-full blur-3xl -z-0" />
         <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-golf-light/40 to-transparent rounded-full blur-2xl -z-0" />
-        
+
         <div className="relative z-10">
           {/* Golf icon accent */}
           <motion.div
@@ -110,7 +110,7 @@ export default function StartPage() {
 
             {/* Gender - Pill Buttons */}
             <motion.div variants={slideUp} transition={{ ...transition, delay: 0.1 }}>
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap" style={{ gap: '1.5rem' }}>
                 {(['male', 'female', 'unspecified'] as const).map((g) => {
                   const Icon = genderIcons[g]
                   const isSelected = gender === g
@@ -122,7 +122,7 @@ export default function StartPage() {
                       whileHover={{ scale: 1.03, y: -2 }}
                       whileTap={{ scale: 0.97 }}
                       className={`
-                        flex items-center justify-center gap-5 px-8 py-5 rounded-[16px] text-2xl font-bold transition-all duration-300 min-h-[64px] flex-1 min-w-[140px]
+                        flex items-center justify-center gap-5 px-6 py-5 rounded-[16px] text-2xl font-bold transition-all duration-300 min-h-[64px] flex-1
                         ${
                           isSelected
                             ? 'bg-gradient-to-br from-golf-emerald to-[#15803d] text-white shadow-lg shadow-golf-emerald/30'

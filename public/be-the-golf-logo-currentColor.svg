@@ -1,0 +1,52 @@
+<svg
+  viewBox="0 0 64 64"
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+>
+  <!-- Green -->
+  <circle
+    cx="32"
+    cy="32"
+    r="30"
+    fill="currentColor"
+  />
+
+  <!-- Hole rim -->
+  <ellipse
+    cx="32"
+    cy="40"
+    rx="14"
+    ry="6"
+    fill="currentColor"
+    opacity="0.35"
+  />
+
+  <!-- Hole depth -->
+  <ellipse
+    cx="32"
+    cy="42"
+    rx="10"
+    ry="4"
+    fill="currentColor"
+    opacity="0.65"
+  />
+
+  <!-- Flagstick -->
+  <rect
+    x="31"
+    y="10"
+    width="2"
+    height="30"
+    rx="1"
+    fill="currentColor"
+    opacity="0.95"
+  />
+
+  <!-- Flag -->
+  <path
+    d="M33 12 L48 18 L33 24 Z"
+    fill="currentColor"
+    opacity="0.95"
+  />
+</svg>
+
