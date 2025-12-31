@@ -55,7 +55,7 @@ export default function ResultsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-neutral-offwhite">
+      <div className="min-h-screen flex justify-center bg-neutral-offwhite overflow-y-auto">
         <LoadingSpinner text={t('common.loading')} size="lg" />
       </div>
     )
@@ -63,7 +63,7 @@ export default function ResultsPage() {
 
   if (error || !data) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-neutral-offwhite">
+      <div className="min-h-screen flex justify-center bg-neutral-offwhite overflow-y-auto">
         <div className="text-center">
           <p className="text-base sm:text-lg text-red-600 mb-3 sm:mb-4">{error || t('common.error')}</p>
           <Button onClick={() => window.location.reload()} variant="primary">
@@ -77,8 +77,8 @@ export default function ResultsPage() {
   const { assessment, tips } = data
 
   return (
-    <div className="min-h-screen bg-neutral-offwhite p-4 sm:p-6">
-      <div className="mx-auto max-w-3xl py-8">
+    <div className="min-h-screen bg-neutral-offwhite flex justify-center p-4 sm:p-6 overflow-y-auto">
+      <div className="mx-auto max-w-3xl w-full py-8">
         <motion.div
           className="bg-neutral-surface shadow-elevated p-4 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl"
           initial={{ opacity: 0, y: 20 }}

@@ -52,7 +52,7 @@ export default function StartPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-neutral-offwhite via-golf-light/30 to-neutral-offwhite flex items-center justify-center p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-gradient-to-br from-neutral-offwhite via-golf-light/30 to-neutral-offwhite flex justify-center p-4 sm:p-6 lg:p-8 overflow-y-auto">
       <motion.div
         className="w-full max-w-3xl bg-white shadow-elevated relative overflow-hidden p-6 sm:p-10 lg:p-14 rounded-xl sm:rounded-2xl lg:rounded-3xl"
         initial={{ opacity: 0, y: 20 }}

@@ -9,7 +9,7 @@ export default function LandingPage() {
   const { t } = useTranslation()
 
   return (
-    <div className="min-h-screen bg-neutral-offwhite flex items-center justify-center p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-neutral-offwhite flex justify-center p-4 sm:p-6 lg:p-8 overflow-y-auto">
       <motion.div
         className="w-full max-w-2xl text-center"
         variants={staggerContainer}
