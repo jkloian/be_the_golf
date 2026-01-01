@@ -45,8 +45,14 @@ export interface StartAssessmentResponse {
 export interface CompleteAssessmentResponse {
   assessment_session: AssessmentSession
   tips: {
-    practice: string[]
-    play: string[]
+    practice: {
+      dos: string[]
+      donts: string[]
+    }
+    play: {
+      dos: string[]
+      donts: string[]
+    }
   }
   share_url: string
 }
@@ -70,8 +76,14 @@ export interface PublicAssessmentResponse {
     completed_at: string
   }
   tips: {
-    practice: string[]
-    play: string[]
+    practice: {
+      dos: string[]
+      donts: string[]
+    }
+    play: {
+      dos: string[]
+      donts: string[]
+    }
   }
 }
 

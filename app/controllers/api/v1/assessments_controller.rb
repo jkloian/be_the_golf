@@ -73,10 +73,9 @@ module Api
         )
 
         # Generate tips
-        primary_style = scoring_result[:scores].max_by { |_k, v| v }[0]
-        secondary_style = scoring_result[:scores].sort_by { |_k, v| -v }[1][0]
         tips = TipsGenerator.generate(
-          { primary: primary_style, secondary: secondary_style },
+          scoring_result[:scores],
+          persona[:code],
           locale
         )
 
@@ -136,12 +135,10 @@ module Api
           S: session.score_s,
           C: session.score_c
         }
-        sorted = scores.sort_by { |_k, v| -v }
-        primary_style = sorted[0][0]
-        secondary_style = sorted[1][0]
 
         tips = TipsGenerator.generate(
-          { primary: primary_style, secondary: secondary_style },
+          scores,
+          session.persona_code,
           locale
         )
 
@@ -165,6 +162,81 @@ module Api
           },
           tips: tips
         }, status: :ok
+      end
+
+      def dev_preview
+        unless Rails.env.development?
+          render json: {
+            error: "Not Available",
+            message: "This endpoint is only available in development mode."
+          }, status: :forbidden
+          return
+        end
+
+        locale = extract_locale
+
+        # Parse scores from params
+        scores = {
+          D: params[:score_d]&.to_i || params[:scores]&.dig(:D)&.to_i || 50,
+          I: params[:score_i]&.to_i || params[:scores]&.dig(:I)&.to_i || 50,
+          S: params[:score_s]&.to_i || params[:scores]&.dig(:S)&.to_i || 50,
+          C: params[:score_c]&.to_i || params[:scores]&.dig(:C)&.to_i || 50
+        }
+
+        # Get gender from params (default to male)
+        gender = params[:gender] || "male"
+        gender = "male" unless %w[male female unspecified].include?(gender)
+
+        # Resolve persona if not provided
+        persona_code = params[:persona_code]&.upcase
+        if persona_code.blank?
+          persona = PersonaResolver.resolve(scores, gender, locale)
+          persona_code = persona[:code]
+        else
+          # Get persona data for the provided code
+          persona_data = I18n.t("personas.#{persona_code}", locale: locale, raise: true)
+          display_example_pro = case gender
+          when "male"
+            persona_data[:example_pro_male]
+          when "female"
+            persona_data[:example_pro_female]
+          else
+            persona_data[:example_pro_male]
+          end
+
+          persona = {
+            code: persona_code,
+            name: persona_data[:name],
+            display_example_pro: display_example_pro
+          }
+        end
+
+        # Generate tips using real TipsGenerator
+        tips = TipsGenerator.generate(
+          scores,
+          persona_code,
+          locale
+        )
+
+        render json: {
+          assessment: {
+            first_name: "Dev",
+            gender: gender,
+            scores: scores,
+            persona: {
+              code: persona[:code],
+              name: persona[:name],
+              display_example_pro: persona[:display_example_pro]
+            },
+            completed_at: Time.current
+          },
+          tips: tips
+        }, status: :ok
+      rescue I18n::MissingTranslationData => e
+        render json: {
+          error: "Invalid Persona",
+          message: "Persona code '#{persona_code}' not found."
+        }, status: :bad_request
       end
 
       private

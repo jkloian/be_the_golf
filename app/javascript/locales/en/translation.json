@@ -39,8 +39,10 @@
       "control": "Control / Strategist"
     },
     "tips": {
-      "practice": "Practice Tips",
-      "play": "On-course Tips"
+      "practice": "During Practice",
+      "play": "On the Course",
+      "do": "Do",
+      "dont": "Don't"
     },
     "share": {
       "title": "Share Your Results",

@@ -5,10 +5,9 @@ import { slideUp, transition } from '../../modules/animations/variants'
 interface ToastProps {
   show: boolean
   message?: string
-  duration?: number
 }
 
-export default function Toast({ show, message = 'Copied!', duration = 2500 }: ToastProps) {
+export default function Toast({ show, message = 'Copied!' }: ToastProps) {
   return (
     <AnimatePresence>
       {show && (

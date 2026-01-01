@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { transition } from '../../modules/animations/variants'
 
 type ViewMode = 'PRACTICE' | 'COURSE'
 

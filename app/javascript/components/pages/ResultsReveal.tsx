@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { useTranslation } from 'react-i18next'
 import type { PublicAssessmentResponse } from '../../shared/types/assessment'
 import MedallionHero from './MedallionHero'
 import ResultsContent from './ResultsContent'
@@ -27,7 +26,6 @@ export default function ResultsReveal({
   devPersonaCode,
   devGender,
 }: ResultsRevealProps) {
-  const { t } = useTranslation()
   const { assessment } = data
   const [showContent, setShowContent] = useState(false)
 

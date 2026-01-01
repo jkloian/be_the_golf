@@ -18,14 +18,7 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <% if Rails.env.test? %>
-      <%# In test mode, use hardcoded asset paths from vite build %>
-      <script type="module" src="/vite-test/assets/application-4vSw5HRt.js"></script>
-      <link rel="stylesheet" href="/vite-test/assets/application-Czdb3Elx.css">
-    <% else %>
-      <%= vite_client_tag %>
-      <%= vite_javascript_tag 'entrypoints/application.tsx' %>
-    <% end %>
+    <%= vite_javascript_tag 'entrypoints/application.tsx' %>
   </head>
 
   <body>

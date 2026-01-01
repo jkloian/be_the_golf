@@ -63,5 +63,28 @@ export const api = {
     )
     return handleResponse<PublicAssessmentResponse>(response)
   },
+
+  async getDevPreview(
+    scores: { D: number; I: number; S: number; C: number },
+    personaCode?: string,
+    gender: 'male' | 'female' = 'male',
+    locale: string = 'en'
+  ): Promise<PublicAssessmentResponse> {
+    const params = new URLSearchParams({
+      locale,
+      gender,
+      score_d: scores.D.toString(),
+      score_i: scores.I.toString(),
+      score_s: scores.S.toString(),
+      score_c: scores.C.toString(),
+    })
+    if (personaCode) {
+      params.append('persona_code', personaCode)
+    }
+    const response = await fetch(
+      `${API_BASE_URL}/api/v1/assessments/dev_preview?${params.toString()}`
+    )
+    return handleResponse<PublicAssessmentResponse>(response)
+  },
 }
 

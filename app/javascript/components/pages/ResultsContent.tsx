@@ -5,7 +5,7 @@ import type { PublicAssessmentResponse } from '../../shared/types/assessment'
 import Button from '../shared/Button'
 import ViewModeToggle from '../shared/ViewModeToggle'
 import MedallionHero from './MedallionHero'
-import { slideUp, staggerContainer, transition, contentSwitch, staggeredList, buttonShimmer } from '../../modules/animations/variants'
+import { staggerContainer, transition, contentSwitch, staggeredList, buttonShimmer } from '../../modules/animations/variants'
 import { useTranslation } from 'react-i18next'
 
 type ViewMode = 'PRACTICE' | 'COURSE'
@@ -165,28 +165,62 @@ export default function ResultsContent({
                     {t('results.tips.practice')}
                   </h2>
                 </div>
-                <div className="space-y-4">
-                  {tips.practice.map((tip, index) => (
-                    <motion.div
-                      key={index}
-                      variants={staggeredList}
-                      transition={{ ...transition, delay: index * 0.1 }}
-                      className="flex items-start space-x-3 p-3 bg-golf-light/50 rounded-lg"
-                      style={{
-                        boxShadow: `0 1px 3px ${personaColor}08`,
-                      }}
-                    >
-                      <div className="flex-shrink-0 mt-1">
-                        <div
-                          className="w-2 h-2 rounded-full"
-                          style={{ backgroundColor: personaColor }}
-                        />
-                      </div>
-                      <p className="text-base sm:text-lg text-neutral-textSecondary leading-relaxed flex-1">
-                        {tip}
-                      </p>
-                    </motion.div>
-                  ))}
+                <div className="space-y-6">
+                  {/* Do Section */}
+                  <div className="space-y-4">
+                    <h3 className="text-xl sm:text-2xl font-display font-bold text-neutral-text">
+                      {t('results.tips.do')}
+                    </h3>
+                    {tips.practice.dos.map((tip, index) => (
+                      <motion.div
+                        key={`do-${index}`}
+                        variants={staggeredList}
+                        transition={{ ...transition, delay: index * 0.1 }}
+                        className="flex items-start space-x-3 p-3 bg-golf-light/50 rounded-lg"
+                        style={{
+                          boxShadow: `0 1px 3px ${personaColor}08`,
+                        }}
+                      >
+                        <div className="flex-shrink-0 mt-1">
+                          <div
+                            className="w-2 h-2 rounded-full"
+                            style={{ backgroundColor: personaColor }}
+                          />
+                        </div>
+                        <p className="text-base sm:text-lg text-neutral-textSecondary leading-relaxed flex-1">
+                          {tip}
+                        </p>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  {/* Don't Section */}
+                  <div className="space-y-4">
+                    <h3 className="text-xl sm:text-2xl font-display font-bold text-neutral-text">
+                      {t('results.tips.dont')}
+                    </h3>
+                    {tips.practice.donts.map((tip, index) => (
+                      <motion.div
+                        key={`dont-${index}`}
+                        variants={staggeredList}
+                        transition={{ ...transition, delay: index * 0.1 }}
+                        className="flex items-start space-x-3 p-3 bg-golf-light/50 rounded-lg"
+                        style={{
+                          boxShadow: `0 1px 3px ${personaColor}08`,
+                        }}
+                      >
+                        <div className="flex-shrink-0 mt-1">
+                          <div
+                            className="w-2 h-2 rounded-full"
+                            style={{ backgroundColor: personaColor }}
+                          />
+                        </div>
+                        <p className="text-base sm:text-lg text-neutral-textSecondary leading-relaxed flex-1">
+                          {tip}
+                        </p>
+                      </motion.div>
+                    ))}
+                  </div>
                 </div>
               </motion.div>
             </motion.div>
@@ -218,83 +252,61 @@ export default function ResultsContent({
                     {t('results.tips.play')}
                   </h2>
                 </div>
-                <div className="space-y-4">
-                  {tips.play.map((tip, index) => {
-                    // Check if tip mentions attack/aggressive or safe/conservative
-                    const isAttack = /attack|aggressive|go for it|take risks/i.test(tip)
-                    const isSafe = /safe|conservative|play it safe|defensive/i.test(tip)
-                    
-                    return (
+                <div className="space-y-6">
+                  {/* Do Section */}
+                  <div className="space-y-4">
+                    <h3 className="text-xl sm:text-2xl font-display font-bold text-neutral-text">
+                      {t('results.tips.do')}
+                    </h3>
+                    {tips.play.dos.map((tip, index) => (
                       <motion.div
-                        key={index}
+                        key={`do-${index}`}
                         variants={staggeredList}
                         transition={{ ...transition, delay: index * 0.1 }}
-                        className={`flex items-start space-x-3 p-4 rounded-lg ${
-                          isAttack
-                            ? 'bg-red-50/80 border-2 border-red-500/50'
-                            : isSafe
-                            ? 'bg-green-50/80 border-2 border-green-500/30'
-                            : 'bg-golf-light/50 border border-neutral-border'
-                        }`}
-                        style={
-                          isAttack
-                            ? {
-                                borderColor: 'rgba(239, 68, 68, 0.5)',
-                                boxShadow: '0 0 0 1px rgba(201, 162, 77, 0.3), 0 2px 4px rgba(239, 68, 68, 0.1)',
-                              }
-                            : isSafe
-                            ? {
-                                borderColor: 'rgba(34, 197, 94, 0.3)',
-                                boxShadow: '0 2px 4px rgba(34, 197, 94, 0.1)',
-                              }
-                            : {}
-                        }
+                        className="flex items-start space-x-3 p-3 bg-golf-light/50 rounded-lg"
+                        style={{
+                          boxShadow: `0 1px 3px ${personaColor}08`,
+                        }}
                       >
                         <div className="flex-shrink-0 mt-1">
                           <div
-                            className={`w-2 h-2 rounded-full ${
-                              isAttack
-                                ? 'bg-red-500'
-                                : isSafe
-                                ? 'bg-green-500'
-                                : 'bg-golf-emerald'
-                            }`}
+                            className="w-2 h-2 rounded-full"
+                            style={{ backgroundColor: personaColor }}
                           />
                         </div>
-                        <div className="flex-1">
-                          {isAttack && (
-                            <span className="inline-block mb-2 px-2.5 py-1 text-xs font-bold text-red-800 bg-red-100/80 border border-red-300/50 rounded uppercase tracking-wide">
-                              ATTACK
-                            </span>
-                          )}
-                          {isSafe && (
-                            <span className="inline-block mb-2 px-2.5 py-1 text-xs font-bold text-green-800 bg-green-100/80 border border-green-300/50 rounded uppercase tracking-wide">
-                              SAFE
-                            </span>
-                          )}
-                          <p className={`text-base sm:text-lg leading-relaxed ${
-                            isAttack || isSafe
-                              ? 'text-neutral-text font-semibold'
-                              : 'text-neutral-textSecondary'
-                          }`}>
-                            {tip}
-                          </p>
-                        </div>
+                        <p className="text-base sm:text-lg text-neutral-textSecondary leading-relaxed flex-1">
+                          {tip}
+                        </p>
                       </motion.div>
-                    )
-                  })}
-                </div>
-                {/* Attack vs Safe Strategy Highlight */}
-                <div className="mt-6 pt-6 border-t-2 border-neutral-border">
-                  <div className="flex items-center gap-6 text-sm font-semibold">
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-red-500" />
-                      <span className="text-neutral-text">Attack</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-green-500" />
-                      <span className="text-neutral-text">Safe</span>
-                    </div>
+                    ))}
+                  </div>
+
+                  {/* Don't Section */}
+                  <div className="space-y-4">
+                    <h3 className="text-xl sm:text-2xl font-display font-bold text-neutral-text">
+                      {t('results.tips.dont')}
+                    </h3>
+                    {tips.play.donts.map((tip, index) => (
+                      <motion.div
+                        key={`dont-${index}`}
+                        variants={staggeredList}
+                        transition={{ ...transition, delay: index * 0.1 }}
+                        className="flex items-start space-x-3 p-3 bg-golf-light/50 rounded-lg"
+                        style={{
+                          boxShadow: `0 1px 3px ${personaColor}08`,
+                        }}
+                      >
+                        <div className="flex-shrink-0 mt-1">
+                          <div
+                            className="w-2 h-2 rounded-full"
+                            style={{ backgroundColor: personaColor }}
+                          />
+                        </div>
+                        <p className="text-base sm:text-lg text-neutral-textSecondary leading-relaxed flex-1">
+                          {tip}
+                        </p>
+                      </motion.div>
+                    ))}
                   </div>
                 </div>
               </motion.div>

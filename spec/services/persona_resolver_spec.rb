@@ -8,7 +8,7 @@ RSpec.describe PersonaResolver do
       it 'returns BALANCED persona' do
         result = described_class.resolve(scores, 'male', :en)
         expect(result[:code]).to eq('BALANCED')
-        expect(result[:name]).to eq('Complete Game Planner')
+        expect(result[:name]).to eq('Dynamic Course Commander')
       end
     end
 

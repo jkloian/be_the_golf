@@ -21,6 +21,7 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: 'list',
+  timeout: 60000, // 60 seconds for e2e tests (processing animation takes ~8.5s)
   use: {
     baseURL: `http://localhost:${railsPort}`,
     trace: 'on-first-retry',

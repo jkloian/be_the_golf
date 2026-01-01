@@ -12,10 +12,16 @@ Rails.application.routes.draw do
       post "assessments/start", to: "assessments#start"
       post "assessments/:id/complete", to: "assessments#complete"
       get "assessments/public/:public_token", to: "assessments#show_public"
+      get "assessments/dev_preview", to: "assessments#dev_preview" if Rails.env.development?
     end
   end
 
   # Catch-all route for React Router (must be last)
-  get "*path", to: "application#index", constraints: ->(req) { !req.path.start_with?("/rails") }
+  get "*path", to: "application#index", constraints: ->(req) { 
+    !req.path.start_with?("/rails") && 
+    !req.path.start_with?("/vite-test") &&
+    !req.path.start_with?("/assets") &&
+    !req.path.match?(/\.(css|js|json|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)$/i)
+  }
   root "application#index"
 end
