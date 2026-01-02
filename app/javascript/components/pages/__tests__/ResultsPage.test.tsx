@@ -29,8 +29,8 @@ describe('ResultsPage', () => {
     // Ensure navigator exists (it should in jsdom)
     if (typeof navigator !== 'undefined') {
       // Delete existing clipboard if it exists (JSDOM might have a read-only one)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       try {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         delete (navigator as any).clipboard
       } catch {
         // Ignore if delete fails
@@ -86,8 +86,8 @@ describe('ResultsPage', () => {
     
     // Ensure clipboard mock is set up in beforeEach (in case beforeAll didn't work)
     if (typeof navigator !== 'undefined') {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       try {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         delete (navigator as any).clipboard
       } catch {
         // Ignore if delete fails
@@ -119,7 +119,7 @@ describe('ResultsPage', () => {
       render(<ResultsPage />)
 
       // Run pending timers to allow useEffect to execute
-      await act(async () => {
+      act(() => {
         jest.runOnlyPendingTimers()
       })
 
@@ -129,7 +129,7 @@ describe('ResultsPage', () => {
       }, { timeout: 5000 })
 
       // Fast-forward past minimum processing time (8.5 seconds)
-      await act(async () => {
+      act(() => {
         jest.advanceTimersByTime(9000)
       })
 
@@ -160,7 +160,7 @@ describe('ResultsPage', () => {
       render(<ResultsPage />)
 
       // Run pending timers to allow useEffect to execute
-      await act(async () => {
+      act(() => {
         jest.runOnlyPendingTimers()
       })
 
@@ -205,7 +205,7 @@ describe('ResultsPage', () => {
       render(<ResultsPage />)
 
       // Run pending timers to allow useEffect to execute
-      await act(async () => {
+      act(() => {
         jest.runOnlyPendingTimers()
       })
 
@@ -215,7 +215,7 @@ describe('ResultsPage', () => {
       })
 
       // Fast-forward past minimum processing time
-      await act(async () => {
+      act(() => {
         jest.advanceTimersByTime(9000)
       })
 
@@ -236,7 +236,7 @@ describe('ResultsPage', () => {
       render(<ResultsPage />)
 
       // Run pending timers to allow useEffect to execute
-      await act(async () => {
+      act(() => {
         jest.runOnlyPendingTimers()
       })
 
@@ -246,7 +246,7 @@ describe('ResultsPage', () => {
       })
 
       // Fast-forward past minimum processing time
-      await act(async () => {
+      act(() => {
         jest.advanceTimersByTime(9000)
       })
 
@@ -281,7 +281,7 @@ describe('ResultsPage', () => {
       render(<ResultsPage />)
 
       // Run pending timers to allow useEffect to execute
-      await act(async () => {
+      act(() => {
         jest.runOnlyPendingTimers()
       })
 
@@ -291,7 +291,7 @@ describe('ResultsPage', () => {
       })
 
       // Fast-forward past minimum processing time
-      await act(async () => {
+      act(() => {
         jest.advanceTimersByTime(9000)
       })
 
@@ -320,7 +320,7 @@ describe('ResultsPage', () => {
       await user.click(shareButton)
 
       // Advance timers to allow async operations to complete
-      await act(async () => {
+      act(() => {
         jest.advanceTimersByTime(100)
       })
 
@@ -341,7 +341,7 @@ describe('ResultsPage', () => {
       render(<ResultsPage />)
 
       // Run pending timers to allow useEffect to execute
-      await act(async () => {
+      act(() => {
         jest.runOnlyPendingTimers()
       })
 
@@ -351,7 +351,7 @@ describe('ResultsPage', () => {
       })
 
       // Fast-forward past minimum processing time
-      await act(async () => {
+      act(() => {
         jest.advanceTimersByTime(9000)
       })
 
@@ -381,7 +381,7 @@ describe('ResultsPage', () => {
       await user.click(shareButton)
 
       // Advance timers to allow async operations to complete
-      await act(async () => {
+      act(() => {
         jest.advanceTimersByTime(100)
       })
 
@@ -395,11 +395,11 @@ describe('ResultsPage', () => {
       }
       
       // Toast should appear (implementation may vary)
-      await act(async () => {
+      act(() => {
         jest.advanceTimersByTime(100)
       })
       // Toast should disappear after 2.5 seconds
-      await act(async () => {
+      act(() => {
         jest.advanceTimersByTime(2600)
       })
     })
@@ -414,7 +414,7 @@ describe('ResultsPage', () => {
       render(<ResultsPage />)
 
       // Run pending timers to allow useEffect to execute
-      await act(async () => {
+      act(() => {
         jest.runOnlyPendingTimers()
       })
 
@@ -424,7 +424,7 @@ describe('ResultsPage', () => {
       })
 
       // Fast-forward past minimum processing time
-      await act(async () => {
+      act(() => {
         jest.advanceTimersByTime(9000)
       })
 
@@ -440,7 +440,7 @@ describe('ResultsPage', () => {
       render(<ResultsPage />)
 
       // Run pending timers to allow useEffect to execute
-      await act(async () => {
+      act(() => {
         jest.runOnlyPendingTimers()
       })
 
@@ -450,7 +450,7 @@ describe('ResultsPage', () => {
       })
 
       // Fast-forward past minimum processing time
-      await act(async () => {
+      act(() => {
         jest.advanceTimersByTime(9000)
       })
 
@@ -475,7 +475,7 @@ describe('ResultsPage', () => {
       render(<ResultsPage />)
 
       // Run pending timers to allow useEffect to execute
-      await act(async () => {
+      act(() => {
         jest.runOnlyPendingTimers()
       })
 
@@ -485,7 +485,7 @@ describe('ResultsPage', () => {
       })
 
       // Fast-forward past minimum processing time
-      await act(async () => {
+      act(() => {
         jest.advanceTimersByTime(9000)
       })
 
@@ -519,7 +519,7 @@ describe('ResultsPage', () => {
       render(<ResultsPage />)
 
       // Run pending timers to allow useEffect to execute
-      await act(async () => {
+      act(() => {
         jest.runOnlyPendingTimers()
       })
 
@@ -529,7 +529,7 @@ describe('ResultsPage', () => {
       })
 
       // Fast-forward past minimum processing time
-      await act(async () => {
+      act(() => {
         jest.advanceTimersByTime(9000)
       })
 
@@ -554,7 +554,7 @@ describe('ResultsPage', () => {
       render(<ResultsPage />)
 
       // Run pending timers to allow useEffect to execute
-      await act(async () => {
+      act(() => {
         jest.runOnlyPendingTimers()
       })
 
@@ -564,7 +564,7 @@ describe('ResultsPage', () => {
       })
 
       // Fast-forward past minimum processing time
-      await act(async () => {
+      act(() => {
         jest.advanceTimersByTime(9000)
       })
 
@@ -589,7 +589,7 @@ describe('ResultsPage', () => {
       render(<ResultsPage />)
 
       // Run pending timers to allow useEffect to execute
-      await act(async () => {
+      act(() => {
         jest.runOnlyPendingTimers()
       })
 
@@ -599,7 +599,7 @@ describe('ResultsPage', () => {
       })
 
       // Fast-forward past minimum processing time
-      await act(async () => {
+      act(() => {
         jest.advanceTimersByTime(9000)
       })
 

@@ -83,8 +83,7 @@ describe('OptionCard', () => {
       expect(handleClick).toHaveBeenCalledTimes(1)
     })
 
-    it('prevents default on Enter key', async () => {
-      const user = userEvent.setup()
+    it('prevents default on Enter key', () => {
       const handleClick = jest.fn()
       render(<OptionCard onClick={handleClick}>Option text</OptionCard>)
 
@@ -97,8 +96,7 @@ describe('OptionCard', () => {
       expect(preventDefaultSpy).toHaveBeenCalled()
     })
 
-    it('prevents default on Space key', async () => {
-      const user = userEvent.setup()
+    it('prevents default on Space key', () => {
       const handleClick = jest.fn()
       render(<OptionCard onClick={handleClick}>Option text</OptionCard>)
 

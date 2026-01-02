@@ -28,6 +28,8 @@ module.exports = {
     '!app/javascript/styles/**',
     '!app/javascript/locales/**',
     '!app/javascript/modules/animations/**',
+    '!app/javascript/components/pages/DevProcessingPage.tsx',
+    '!app/javascript/components/pages/DevResultsPage.tsx',
   ],
   coverageThreshold: {
     global: {

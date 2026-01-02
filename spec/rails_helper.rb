@@ -1,48 +1,46 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 # SimpleCov must be started BEFORE loading Rails to track coverage accurately
-if ENV['COVERAGE'] == 'true'
-  require 'simplecov'
-  SimpleCov.start 'rails' do
-    # Minimum coverage threshold: 85%
-    minimum_coverage 85
-    # Don't enforce per-file coverage, only overall
-    minimum_coverage_by_file 0
+require 'simplecov'
+SimpleCov.start 'rails' do
+  # Minimum coverage threshold: 85%
+  minimum_coverage 85
+  # Don't enforce per-file coverage, only overall
+  minimum_coverage_by_file 0
 
-    # Track coverage for app/ directory only
-    add_filter '/spec/'
-    add_filter '/config/'
-    add_filter '/db/'
-    add_filter '/vendor/'
-    add_filter '/bin/'
-    add_filter '/lib/tasks/'
+  # Track coverage for app/ directory only
+  add_filter '/spec/'
+  add_filter '/config/'
+  add_filter '/db/'
+  add_filter '/vendor/'
+  add_filter '/bin/'
+  add_filter '/lib/tasks/'
 
-    # Exclude base classes and framework code using block filters
-    # These files are Rails base classes with no custom logic to test
-    add_filter do |source_file|
-      filename = source_file.filename
-      filename.end_with?('app/models/application_record.rb') ||
-        filename.end_with?('app/jobs/application_job.rb') ||
-        filename.end_with?('app/mailers/application_mailer.rb') ||
-        filename.end_with?('app/helpers/application_helper.rb') ||
-        filename.include?('/application_record.rb') ||
-        filename.include?('/application_job.rb') ||
-        filename.include?('/application_mailer.rb') ||
-        filename.include?('/application_helper.rb')
-    end
-
-    # Generate HTML report
-    enable_coverage :branch
-    enable_coverage :line
-
-    # Output format
-    formatter SimpleCov::Formatter::MultiFormatter.new([
-      SimpleCov::Formatter::HTMLFormatter,
-      SimpleCov::Formatter::SimpleFormatter
-    ])
-
-    # Output to separate directory to avoid conflicts
-    coverage_dir 'coverage/ruby'
+  # Exclude base classes and framework code using block filters
+  # These files are Rails base classes with no custom logic to test
+  add_filter do |source_file|
+    filename = source_file.filename
+    filename.end_with?('app/models/application_record.rb') ||
+      filename.end_with?('app/jobs/application_job.rb') ||
+      filename.end_with?('app/mailers/application_mailer.rb') ||
+      filename.end_with?('app/helpers/application_helper.rb') ||
+      filename.include?('/application_record.rb') ||
+      filename.include?('/application_job.rb') ||
+      filename.include?('/application_mailer.rb') ||
+      filename.include?('/application_helper.rb')
   end
+
+  # Generate HTML report
+  enable_coverage :branch
+  enable_coverage :line
+
+  # Output format
+  formatter SimpleCov::Formatter::MultiFormatter.new([
+    SimpleCov::Formatter::HTMLFormatter,
+    SimpleCov::Formatter::SimpleFormatter
+  ])
+
+  # Output to separate directory to avoid conflicts
+  coverage_dir 'coverage/ruby'
 end
 
 require 'spec_helper'

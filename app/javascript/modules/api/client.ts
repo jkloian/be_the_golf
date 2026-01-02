@@ -7,20 +7,23 @@ import type {
 
 // Use process.env in test environment (Jest), import.meta.env in browser (Vite)
 // We use a function to avoid Babel parsing import.meta at compile time
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getApiBaseUrl = (): string => {
   // Check process.env first (available in Jest/Node)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   if (typeof process !== 'undefined' && (process as any).env?.VITE_API_URL) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-return
     return (process as any).env.VITE_API_URL
   }
   
   // Check import.meta.env (available in browser via Vite)
   // Use Function constructor to avoid Babel parsing this at compile time
   try {
-    // eslint-disable-next-line @typescript-eslint/no-implied-eval, no-new-func
+    // eslint-disable-next-line @typescript-eslint/no-implied-eval
     const getImportMeta = new Function('return typeof import !== "undefined" ? import.meta : undefined')
     const importMeta = getImportMeta()
+     
     if (importMeta?.env?.VITE_API_URL) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return importMeta.env.VITE_API_URL
     }
   } catch {

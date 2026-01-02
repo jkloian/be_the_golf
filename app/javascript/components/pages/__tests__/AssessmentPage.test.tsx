@@ -5,7 +5,7 @@ import {
   clearMockSessionStorage,
   setMockSessionStorageItem,
 } from '../../../__tests__/helpers/mock-sessionStorage'
-import type { Frame, AssessmentResponse } from '../../../shared/types/assessment'
+import type { Frame } from '../../../shared/types/assessment'
 import type { CompleteAssessmentResponse } from '../../../shared/types/assessment'
 
 // Mock react-router-dom
@@ -498,7 +498,7 @@ describe('AssessmentPage', () => {
       }, { timeout: 3000 })
 
       // Resolve the promise
-      await act(async () => {
+      act(() => {
         resolvePromise!(mockCompleteResponse)
         jest.runOnlyPendingTimers()
       })
