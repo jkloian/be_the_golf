@@ -1,49 +1,73 @@
-import React from 'react'
-import { render, screen } from '@testing-library/react'
-import { BrowserRouter } from 'react-router-dom'
-import { I18nextProvider } from 'react-i18next'
-import i18n from 'i18next'
-import { initReactI18next } from 'react-i18next'
+import { render, screen } from '../../../__tests__/helpers/test-utils'
+import userEvent from '@testing-library/user-event'
 import LandingPage from '../LandingPage'
 
-// Initialize i18n for tests
-void i18n.use(initReactI18next).init({
-  resources: {
-    en: {
-      translation: {
-        landing: {
-          title: 'Be Your Golf',
-          description: 'Free golf style assessment',
-          startButton: 'Start Free Assessment',
-        },
-      },
-    },
-  },
-  lng: 'en',
-  fallbackLng: 'en',
-  interpolation: {
-    escapeValue: false,
-  },
-})
-
-const renderWithRouter = (component: React.ReactElement): void => {
-  render(
-    <I18nextProvider i18n={i18n}>
-      <BrowserRouter>{component}</BrowserRouter>
-    </I18nextProvider>
-  )
-}
+// Mock react-router-dom
+const mockNavigate = jest.fn()
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockNavigate,
+}))
 
 describe('LandingPage', () => {
-  it('renders the title and description', () => {
-    renderWithRouter(<LandingPage />)
-    expect(screen.getByText('Be Your Golf')).toBeInTheDocument()
-    expect(screen.getByText(/Free golf style assessment/)).toBeInTheDocument()
+  beforeEach(() => {
+    mockNavigate.mockClear()
   })
 
-  it('renders the start button', () => {
-    renderWithRouter(<LandingPage />)
-    expect(screen.getByText('Start Free Assessment')).toBeInTheDocument()
+  describe('rendering', () => {
+    it('renders the title and description', () => {
+      render(<LandingPage />)
+      expect(screen.getByText('Be Your Golf')).toBeInTheDocument()
+      expect(screen.getByText(/Find out who you play like/i)).toBeInTheDocument()
+    })
+
+    it('renders the start button', () => {
+      render(<LandingPage />)
+      expect(screen.getByRole('button', { name: /Start Free Assessment/i })).toBeInTheDocument()
+    })
+
+    it('renders the golf icon', () => {
+      render(<LandingPage />)
+      // SVG icon is rendered
+      const svg = document.querySelector('svg')
+      expect(svg).toBeInTheDocument()
+    })
+  })
+
+  describe('navigation', () => {
+    it('navigates to /start when button is clicked', async () => {
+      const user = userEvent.setup()
+      render(<LandingPage />)
+
+      const startButton = screen.getByRole('button', { name: /Start Free Assessment/i })
+      await user.click(startButton)
+
+      expect(mockNavigate).toHaveBeenCalledWith('/start')
+    })
+
+    it('handles keyboard navigation on button', async () => {
+      const user = userEvent.setup()
+      render(<LandingPage />)
+
+      const startButton = screen.getByRole('button', { name: /Start Free Assessment/i })
+      startButton.focus()
+      await user.keyboard('{Enter}')
+
+      expect(mockNavigate).toHaveBeenCalledWith('/start')
+    })
+  })
+
+  describe('interactions', () => {
+    it('button is clickable', async () => {
+      const user = userEvent.setup()
+      render(<LandingPage />)
+
+      const startButton = screen.getByRole('button', { name: /Start Free Assessment/i })
+      expect(startButton).not.toBeDisabled()
+
+      await user.click(startButton)
+      expect(mockNavigate).toHaveBeenCalled()
+    })
   })
 })
 

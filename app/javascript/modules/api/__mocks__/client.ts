@@ -1,3 +1,4 @@
+// Mock implementation for api client in tests
 import type {
   StartAssessmentResponse,
   CompleteAssessmentResponse,
@@ -5,33 +6,7 @@ import type {
   AssessmentResponse,
 } from '../../shared/types/assessment'
 
-// Use process.env in test environment (Jest), import.meta.env in browser (Vite)
-// We use a function to avoid Babel parsing import.meta at compile time
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const getApiBaseUrl = (): string => {
-  // Check process.env first (available in Jest/Node)
-  if (typeof process !== 'undefined' && (process as any).env?.VITE_API_URL) {
-    return (process as any).env.VITE_API_URL
-  }
-  
-  // Check import.meta.env (available in browser via Vite)
-  // Use Function constructor to avoid Babel parsing this at compile time
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-implied-eval, no-new-func
-    const getImportMeta = new Function('return typeof import !== "undefined" ? import.meta : undefined')
-    const importMeta = getImportMeta()
-    if (importMeta?.env?.VITE_API_URL) {
-      return importMeta.env.VITE_API_URL
-    }
-  } catch {
-    // import.meta not available (e.g., in Jest)
-  }
-  
-  // Fallback to window.location.origin or default
-  return typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000'
-}
-
-const API_BASE_URL = getApiBaseUrl()
+const API_BASE_URL = process.env.VITE_API_URL || 'http://localhost:3000'
 
 async function handleResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
