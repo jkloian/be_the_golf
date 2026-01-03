@@ -174,7 +174,7 @@ RSpec.describe Api::V1::AssessmentsController, type: :controller do
     it 'completes assessment with different score combinations' do
       varied_responses = (1..16).map do |i|
         # Mix up choices to get different scores
-        choices = [%w[A D], %w[B C], %w[C B], %w[D A]]
+        choices = [ %w[A D], %w[B C], %w[C B], %w[D A] ]
         most, least = choices[i % 4]
         { frame_index: i, most_choice_key: most, least_choice_key: least }
       end
@@ -194,12 +194,17 @@ RSpec.describe Api::V1::AssessmentsController, type: :controller do
 
     it 'includes complete response structure' do
       post :complete, params: { id: session.id, responses: responses }
-      expect(response).to have_http_status(:ok)
       json = JSON.parse(response.body)
+      expect(response).to have_http_status(:ok)
       expect(json['assessment_session']).to be_present
       expect(json['assessment_session']['scores']).to be_present
       expect(json['assessment_session']['persona']).to be_present
       expect(json['tips']).to be_present
+    end
+
+    it 'includes tips with practice and play sections' do
+      post :complete, params: { id: session.id, responses: responses }
+      json = JSON.parse(response.body)
       expect(json['tips']['practice']).to be_present
       expect(json['tips']['play']).to be_present
     end
@@ -207,12 +212,14 @@ RSpec.describe Api::V1::AssessmentsController, type: :controller do
     it 'updates session with scores and persona' do
       post :complete, params: { id: session.id, responses: responses }
       session.reload
-      expect(session.score_d).to be_present
-      expect(session.score_i).to be_present
-      expect(session.score_s).to be_present
-      expect(session.score_c).to be_present
-      expect(session.persona_code).to be_present
-      expect(session.completed_at).to be_present
+      aggregate_failures do
+        expect(session.score_d).to be_present
+        expect(session.score_i).to be_present
+        expect(session.score_s).to be_present
+        expect(session.score_c).to be_present
+        expect(session.persona_code).to be_present
+        expect(session.completed_at).to be_present
+      end
     end
 
     it 'handles string keys in responses' do
@@ -271,15 +278,12 @@ RSpec.describe Api::V1::AssessmentsController, type: :controller do
 
     it 'includes all required assessment fields' do
       get :show_public, params: { public_token: session.public_token }
-      expect(response).to have_http_status(:ok)
       json = JSON.parse(response.body)
       assessment = json['assessment']
-      expect(assessment['first_name']).to be_present
-      expect(assessment['gender']).to be_present
-      expect(assessment['handicap']).to be_present
-      expect(assessment['scores']).to be_present
-      expect(assessment['persona']).to be_present
-      expect(assessment['completed_at']).to be_present
+      expect(response).to have_http_status(:ok)
+      %w[first_name gender handicap scores persona completed_at].each do |field|
+        expect(assessment[field]).to be_present
+      end
     end
 
     it 'includes persona information' do
@@ -341,19 +345,11 @@ RSpec.describe Api::V1::AssessmentsController, type: :controller do
       get :dev_preview, params: {}
       expect(response).to have_http_status(:ok)
       json = JSON.parse(response.body)
-      expect(json['assessment']).to be_present
-      expect(json['tips']).to be_present
-      expect(json['assessment']['scores']).to be_present
-    end
-
-    it 'returns preview data with default scores' do
-      allow(Rails.env).to receive(:development?).and_return(true)
-      get :dev_preview, params: {}
-      expect(response).to have_http_status(:ok)
-      json = JSON.parse(response.body)
-      expect(json['assessment']).to be_present
-      expect(json['tips']).to be_present
-      expect(json['assessment']['scores']).to be_present
+      aggregate_failures do
+        expect(json['assessment']).to be_present
+        expect(json['tips']).to be_present
+        expect(json['assessment']['scores']).to be_present
+      end
     end
 
     it 'accepts score_d parameter' do
@@ -434,14 +430,12 @@ RSpec.describe Api::V1::AssessmentsController, type: :controller do
     it 'includes all required fields in response' do
       allow(Rails.env).to receive(:development?).and_return(true)
       get :dev_preview, params: {}
-      expect(response).to have_http_status(:ok)
       json = JSON.parse(response.body)
-      assessment = json['assessment']
-      expect(assessment['first_name']).to eq('Dev')
-      expect(assessment['gender']).to be_present
-      expect(assessment['scores']).to be_present
-      expect(assessment['persona']).to be_present
-      expect(assessment['completed_at']).to be_present
+      expect(response).to have_http_status(:ok)
+      expect(json['assessment']['first_name']).to eq('Dev')
+      %w[gender scores persona completed_at].each do |field|
+        expect(json['assessment'][field]).to be_present
+      end
       expect(json['tips']).to be_present
     end
 

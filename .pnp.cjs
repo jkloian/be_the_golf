@@ -65,13 +65,15 @@ const RAW_RUNTIME_STATE =
           ["react-dom", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:19.2.3"],\
           ["react-i18next", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:16.5.1"],\
           ["react-router-dom", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:7.11.0"],\
+          ["rollup", "npm:4.54.0"],\
           ["root-workspace-0b6124", "workspace:."],\
           ["tailwindcss", "npm:4.1.18"],\
           ["ts-jest", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:29.4.6"],\
           ["typescript", "patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"],\
           ["typescript-eslint", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:8.51.0"],\
           ["vite", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:5.4.21"],\
-          ["vite-plugin-rails", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:0.5.0"]\
+          ["vite-plugin-rails", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:0.5.0"],\
+          ["vite-plugin-ruby", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:5.1.1"]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -10323,13 +10325,15 @@ const RAW_RUNTIME_STATE =
           ["react-dom", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:19.2.3"],\
           ["react-i18next", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:16.5.1"],\
           ["react-router-dom", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:7.11.0"],\
+          ["rollup", "npm:4.54.0"],\
           ["root-workspace-0b6124", "workspace:."],\
           ["tailwindcss", "npm:4.1.18"],\
           ["ts-jest", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:29.4.6"],\
           ["typescript", "patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"],\
           ["typescript-eslint", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:8.51.0"],\
           ["vite", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:5.4.21"],\
-          ["vite-plugin-rails", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:0.5.0"]\
+          ["vite-plugin-rails", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:0.5.0"],\
+          ["vite-plugin-ruby", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:5.1.1"]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -11529,7 +11533,7 @@ const RAW_RUNTIME_STATE =
           ["vite-plugin-full-reload", "npm:1.2.0"],\
           ["vite-plugin-manifest-sri", "npm:0.2.0"],\
           ["vite-plugin-rails", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:0.5.0"],\
-          ["vite-plugin-ruby", "virtual:2df7e36d0f37d8e12942e55a44cafb624d8fa003792993da81b0d5135af6b1b1e05fd7b0932c6240ec17669bae706a93ab232cfa6bd4a48d0525dabadc0c9a01#npm:5.1.2"],\
+          ["vite-plugin-ruby", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:5.1.1"],\
           ["vite-plugin-stimulus-hmr", "npm:3.0.0"]\
         ],\
         "packagePeers": [\
@@ -11540,21 +11544,21 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["vite-plugin-ruby", [\
-      ["npm:5.1.2", {\
-        "packageLocation": "../../.yarn/berry/cache/vite-plugin-ruby-npm-5.1.2-a9a259dec6-10c0.zip/node_modules/vite-plugin-ruby/",\
+      ["npm:5.1.1", {\
+        "packageLocation": "../../.yarn/berry/cache/vite-plugin-ruby-npm-5.1.1-79312225a4-10c0.zip/node_modules/vite-plugin-ruby/",\
         "packageDependencies": [\
-          ["vite-plugin-ruby", "npm:5.1.2"]\
+          ["vite-plugin-ruby", "npm:5.1.1"]\
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:2df7e36d0f37d8e12942e55a44cafb624d8fa003792993da81b0d5135af6b1b1e05fd7b0932c6240ec17669bae706a93ab232cfa6bd4a48d0525dabadc0c9a01#npm:5.1.2", {\
-        "packageLocation": "./.yarn/__virtual__/vite-plugin-ruby-virtual-a7fe215b6f/3/.yarn/berry/cache/vite-plugin-ruby-npm-5.1.2-a9a259dec6-10c0.zip/node_modules/vite-plugin-ruby/",\
+      ["virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:5.1.1", {\
+        "packageLocation": "./.yarn/__virtual__/vite-plugin-ruby-virtual-3d0d3765f1/3/.yarn/berry/cache/vite-plugin-ruby-npm-5.1.1-79312225a4-10c0.zip/node_modules/vite-plugin-ruby/",\
         "packageDependencies": [\
           ["@types/vite", null],\
           ["debug", "virtual:2b51d83636a42cdc1434b9a574324a754fe902f0d8f47c84f37fc9dd9e42f0be9d5cd9599ca4ccf8c80b9be5756c7aea000403217e2fd7a585437af81d091cfd#npm:4.4.3"],\
           ["fast-glob", "npm:3.3.3"],\
           ["vite", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:5.4.21"],\
-          ["vite-plugin-ruby", "virtual:2df7e36d0f37d8e12942e55a44cafb624d8fa003792993da81b0d5135af6b1b1e05fd7b0932c6240ec17669bae706a93ab232cfa6bd4a48d0525dabadc0c9a01#npm:5.1.2"]\
+          ["vite-plugin-ruby", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:5.1.1"]\
         ],\
         "packagePeers": [\
           "@types/vite",\

@@ -15,4 +15,11 @@ export default defineConfig({
   esbuild: {
     jsx: 'automatic',
   },
+  optimizeDeps: {
+    exclude: ['@tailwindcss/vite'],
+  },
+  ssr: {
+    external: ['@tailwindcss/vite'],
+  },
 })
+

@@ -3,7 +3,10 @@ require 'rails_helper'
 RSpec.describe ApiErrorHandler, type: :controller do
   # Create a test controller that includes the concern
   controller(ActionController::API) do
+    # rubocop:disable RSpec/DescribedClass
+    # described_class is not available in the controller block context
     include ApiErrorHandler
+    # rubocop:enable RSpec/DescribedClass
 
     def show_not_found
       AssessmentSession.find(999_999)
@@ -77,4 +80,3 @@ RSpec.describe ApiErrorHandler, type: :controller do
     end
   end
 end
-

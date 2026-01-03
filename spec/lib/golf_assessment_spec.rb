@@ -24,11 +24,9 @@ RSpec.describe GolfAssessment do
     it 'each option has a key, text, and style' do
       frames = described_class.frames
       frames.each do |frame|
-        frame[:options].each do |option|
-          expect(option).to respond_to(:key)
-          expect(option).to respond_to(:text)
-          expect(option).to respond_to(:style)
-        end
+        expect(frame[:options]).to all(respond_to(:key))
+        expect(frame[:options]).to all(respond_to(:text))
+        expect(frame[:options]).to all(respond_to(:style))
       end
     end
 
@@ -42,18 +40,10 @@ RSpec.describe GolfAssessment do
 
     it 'options map to correct styles (A=D, B=I, C=S, D=C)' do
       frames = described_class.frames
+      style_mapping = { 'A' => :D, 'B' => :I, 'C' => :S, 'D' => :C }
       frames.each do |frame|
         frame[:options].each do |option|
-          case option.key
-          when 'A'
-            expect(option.style).to eq(:D)
-          when 'B'
-            expect(option.style).to eq(:I)
-          when 'C'
-            expect(option.style).to eq(:S)
-          when 'D'
-            expect(option.style).to eq(:C)
-          end
+          expect(option.style).to eq(style_mapping[option.key])
         end
       end
     end
@@ -142,4 +132,3 @@ RSpec.describe GolfAssessment do
     end
   end
 end
-

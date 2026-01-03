@@ -31,7 +31,7 @@ module Api
           error: "Validation Failed",
           message: e.message,
           details: e.record.errors.full_messages
-        }, status: :unprocessable_entity
+        }, status: :unprocessable_content
       end
 
       def complete
@@ -113,7 +113,7 @@ module Api
           error: "Validation Failed",
           message: e.message,
           details: e.record.errors.full_messages
-        }, status: :unprocessable_entity
+        }, status: :unprocessable_content
       end
 
       def show_public
@@ -124,7 +124,7 @@ module Api
           render json: {
             error: "Assessment Not Completed",
             message: "This assessment has not been completed yet."
-          }, status: :unprocessable_entity
+          }, status: :unprocessable_content
           return
         end
 

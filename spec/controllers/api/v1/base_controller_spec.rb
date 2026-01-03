@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::BaseController, type: :controller do
   # Create a test controller that inherits from BaseController
-  controller(Api::V1::BaseController) do
+  controller(described_class) do
     def index
       render json: { locale: extract_locale }
     end
@@ -69,13 +69,6 @@ RSpec.describe Api::V1::BaseController, type: :controller do
         expect(json['locale']).to eq('en')
       end
 
-      it 'defaults to :en when Accept-Language header is missing' do
-        # Don't set Accept-Language header
-        get :index
-        json = JSON.parse(response.body)
-        expect(json['locale']).to eq('en')
-      end
-
       it 'defaults to :en when Accept-Language header is empty' do
         request.headers['Accept-Language'] = ''
         get :index
@@ -94,4 +87,3 @@ RSpec.describe Api::V1::BaseController, type: :controller do
     end
   end
 end
-

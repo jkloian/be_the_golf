@@ -1,4 +1,5 @@
 {
+  "package_manager": "yarn",
   "all": {
     "sourceCodeDir": "app/javascript",
     "watchAdditionalPaths": []
