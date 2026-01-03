@@ -1,0 +1,174 @@
+---
+name: Release
+
+on:  # yamllint disable-line rule:truthy
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  validate-tag:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Get tag name
+        id: tag
+        run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          echo "tag_name=$TAG_NAME" >> $GITHUB_OUTPUT
+          echo "Tag name: $TAG_NAME"
+
+      - name: Check if tag contains rc
+        id: is_rc
+        run: |
+          if [[ "${{ steps.tag.outputs.tag_name }}" == *"rc"* ]]; then
+            echo "is_rc=true" >> $GITHUB_OUTPUT
+            echo "This is an rc tag (staging)"
+          else
+            echo "is_rc=false" >> $GITHUB_OUTPUT
+            echo "This is a production tag"
+          fi
+
+      - name: Get tag commit SHA and branch
+        id: tag_branch
+        run: |
+          TAG_COMMIT=$(git rev-list -n 1 ${{ steps.tag.outputs.tag_name }})
+          BRANCHES=$(git branch -r --contains $TAG_COMMIT)
+          echo "Tag commit: $TAG_COMMIT"
+          echo "Branches containing tag commit:"
+          echo "$BRANCHES"
+
+          # Output the commit SHA for use in wait-for-tests
+          echo "commit_sha=$TAG_COMMIT" >> $GITHUB_OUTPUT
+
+          # Check if staging branch contains this commit
+          if echo "$BRANCHES" | grep -q "origin/staging"; then
+            echo "branch=staging" >> $GITHUB_OUTPUT
+            echo "Tag is on staging branch"
+          elif echo "$BRANCHES" | grep -q "origin/master"; then
+            echo "branch=master" >> $GITHUB_OUTPUT
+            echo "Tag is on master branch"
+          else
+            echo "branch=other" >> $GITHUB_OUTPUT
+            echo "Tag is on other branch"
+          fi
+
+      - name: Validate rc tag from staging branch
+        if: steps.is_rc.outputs.is_rc == 'true'
+        run: |
+          if [ "${{ steps.tag_branch.outputs.branch }}" != "staging" ]; then
+            echo "ERROR: rc tags can only be created from the staging branch"
+            echo "Current branch: ${{ steps.tag_branch.outputs.branch }}"
+            exit 1
+          fi
+          echo "✓ rc tag validation passed - tag is from staging branch"
+
+      - name: Set build type
+        id: build_type
+        run: |
+          if [[ "${{ steps.is_rc.outputs.is_rc }}" == "true" ]]; then
+            echo "build_type=staging" >> $GITHUB_OUTPUT
+          else
+            echo "build_type=production" >> $GITHUB_OUTPUT
+          fi
+
+    outputs:
+      build_type: ${{ steps.build_type.outputs.build_type }}
+      branch: ${{ steps.tag_branch.outputs.branch }}
+      commit_sha: ${{ steps.tag_branch.outputs.commit_sha }}
+      tag_name: ${{ steps.tag.outputs.tag_name }}
+
+  wait-for-tests:
+    needs: validate-tag
+    runs-on: ubuntu-latest
+    permissions:
+      checks: read
+      contents: read
+    steps:
+      - name: Wait for Jest tests
+        uses: lewagon/wait-on-check-action@v1.4.1
+        with:
+          ref: ${{ needs.validate-tag.outputs.commit_sha }}
+          check-name: 'jest'
+          wait-interval: 10
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Wait for Ruby security scan
+        uses: lewagon/wait-on-check-action@v1.4.1
+        with:
+          ref: ${{ needs.validate-tag.outputs.commit_sha }}
+          check-name: 'scan_ruby'
+          wait-interval: 10
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Wait for Ruby linting
+        uses: lewagon/wait-on-check-action@v1.4.1
+        with:
+          ref: ${{ needs.validate-tag.outputs.commit_sha }}
+          check-name: 'ruby_lint'
+          wait-interval: 10
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Wait for tests
+        uses: lewagon/wait-on-check-action@v1.4.1
+        with:
+          ref: ${{ needs.validate-tag.outputs.commit_sha }}
+          check-name: 'test'
+          wait-interval: 10
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+  build-and-push:
+    needs: [wait-for-tests, validate-tag]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: |
+            type=raw,value=${{ inputs.image_tag }},enable=${{ inputs.image_tag != '' }}
+            type=ref,event=tag
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha
+            type=semver,pattern={{raw}}
+          labels: |
+            build.type=${{ needs.validate-tag.outputs.build_type }}
+            build.branch=${{ needs.validate-tag.outputs.branch }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
