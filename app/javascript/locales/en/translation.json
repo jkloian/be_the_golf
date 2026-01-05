@@ -1,0 +1,70 @@
+{
+  "landing": {
+    "title": "Be Your Golf",
+    "description": "Find out who you play like and get quick tips to train smarter and score lower.",
+    "startButton": "Start Free Assessment"
+  },
+  "start": {
+    "title": "Start Your Assessment",
+    "firstName": "First Name",
+    "firstNamePlaceholder": "Enter your first name (optional)",
+    "gender": "Gender",
+    "genderMale": "Male",
+    "genderFemale": "Female",
+    "genderUnspecified": "Prefer not to say",
+    "genderWarning": "If you choose this, we can't personalize the pro you 'play like'.",
+    "handicap": "Handicap",
+    "handicapPlaceholder": "Enter your handicap (optional)",
+    "handicapNote": "Leave blank if you don't have a handicap yet",
+    "submit": "Start Assessment"
+  },
+  "assessment": {
+    "question": "Question {{current}} of {{total}}",
+    "mostLike": "Most like me",
+    "leastLike": "Least like me",
+    "next": "Next",
+    "finish": "Finish"
+  },
+  "results": {
+    "title": "Be Your Golf – Results",
+    "greeting": "Hi {{name}}",
+    "personaTitle": "Your Golf Persona",
+    "personaName": "{{name}}",
+    "playLike": "You play most like",
+    "scores": {
+      "title": "Your Scores",
+      "drive": "Drive / Attacker",
+      "inspire": "Inspire / Shotmaker",
+      "steady": "Steady / Rhythm",
+      "control": "Control / Strategist"
+    },
+    "tips": {
+      "practice": "During Practice",
+      "play": "On the Course",
+      "do": "Do",
+      "dont": "Don't"
+    },
+    "share": {
+      "title": "Share Your Results",
+      "text": "I just discovered I play golf like {{pro}} – my style is '{{persona}}'. Find your golf style at Be Your Golf: {{url}}",
+      "copy": "Copy to Clipboard",
+      "button": "Share Your Result"
+    },
+    "processing": {
+      "analyzing": "Analyzing your game style...",
+      "calculating": "Calculating your DISC profile...",
+      "matching": "Matching you with pros...",
+      "preparing": "Preparing your results..."
+    },
+    "hero": {
+      "youAre": "You are the",
+      "playsLike": "Plays like"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "tryAgain": "Try Again"
+  }
+}
+

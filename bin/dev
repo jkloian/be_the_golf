@@ -1,2 +1,12 @@
 #!/usr/bin/env ruby
-exec "./bin/rails", "server", *ARGV
+require "fileutils"
+require 'dotenv'
+
+Dotenv.load('.env.development')
+
+# Ensure all needed build directories exist
+FileUtils.mkdir_p "app/assets/builds"
+
+# Execute foreman with our Procfile.dev
+exec "bundle exec foreman start -f Procfile.dev"
+

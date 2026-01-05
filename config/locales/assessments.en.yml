@@ -1,0 +1,84 @@
+en:
+  assessments:
+    frames:
+      frame_1:
+        option_a: "At the range, I like to challenge myself with tough targets and push my limits."
+        option_b: "Practice is more fun for me when I can keep it loose and try lots of different shots."
+        option_c: "I prefer a calm, steady practice session with a simple, repeatable routine."
+        option_d: "I like my practice to follow a clear plan, with specific drills and numbers to hit."
+      frame_2:
+        option_a: "A bad shot fires me up – I immediately want to attack the next one and make up for it."
+        option_b: "I brush off bad shots quickly and talk or joke to stay positive."
+        option_c: "I take a breath, slow down, and focus on getting back into my normal rhythm."
+        option_d: "I replay the bad shot in my head to understand exactly what went wrong."
+      frame_3:
+        option_a: "I often take the aggressive line if there's a chance for a big reward."
+        option_b: "I'll try the shot that feels exciting or creative, even if it's not the textbook play."
+        option_c: "I usually choose the safer shot that keeps big numbers off my card."
+        option_d: "I base my decision on yardages, percentages, and what the hole layout is telling me."
+      frame_4:
+        option_a: "With a coach, I want clear, direct feedback and to get straight to the point."
+        option_b: "I like a coach who keeps things upbeat and conversational while we work."
+        option_c: "I value a coach who is patient and builds my game step by step over time."
+        option_d: "I prefer a coach who explains the details, data, and mechanics behind my swing."
+      frame_5:
+        option_a: "I go to the first tee with a target score or goal I'm determined to beat."
+        option_b: "I'm thinking about enjoying the round and the people I'm playing with."
+        option_c: "I focus on staying calm, sticking to my routine, and letting the round unfold."
+        option_d: "I think through the course, my game plan, and how I'll manage each hole."
+      frame_6:
+        option_a: "I like to play quickly and get frustrated when the group slows me down."
+        option_b: "I don't mind the pace as long as the group is relaxed and in good spirits."
+        option_c: "A steady, unhurried pace helps me stay in my comfort zone."
+        option_d: "I prefer enough time to go through my full routine and think through each shot."
+      frame_7:
+        option_a: "I learn best by jumping in, taking action, and figuring it out as I go."
+        option_b: "I learn best when I can talk things through and see or feel the motion."
+        option_c: "I learn best when I can repeat the same move calmly until it feels natural."
+        option_d: "I learn best when I understand the \"why\" and can see the numbers or video."
+      frame_8:
+        option_a: "I naturally take charge of decisions in the group, like order, strategy, or rules."
+        option_b: "I naturally keep the group talking, laughing, and connected."
+        option_c: "I naturally help keep everyone comfortable and the round running smoothly."
+        option_d: "I naturally pay attention to details like scores, rules, and where everyone's ball is."
+      frame_9:
+        option_a: "Under pressure, I commit strongly and stroke the putt with authority."
+        option_b: "Under pressure, I remind myself to stay loose and trust my feel."
+        option_c: "Under pressure, I lean on my routine and do exactly what I always do."
+        option_d: "Under pressure, I focus on my line, speed, and technique to control the putt."
+      frame_10:
+        option_a: "If my plan isn't working, I'm quick to make bold changes."
+        option_b: "If my plan isn't working, I'll experiment with different feels or ideas."
+        option_c: "If my plan isn't working, I stick with it a bit longer and make small tweaks."
+        option_d: "If my plan isn't working, I step back, analyze, and adjust my strategy carefully."
+      frame_11:
+        option_a: "Slow or disorganized partners can really annoy me and push my buttons."
+        option_b: "I'll usually start a conversation or joke to keep the mood light, even if things bother me."
+        option_c: "I rarely say anything; I just try to stay patient and not make a fuss."
+        option_d: "I may not say much, but I mentally note what's out of order or affecting play."
+      frame_12:
+        option_a: "I'm driven by big goals, like beating my personal best or winning a match."
+        option_b: "I'm motivated when golf feels enjoyable, social, and full of variety."
+        option_c: "I'm happy when my game is solid and dependable from round to round."
+        option_d: "I'm motivated by seeing my stats, technique, or handicap steadily improve."
+      frame_13:
+        option_a: "Too many tips frustrate me; I want one key thing to attack right now."
+        option_b: "Too many tips distract me; I'd rather keep it simple and focus on the feel."
+        option_c: "Too many tips unsettle me; I prefer small changes introduced gradually."
+        option_d: "Too many tips don't bother me if they're organized; I like having detailed guidance."
+      frame_14:
+        option_a: "On a new course, I still look for chances to attack and test myself."
+        option_b: "On a new course, I enjoy discovering it and trying different types of shots."
+        option_c: "On a new course, I look for a steady game plan I can repeat all day."
+        option_d: "On a new course, I study the card, layout, or GPS to plan each hole."
+      frame_15:
+        option_a: "Between shots, I often think ahead about how to gain an edge on the next hole."
+        option_b: "Between shots, I tend to chat, laugh, and keep things upbeat."
+        option_c: "Between shots, I like quiet or simple conversation so I can stay in my rhythm."
+        option_d: "Between shots, I often review yardages, wind, lies, or my last swing."
+      frame_16:
+        option_a: "After a string of bad holes, I try to flip the switch and go on the attack."
+        option_b: "After a string of bad holes, I work hard to stay positive and keep the round fun."
+        option_c: "After a string of bad holes, I slow myself down and focus on hitting solid, simple shots."
+        option_d: "After a string of bad holes, I think through what's breaking down and adjust my plan."
+

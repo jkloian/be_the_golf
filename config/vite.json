@@ -1,0 +1,18 @@
+{
+  "package_manager": "yarn",
+  "all": {
+    "sourceCodeDir": "app/javascript",
+    "watchAdditionalPaths": []
+  },
+  "development": {
+    "autoBuild": true,
+    "publicOutputDir": "vite-dev"
+  },
+  "test": {
+    "autoBuild": true,
+    "publicOutputDir": "vite-test"
+  },
+  "production": {
+    "publicOutputDir": "vite"
+  }
+}

@@ -1,8 +1,43 @@
-# Omakase Ruby styling for Rails
+plugins:
+  - rubocop-factory_bot
+  - rubocop-rspec
+  - rubocop-capybara
+  - rubocop-rails
+  - rubocop-performance
+
+# Inherit from Omakase (excellent base)
 inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 
-# Overwrite or add rules to create your own house style
-#
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-# Layout/SpaceInsideArrayLiteralBrackets:
-#   Enabled: false
+# Project-specific overrides
+AllCops:
+  TargetRubyVersion: 3.4
+  TargetRailsVersion: 8.0
+  NewCops: enable
+  Exclude:
+    - 'spec/views/shared/*_template.rb'  # Template files, not actual specs
+    - 'db/schema.rb'  # Auto-generated file
+    - 'config/routes.rb'  # Routes file
+
+# RSpec configuration
+RSpec/MultipleExpectations:
+  Max: 5  # Allow up to 5 expectations per example (integration tests need more)
+
+RSpec/ExampleLength:
+  Max: 10  # Allow up to 10 lines per example
+
+# Enable additional useful rules
+Rails/UniqueValidationWithoutIndex:
+  Enabled: true  # Ensure DB indexes for unique validations
+
+Rails/NotNullColumn:
+  Enabled: true  # Prevent NOT NULL columns without defaults
+
+Rails/ThreeStateBooleanColumn:
+  Enabled: true  # Ensure boolean columns have defaults
+
+# Performance optimizations
+Performance/MapCompact:
+  Enabled: true
+
+Performance/UnfreezeString:
+  Enabled: true

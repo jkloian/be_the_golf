@@ -1,0 +1,57 @@
+{
+  "landing": {
+    "title": "Be Your Golf",
+    "description": "Evaluación de estilo de golf gratuita. Descubre a quién juegas y obtén consejos rápidos para entrenar de manera más inteligente.",
+    "startButton": "Comenzar Evaluación Gratuita"
+  },
+  "start": {
+    "title": "Comienza Tu Evaluación",
+    "firstName": "Nombre",
+    "firstNamePlaceholder": "Ingresa tu nombre (opcional)",
+    "gender": "Género",
+    "genderMale": "Masculino",
+    "genderFemale": "Femenino",
+    "genderUnspecified": "Prefiero no decir",
+    "genderWarning": "Si eliges esto, no podemos personalizar el profesional al que 'juegas como'.",
+    "handicap": "Handicap",
+    "handicapPlaceholder": "Ingresa tu handicap (opcional)",
+    "handicapNote": "Deja en blanco si aún no tienes un handicap",
+    "submit": "Comenzar Evaluación"
+  },
+  "assessment": {
+    "question": "Pregunta {{current}} de {{total}}",
+    "mostLike": "Más como yo",
+    "leastLike": "Menos como yo",
+    "next": "Siguiente",
+    "finish": "Finalizar"
+  },
+  "results": {
+    "title": "Be Your Golf – Resultados",
+    "greeting": "Hola {{name}}",
+    "personaTitle": "Tu Persona de Golf",
+    "personaName": "{{name}}",
+    "playLike": "Juegas más como",
+    "scores": {
+      "title": "Tus Puntuaciones",
+      "drive": "Impulso / Atacante",
+      "inspire": "Inspiración / Creador de Tiros",
+      "steady": "Constante / Ritmo",
+      "control": "Control / Estratega"
+    },
+    "tips": {
+      "practice": "Consejos de Práctica",
+      "play": "Consejos en el Campo"
+    },
+    "share": {
+      "title": "Comparte Tus Resultados",
+      "text": "Acabo de descubrir que juego al golf como {{pro}} – mi estilo es '{{persona}}'. Encuentra tu estilo de golf en Be Your Golf: {{url}}",
+      "copy": "Copiar al Portapapeles"
+    }
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Ocurrió un error",
+    "tryAgain": "Intentar de Nuevo"
+  }
+}
+

@@ -1,0 +1,18 @@
+exclude:
+  - 'app/views/rails_admin/**/*'
+  - 'vendor/**/*'
+
+  
+linters:
+  LineLength:
+    max: 120
+  RuboCop:
+    enabled: true
+    ignored_cops:
+      - Layout/LineLength
+      - Style/StringLiterals
+  ImplicitDiv:
+    enabled: false
+  ConsecutiveSilentScripts:
+    enabled: false
+

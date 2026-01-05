@@ -1,0 +1,7 @@
+{
+    "rubocop.mode": "enableUnconditionally",
+    "rubocop.additionalLanguages": [
+        ""
+    ],
+    "rubocop.commandPath": "/home/john/.rbenv/shims/rubocop"
+}
