@@ -136,6 +136,13 @@ module Api
           C: session.score_c
         }
 
+        # Resolve persona to get all fields including new metadata
+        persona = PersonaResolver.resolve(
+          scores,
+          session.gender,
+          locale
+        )
+
         tips = TipsGenerator.generate(
           scores,
           session.persona_code,
@@ -154,9 +161,13 @@ module Api
               C: session.score_c
             },
             persona: {
-              code: session.persona_code,
-              name: session.persona_name,
-              display_example_pro: session.display_example_pro
+              code: persona[:code],
+              name: persona[:name],
+              style_summary: persona[:style_summary],
+              style_tagline: persona[:style_tagline],
+              style_watchout: persona[:style_watchout],
+              style_reset: persona[:style_reset],
+              display_example_pro: persona[:display_example_pro]
             },
             completed_at: session.completed_at
           },
@@ -193,22 +204,36 @@ module Api
           persona = PersonaResolver.resolve(scores, gender, locale)
           persona_code = persona[:code]
         else
-          # Get persona data for the provided code
-          persona_data = I18n.t("personas.#{persona_code}", locale: locale, raise: true)
-          display_example_pro = case gender
-          when "male"
-            persona_data[:example_pro_male]
-          when "female"
-            persona_data[:example_pro_female]
-          else
-            persona_data[:example_pro_male]
-          end
+          # Validate that the provided persona_code exists
+          begin
+            persona_data = I18n.t("personas.#{persona_code}", locale: locale, raise: true)
+            display_example_pro = case gender
+            when "male"
+              persona_data[:example_pro_male]
+            when "female"
+              persona_data[:example_pro_female]
+            else
+              persona_data[:example_pro_male]
+            end
 
-          persona = {
-            code: persona_code,
-            name: persona_data[:name],
-            display_example_pro: display_example_pro
-          }
+            persona = {
+              code: persona_code,
+              name: persona_data[:name],
+              style_summary: persona_data[:style_summary],
+              style_tagline: persona_data[:style_tagline],
+              style_watchout: persona_data[:style_watchout],
+              style_reset: persona_data[:style_reset],
+              example_pro_male: persona_data[:example_pro_male],
+              example_pro_female: persona_data[:example_pro_female],
+              display_example_pro: display_example_pro
+            }
+          rescue I18n::MissingTranslationData
+            render json: {
+              error: "Invalid Persona",
+              message: "Persona code '#{persona_code}' not found."
+            }, status: :bad_request
+            return
+          end
         end
 
         # Generate tips using real TipsGenerator
@@ -226,6 +251,10 @@ module Api
             persona: {
               code: persona[:code],
               name: persona[:name],
+              style_summary: persona[:style_summary],
+              style_tagline: persona[:style_tagline],
+              style_watchout: persona[:style_watchout],
+              style_reset: persona[:style_reset],
               display_example_pro: persona[:display_example_pro]
             },
             completed_at: Time.current

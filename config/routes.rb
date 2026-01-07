@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     !req.path.start_with?("/rails") && 
     !req.path.start_with?("/vite-test") &&
     !req.path.start_with?("/assets") &&
+    !req.path.start_with?("/api") &&
     !req.path.match?(/\.(css|js|json|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)$/i)
   }
   root "application#index"

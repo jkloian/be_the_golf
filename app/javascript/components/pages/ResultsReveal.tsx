@@ -60,7 +60,7 @@ export default function ResultsReveal({
           </motion.h1>
 
           {/* Phase 2: Typography - Subtext */}
-          <motion.p
+          <motion.div
             variants={staggeredText}
             initial="initial"
             animate="animate"
@@ -70,8 +70,15 @@ export default function ResultsReveal({
             }}
             className="text-xl sm:text-2xl lg:text-3xl font-display font-semibold text-neutral-textSecondary text-center mb-8 sm:mb-12"
           >
-            Your style aligns with <span className="font-bold text-golf-deep">{assessment.persona.display_example_pro}</span>
-          </motion.p>
+            <p className="mb-3">
+              <span className="font-bold text-golf-deep">{assessment.persona.display_example_pro}</span> shares your playing style
+            </p>
+            {assessment.persona.style_tagline && (
+              <p className="text-lg sm:text-xl lg:text-2xl font-display font-medium text-neutral-textSecondary">
+                {assessment.persona.style_tagline}
+              </p>
+            )}
+          </motion.div>
 
           {/* Continue Button */}
           <motion.div
