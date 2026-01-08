@@ -624,4 +624,102 @@ describe('ResultsPage', () => {
       expect(tryAgainButton).toBeInTheDocument()
     })
   })
+
+  describe('minimum processing time edge cases', () => {
+    it('sets loading to false immediately when API call takes longer than minimum time', async () => {
+      // Simulate API call that takes longer than MIN_PROCESSING_DISPLAY_MS (8.5 seconds)
+      let resolvePromise: (value: PublicAssessmentResponse) => void
+      const promise = new Promise<PublicAssessmentResponse>((resolve) => {
+        resolvePromise = resolve
+      })
+      mockGetPublicResult.mockReturnValue(promise)
+
+      render(<ResultsPage />)
+
+      // Run pending timers to allow useEffect to execute
+      act(() => {
+        jest.runOnlyPendingTimers()
+      })
+
+      // Wait for API call
+      await waitFor(() => {
+        expect(mockGetPublicResult).toHaveBeenCalled()
+      })
+
+      // Fast-forward past minimum processing time (8.5 seconds)
+      act(() => {
+        jest.advanceTimersByTime(9000)
+      })
+
+      // Resolve the promise after minimum time has elapsed
+      act(() => {
+        resolvePromise!(mockResponse)
+        jest.runOnlyPendingTimers()
+      })
+
+      // Loading should be set to false immediately (line 50 - else branch)
+      // No additional setTimeout should be needed
+      await waitFor(() => {
+        expect(screen.getByText(/You are the/i)).toBeInTheDocument()
+      }, { timeout: 10000 })
+    })
+  })
+
+  describe('share modal functionality', () => {
+    beforeEach(() => {
+      mockGetPublicResult.mockResolvedValue(mockResponse)
+    })
+
+    it('closes share modal when onClose is called', async () => {
+      const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+      render(<ResultsPage />)
+
+      // Run pending timers to allow useEffect to execute
+      act(() => {
+        jest.runOnlyPendingTimers()
+      })
+
+      // Wait for API call
+      await waitFor(() => {
+        expect(mockGetPublicResult).toHaveBeenCalled()
+      })
+
+      // Fast-forward past minimum processing time
+      act(() => {
+        jest.advanceTimersByTime(9000)
+      })
+
+      // Wait for ResultsReveal to show
+      await waitFor(() => {
+        expect(screen.getByText(/You are the/i)).toBeInTheDocument()
+      }, { timeout: 10000 })
+
+      // Click Continue to show detailed results
+      const continueButton = screen.getByRole('button', { name: /Continue/i })
+      await user.click(continueButton)
+
+      // Wait for detailed content
+      await waitFor(() => {
+        expect(screen.getByText(/Relentless Attacker/i)).toBeInTheDocument()
+      })
+
+      // Click share button to open modal
+      const shareButton = screen.getByRole('button', { name: /Share/i })
+      await user.click(shareButton)
+
+      // Modal should be open
+      await waitFor(() => {
+        expect(screen.getByText(/Share Your Golf Style/i)).toBeInTheDocument()
+      })
+
+      // Close modal by clicking close button (line 88 - onClose handler)
+      const closeButton = screen.getByLabelText(/Close modal/i)
+      await user.click(closeButton)
+
+      // Modal should be closed
+      await waitFor(() => {
+        expect(screen.queryByText(/Share Your Golf Style/i)).not.toBeInTheDocument()
+      })
+    })
+  })
 })

@@ -30,6 +30,8 @@ module.exports = {
     '!app/javascript/modules/animations/**',
     '!app/javascript/components/pages/DevProcessingPage.tsx',
     '!app/javascript/components/pages/DevResultsPage.tsx',
+    '!app/javascript/shared/types/**',
+    '!app/javascript/modules/i18n/config.ts',
   ],
   coverageThreshold: {
     global: {

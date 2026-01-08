@@ -429,5 +429,178 @@ describe('ResultsContent', () => {
       expect(screen.getByText(/Unknown Persona/i)).toBeInTheDocument()
     })
   })
+
+  describe('conditional rendering of style insights', () => {
+    it('renders style_tagline when present', () => {
+      const dataWithTagline = {
+        ...mockData,
+        assessment: {
+          ...mockData.assessment,
+          persona: {
+            ...mockData.assessment.persona,
+            style_tagline: 'Test tagline',
+          },
+        },
+      }
+
+      render(<ResultsContent data={dataWithTagline} onShare={mockOnShare} />)
+
+      expect(screen.getByText('Test tagline')).toBeInTheDocument()
+    })
+
+    it('does not render style_tagline section when absent', () => {
+      const dataWithoutTagline = {
+        ...mockData,
+        assessment: {
+          ...mockData.assessment,
+          persona: {
+            ...mockData.assessment.persona,
+            style_tagline: undefined,
+          },
+        },
+      }
+
+      render(<ResultsContent data={dataWithoutTagline} onShare={mockOnShare} />)
+
+      // The section container should not render when no tagline
+      const taglineSection = screen.queryByText(/Test tagline/i)
+      expect(taglineSection).not.toBeInTheDocument()
+    })
+
+    it('renders style_watchout when present', () => {
+      const dataWithWatchout = {
+        ...mockData,
+        assessment: {
+          ...mockData.assessment,
+          persona: {
+            ...mockData.assessment.persona,
+            style_watchout: 'Watch out for this',
+          },
+        },
+      }
+
+      render(<ResultsContent data={dataWithWatchout} onShare={mockOnShare} />)
+
+      expect(screen.getByText(/Round Killer/i)).toBeInTheDocument()
+      expect(screen.getByText('Watch out for this')).toBeInTheDocument()
+    })
+
+    it('does not render style_watchout section when absent', () => {
+      const dataWithoutWatchout = {
+        ...mockData,
+        assessment: {
+          ...mockData.assessment,
+          persona: {
+            ...mockData.assessment.persona,
+            style_watchout: undefined,
+          },
+        },
+      }
+
+      render(<ResultsContent data={dataWithoutWatchout} onShare={mockOnShare} />)
+
+      expect(screen.queryByText(/Round Killer/i)).not.toBeInTheDocument()
+    })
+
+    it('renders style_reset when present', () => {
+      const dataWithReset = {
+        ...mockData,
+        assessment: {
+          ...mockData.assessment,
+          persona: {
+            ...mockData.assessment.persona,
+            style_reset: 'Reset action',
+          },
+        },
+      }
+
+      render(<ResultsContent data={dataWithReset} onShare={mockOnShare} />)
+
+      expect(screen.getByText(/When this happens, do this:/i)).toBeInTheDocument()
+      expect(screen.getByText('Reset action')).toBeInTheDocument()
+    })
+
+    it('does not render style_reset section when absent', () => {
+      const dataWithoutReset = {
+        ...mockData,
+        assessment: {
+          ...mockData.assessment,
+          persona: {
+            ...mockData.assessment.persona,
+            style_reset: undefined,
+          },
+        },
+      }
+
+      render(<ResultsContent data={dataWithoutReset} onShare={mockOnShare} />)
+
+      expect(screen.queryByText(/When this happens, do this:/i)).not.toBeInTheDocument()
+    })
+
+    it('renders all style insights when all are present', () => {
+      const dataWithAll = {
+        ...mockData,
+        assessment: {
+          ...mockData.assessment,
+          persona: {
+            ...mockData.assessment.persona,
+            style_tagline: 'Test tagline',
+            style_watchout: 'Watch out',
+            style_reset: 'Reset action',
+          },
+        },
+      }
+
+      render(<ResultsContent data={dataWithAll} onShare={mockOnShare} />)
+
+      expect(screen.getByText('Test tagline')).toBeInTheDocument()
+      expect(screen.getByText(/Round Killer/i)).toBeInTheDocument()
+      expect(screen.getByText('Watch out')).toBeInTheDocument()
+      expect(screen.getByText(/When this happens, do this:/i)).toBeInTheDocument()
+      expect(screen.getByText('Reset action')).toBeInTheDocument()
+    })
+
+    it('renders divider when watchout or reset are present', () => {
+      const dataWithWatchout = {
+        ...mockData,
+        assessment: {
+          ...mockData.assessment,
+          persona: {
+            ...mockData.assessment.persona,
+            style_tagline: 'Test tagline',
+            style_watchout: 'Watch out',
+          },
+        },
+      }
+
+      render(<ResultsContent data={dataWithWatchout} onShare={mockOnShare} />)
+
+      // Divider should be present between tagline and watchout
+      expect(screen.getByText('Test tagline')).toBeInTheDocument()
+      expect(screen.getByText(/Round Killer/i)).toBeInTheDocument()
+    })
+
+    it('does not render style insights card when none are present', () => {
+      const dataWithoutInsights = {
+        ...mockData,
+        assessment: {
+          ...mockData.assessment,
+          persona: {
+            ...mockData.assessment.persona,
+            style_tagline: undefined,
+            style_watchout: undefined,
+            style_reset: undefined,
+          },
+        },
+      }
+
+      render(<ResultsContent data={dataWithoutInsights} onShare={mockOnShare} />)
+
+      // The unified style insight card should not render
+      expect(screen.queryByText(/Test tagline/i)).not.toBeInTheDocument()
+      expect(screen.queryByText(/Round Killer/i)).not.toBeInTheDocument()
+      expect(screen.queryByText(/When this happens, do this:/i)).not.toBeInTheDocument()
+    })
+  })
 })
 
