@@ -406,6 +406,39 @@ docker-compose -f docker-compose.prod.yml up -d
 2. **Single-style:** If `primary_score >= 60 AND (primary_score - secondary_score) >= 15` → single style persona
 3. **Two-style combo:** Otherwise → combo persona using top two styles
 
+## Shareable Image Feature
+
+Users can generate and share a custom image showcasing their golf playing style. The shareable image includes:
+- Hero badge (persona-specific PNG badge)
+- Style name (e.g., "Electric Playmaker")
+- Pro comparison (e.g., "Rory McIlroy shares my playing style")
+- Style truth (first-person, emotionally resonant statement)
+- Brand mark and call-to-action
+
+### Features
+
+- **Aspect Ratios:** Square (1:1) or Vertical (4:5) formats
+- **Sharing Options:**
+  - Social media buttons (Facebook, Twitter, LinkedIn, WhatsApp)
+  - Copy image to clipboard
+  - Download as PNG file
+  - Native Web Share API support
+- **Image Generation:** Client-side using `html2canvas`
+- **Filename Format:** `bethegolf-playing-style-{style-name}.png`
+
+### Components
+
+- `ShareableModal`: Modal interface for generating and sharing images
+- `ShareableImage`: Component that renders the shareable design
+- `useWebShare`: Hook for Web Share API functionality
+- `imageGenerator`: Utility for converting React components to PNG images
+
+### Implementation Details
+
+- The page header (MedallionHero) is automatically hidden when the share modal is open to prevent layout conflicts
+- Images are generated at 2x scale for high-quality output
+- The modal is constrained to 90vh to ensure it fits within the viewport
+
 ## Admin Interface
 
 Access the admin interface at `/admin` (no authentication in MVP - handled by reverse-proxy in production).
