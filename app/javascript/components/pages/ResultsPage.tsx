@@ -69,7 +69,7 @@ export default function ResultsPage() {
 
   if (error || !data) {
     return (
-      <div className="min-h-screen flex justify-center bg-neutral-offwhite overflow-y-auto">
+      <div className="min-h-full flex justify-center bg-neutral-offwhite">
         <div className="text-center">
           <p className="text-base sm:text-lg text-red-600 mb-3 sm:mb-4">{error || t('common.error')}</p>
           <Button onClick={() => window.location.reload()} variant="primary">

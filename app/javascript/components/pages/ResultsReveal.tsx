@@ -32,13 +32,13 @@ export default function ResultsReveal({
   const [showContent, setShowContent] = useState(false)
 
   return (
-    <div className="min-h-screen bg-neutral-offwhite overflow-y-auto">
+    <div className="min-h-full bg-neutral-offwhite">
       {!showContent ? (
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="min-h-screen flex flex-col items-center justify-center px-4 py-12"
+          className="min-h-full flex flex-col items-center justify-center px-4 py-12"
         >
           {/* Phase 1: Medallion Hero */}
           <div className="mb-12 sm:mb-16">

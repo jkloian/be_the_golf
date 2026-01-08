@@ -116,7 +116,7 @@ export default function AssessmentPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex justify-center bg-neutral-offwhite overflow-y-auto">
+      <div className="min-h-full flex justify-center bg-neutral-offwhite">
         <LoadingSpinner text={t('common.loading')} size="lg" />
       </div>
     )
@@ -124,7 +124,7 @@ export default function AssessmentPage() {
 
   if (!currentFrame) {
     return (
-      <div className="min-h-screen flex justify-center bg-neutral-offwhite overflow-y-auto">
+      <div className="min-h-full flex justify-center bg-neutral-offwhite">
         <div className="text-center">
           <p className="text-lg text-red-600 mb-4">{t('common.error')}</p>
           <Button onClick={() => void navigate('/start')} variant="primary">
@@ -136,7 +136,7 @@ export default function AssessmentPage() {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-offwhite flex justify-center py-8 px-4 sm:px-6 lg:px-8 overflow-y-auto">
+    <div className="min-h-full bg-neutral-offwhite flex justify-center py-8 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-3xl mx-auto">
         <motion.div
           className="bg-neutral-surface shadow-elevated p-4 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl"

@@ -62,7 +62,7 @@ export default function ResultsContent({
   const personaColor = getPersonaColor(assessment.persona.code)
 
   return (
-    <div className="min-h-screen bg-neutral-offwhite overflow-y-auto relative">
+    <div className="min-h-full bg-neutral-offwhite relative">
       {/* Grain texture overlay */}
       <div
         className="fixed inset-0 pointer-events-none opacity-[0.04] z-0"
