@@ -19,6 +19,8 @@
     %link{ href: "/icon.png", rel: "apple-touch-icon" }
     = vite_client_tag
     = vite_javascript_tag 'entrypoints/application.tsx'
+    :javascript
+      window.APP_VERSION = "#{app_version}";
   %body
     #app
     = yield

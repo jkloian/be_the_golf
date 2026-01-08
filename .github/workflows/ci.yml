@@ -7,6 +7,9 @@ on:
     branches: [ master, staging ]
     tags-ignore:
       - '**'
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   jest:

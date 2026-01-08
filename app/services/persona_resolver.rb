@@ -33,6 +33,10 @@ class PersonaResolver
       code: persona_code,
       name: persona_data[:name],
       style_summary: persona_data[:style_summary],
+      style_tagline: persona_data[:style_tagline],
+      style_truth: persona_data[:style_truth],
+      style_watchout: persona_data[:style_watchout],
+      style_reset: persona_data[:style_reset],
       example_pro_male: persona_data[:example_pro_male],
       example_pro_female: persona_data[:example_pro_female],
       display_example_pro: display_example_pro
@@ -43,6 +47,10 @@ class PersonaResolver
       code: persona_code,
       name: persona_code,
       style_summary: "",
+      style_tagline: "",
+      style_truth: "",
+      style_watchout: "",
+      style_reset: "",
       example_pro_male: "",
       example_pro_female: "",
       display_example_pro: ""

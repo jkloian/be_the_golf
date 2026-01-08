@@ -90,6 +90,22 @@ describe('AssessmentPage', () => {
       }, { timeout: 3000 })
     })
 
+    it('navigates to start page when try again is clicked in error state', async () => {
+      const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+      render(<AssessmentPage />)
+
+      await waitFor(() => {
+        expect(screen.getByRole('button', { name: /Try Again/i })).toBeInTheDocument()
+      }, { timeout: 3000 })
+
+      const tryAgainButton = screen.getByRole('button', { name: /Try Again/i })
+      await user.click(tryAgainButton)
+
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith('/start')
+      })
+    })
+
     it('shows loading spinner while loading frames', () => {
       render(<AssessmentPage />)
 

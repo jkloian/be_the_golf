@@ -25,6 +25,10 @@ export interface AssessmentSession {
   persona?: {
     code: string
     name: string
+    style_summary?: string
+    style_tagline?: string
+    style_watchout?: string
+    style_reset?: string
     example_pro_male: string
     example_pro_female: string
     display_example_pro: string
@@ -71,6 +75,11 @@ export interface PublicAssessmentResponse {
     persona: {
       code: string
       name: string
+      style_summary?: string
+      style_tagline?: string
+      style_truth?: string
+      style_watchout?: string
+      style_reset?: string
       display_example_pro: string
     }
     completed_at: string

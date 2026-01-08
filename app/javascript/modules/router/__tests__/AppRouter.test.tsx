@@ -56,6 +56,18 @@ jest.mock('../../../components/pages/DevResultsPage', () => {
   }
 })
 
+jest.mock('../../../components/shared/Footer', () => {
+  return function MockFooter() {
+    return <footer>Footer</footer>
+  }
+})
+
+jest.mock('../../../components/shared/Layout', () => {
+  return function MockLayout({ children }: { children: React.ReactNode }) {
+    return <div>{children}</div>
+  }
+})
+
 // Import AppRouter after mocks
 import AppRouter from '../AppRouter'
 

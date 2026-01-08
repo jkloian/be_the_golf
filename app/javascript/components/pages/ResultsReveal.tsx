@@ -12,6 +12,7 @@ interface ResultsRevealProps {
   showDevBanner?: boolean
   devPersonaCode?: string
   devGender?: string
+  isShareModalOpen?: boolean
 }
 
 // Duration constants using var(--duration-golf) equivalent (300ms)
@@ -25,18 +26,19 @@ export default function ResultsReveal({
   showDevBanner = false,
   devPersonaCode,
   devGender,
+  isShareModalOpen = false,
 }: ResultsRevealProps) {
   const { assessment } = data
   const [showContent, setShowContent] = useState(false)
 
   return (
-    <div className="min-h-screen bg-neutral-offwhite overflow-y-auto">
+    <div className="min-h-full bg-neutral-offwhite">
       {!showContent ? (
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="min-h-screen flex flex-col items-center justify-center px-4 py-12"
+          className="min-h-full flex flex-col items-center justify-center px-4 py-12"
         >
           {/* Phase 1: Medallion Hero */}
           <div className="mb-12 sm:mb-16">
@@ -60,7 +62,7 @@ export default function ResultsReveal({
           </motion.h1>
 
           {/* Phase 2: Typography - Subtext */}
-          <motion.p
+          <motion.div
             variants={staggeredText}
             initial="initial"
             animate="animate"
@@ -70,8 +72,15 @@ export default function ResultsReveal({
             }}
             className="text-xl sm:text-2xl lg:text-3xl font-display font-semibold text-neutral-textSecondary text-center mb-8 sm:mb-12"
           >
-            Your style aligns with <span className="font-bold text-golf-deep">{assessment.persona.display_example_pro}</span>
-          </motion.p>
+            <p className="mb-3">
+              <span className="font-bold text-golf-deep">{assessment.persona.display_example_pro}</span> shares your playing style
+            </p>
+            {assessment.persona.style_tagline && (
+              <p className="text-lg sm:text-xl lg:text-2xl font-display font-medium text-neutral-textSecondary">
+                {assessment.persona.style_tagline}
+              </p>
+            )}
+          </motion.div>
 
           {/* Continue Button */}
           <motion.div
@@ -100,6 +109,7 @@ export default function ResultsReveal({
             showDevBanner={showDevBanner}
             devPersonaCode={devPersonaCode}
             devGender={devGender}
+            isShareModalOpen={isShareModalOpen}
           />
         </motion.div>
       )}

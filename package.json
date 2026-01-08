@@ -48,8 +48,10 @@
   "dependencies": {
     "@eslint/js": "^9.39.2",
     "framer-motion": "^12.23.26",
+    "html2canvas": "^1.4.1",
     "lucide-react": "^0.562.0",
     "rails_admin": "3.3.0",
+    "react-share": "^5.2.2",
     "rollup": "^4.54.0",
     "vite-plugin-ruby": "5.1.1"
   },

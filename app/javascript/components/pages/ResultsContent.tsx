@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Share2, Lightbulb, Play } from 'lucide-react'
+import { Share2, Lightbulb, Play, AlertTriangle } from 'lucide-react'
 import type { PublicAssessmentResponse } from '../../shared/types/assessment'
 import Button from '../shared/Button'
 import ViewModeToggle from '../shared/ViewModeToggle'
@@ -16,6 +16,7 @@ interface ResultsContentProps {
   showDevBanner?: boolean
   devPersonaCode?: string
   devGender?: string
+  isShareModalOpen?: boolean
 }
 
 // Get persona color for green glow effect
@@ -53,6 +54,7 @@ export default function ResultsContent({
   showDevBanner = false,
   devPersonaCode,
   devGender,
+  isShareModalOpen = false,
 }: ResultsContentProps) {
   const { t } = useTranslation()
   const { assessment, tips } = data
@@ -60,7 +62,7 @@ export default function ResultsContent({
   const personaColor = getPersonaColor(assessment.persona.code)
 
   return (
-    <div className="min-h-screen bg-neutral-offwhite overflow-y-auto relative">
+    <div className="min-h-full bg-neutral-offwhite relative">
       {/* Grain texture overlay */}
       <div
         className="fixed inset-0 pointer-events-none opacity-[0.04] z-0"
@@ -69,13 +71,16 @@ export default function ResultsContent({
         }}
       />
 
-      {/* Fixed Medallion at top */}
-      <MedallionHero personaCode={assessment.persona.code} isFixed={true} />
+      {/* Fixed Medallion at top - hidden when modal is open */}
+      {!isShareModalOpen && (
+        <>
+          <MedallionHero personaCode={assessment.persona.code} isFixed={true} />
+          {/* Spacer for fixed medallion */}
+          <div className="h-32 sm:h-40" />
+        </>
+      )}
 
-      {/* Spacer for fixed medallion */}
-      <div className="h-32 sm:h-40" />
-
-      <div className="relative z-10 mx-auto max-w-6xl w-full px-4 sm:px-6 py-8 sm:py-12">
+      <div className="relative z-10 mx-auto max-w-5xl w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Dev Mode Banner */}
         {showDevBanner && (
           <motion.div
@@ -94,33 +99,105 @@ export default function ResultsContent({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={transition}
-          className="text-center mb-8 sm:mb-12"
+          className="text-center mb-8 sm:mb-12 mt-12 sm:mt-16"
         >
-          {/* Persona Name - Bold, Heavy Typography */}
+          {/* Persona Name - Bold, Heavy Typography - Premium Treatment */}
           <motion.h1
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ ...transition, delay: 0.1 }}
-            className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-display font-black text-golf-deep mb-4 sm:mb-6 leading-tight"
+            className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-display font-black text-golf-deep mb-6 sm:mb-8 leading-none tracking-tight"
           >
             You are the <span className="text-golf-emerald">{assessment.persona.name}</span>
           </motion.h1>
 
-          {/* Pro Match - Text style like reveal page */}
+          {/* Pro Comparison - Refined, Medium weight, neutral gray */}
           <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ ...transition, delay: 0.15 }}
-            className="text-xl sm:text-2xl lg:text-3xl font-display font-semibold text-neutral-textSecondary mb-5"
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ...transition, delay: 0.2 }}
+            className="text-lg sm:text-xl lg:text-2xl font-display font-medium text-neutral-textSecondary mb-10 sm:mb-12"
           >
-            Your style aligns with <span className="font-bold text-golf-deep">{assessment.persona.display_example_pro}</span>
+            <span className="text-golf-deep">{assessment.persona.display_example_pro}</span> shares your playing style
           </motion.p>
 
-          {/* ViewMode Toggle - ~20px below persona title */}
+          {/* Unified Style Insight Card - Premium Treatment */}
+          {(assessment.persona.style_tagline || assessment.persona.style_watchout || assessment.persona.style_reset) && (
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ ...transition, delay: 0.3 }}
+              className="bg-neutral-surface border-2 border-neutral-border/60 rounded-3xl p-8 sm:p-10 lg:p-12 shadow-[0_8px_24px_rgba(15,61,46,0.08),0_2px_4px_rgba(15,61,46,0.04)] max-w-3xl mx-auto mb-10 sm:mb-12"
+            >
+              {/* Style Tagline Section */}
+              {assessment.persona.style_tagline && (
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ ...transition, delay: 0.35 }}
+                  className="text-xl sm:text-2xl font-display font-semibold text-neutral-text mb-8 leading-relaxed text-center"
+                >
+                  {assessment.persona.style_tagline}
+                </motion.p>
+              )}
+
+              {/* Divider - Refined */}
+              {(assessment.persona.style_watchout || assessment.persona.style_reset) && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ ...transition, delay: 0.4 }}
+                  className="h-px bg-gradient-to-r from-transparent via-neutral-border to-transparent my-8"
+                />
+              )}
+
+              {/* Round Killer Section - Premium Treatment with More Visual Distinction */}
+              {assessment.persona.style_watchout && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ ...transition, delay: 0.45 }}
+                  className="mb-0 bg-golf-light/30 rounded-xl p-5 sm:p-6 border border-accent-gold/20"
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    <AlertTriangle 
+                      className="w-6 h-6 sm:w-7 sm:h-7 text-accent-gold opacity-90 flex-shrink-0" 
+                      strokeWidth={2}
+                    />
+                    <h3 className="text-xs sm:text-sm font-bold uppercase tracking-widest text-neutral-textSecondary">
+                      Round Killer (Watch Out)
+                    </h3>
+                  </div>
+                  <p className="text-base sm:text-lg font-normal text-neutral-text leading-relaxed">
+                    {assessment.persona.style_watchout}
+                  </p>
+                </motion.div>
+              )}
+
+              {/* Action Cue Section - Premium Treatment */}
+              {assessment.persona.style_reset && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ ...transition, delay: 0.5 }}
+                  className="border-l-[6px] border-golf-emerald bg-golf-light/70 rounded-l-xl pl-6 sm:pl-8 py-5 sm:py-6 mt-8"
+                >
+                  <h3 className="text-xs sm:text-sm font-bold uppercase tracking-widest text-golf-deep mb-3">
+                    When this happens, do this:
+                  </h3>
+                  <p className="text-base sm:text-lg font-medium text-neutral-text leading-relaxed">
+                    {assessment.persona.style_reset}
+                  </p>
+                </motion.div>
+              )}
+            </motion.div>
+          )}
+
+          {/* ViewMode Toggle - After unified card */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ ...transition, delay: 0.2 }}
+            transition={{ ...transition, delay: 0.6 }}
             className="flex justify-center"
           >
             <ViewModeToggle value={viewMode} onChange={setViewMode} />
