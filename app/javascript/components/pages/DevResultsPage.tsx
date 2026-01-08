@@ -5,7 +5,7 @@ import { api } from '../../modules/api/client'
 import type { PublicAssessmentResponse } from '../../shared/types/assessment'
 import Button from '../shared/Button'
 import ProcessingResults from '../shared/ProcessingResults'
-import Toast from '../shared/Toast'
+import ShareableModal from '../shared/ShareableModal'
 import ResultsReveal from './ResultsReveal'
 
 // Minimum display duration for processing animation (in milliseconds)
@@ -72,7 +72,7 @@ export default function DevResultsPage() {
   const [data, setData] = useState<PublicAssessmentResponse | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [showToast, setShowToast] = useState(false)
+  const [showShareModal, setShowShareModal] = useState(false)
   const processingStartTimeRef = useRef<number | null>(null)
 
   useEffect(() => {
@@ -135,14 +135,12 @@ export default function DevResultsPage() {
     void fetchDevData()
   }, [searchParams, t, i18n.language])
 
-  const handleCopyShare = () => {
+  const handleShare = () => {
     if (!data) return
-
-    void navigator.clipboard.writeText(window.location.href).then(() => {
-      setShowToast(true)
-      setTimeout(() => setShowToast(false), 2500)
-    })
+    setShowShareModal(true)
   }
+
+  const shareUrl = window.location.href
 
   // Phase 1: Loading State with ProcessingResults
   if (loading) {
@@ -164,13 +162,21 @@ export default function DevResultsPage() {
 
   return (
     <>
-      <Toast show={showToast} />
+      {data && (
+        <ShareableModal
+          isOpen={showShareModal}
+          onClose={() => setShowShareModal(false)}
+          data={data}
+          shareUrl={shareUrl}
+        />
+      )}
       <ResultsReveal
         data={data}
-        onShare={handleCopyShare}
+        onShare={handleShare}
         showDevBanner={true}
         devPersonaCode={data.assessment.persona.code}
         devGender={data.assessment.gender}
+        isShareModalOpen={showShareModal}
       />
     </>
   )

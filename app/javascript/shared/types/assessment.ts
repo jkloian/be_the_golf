@@ -77,6 +77,7 @@ export interface PublicAssessmentResponse {
       name: string
       style_summary?: string
       style_tagline?: string
+      style_truth?: string
       style_watchout?: string
       style_reset?: string
       display_example_pro: string

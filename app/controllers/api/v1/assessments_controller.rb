@@ -165,6 +165,7 @@ module Api
               name: persona[:name],
               style_summary: persona[:style_summary],
               style_tagline: persona[:style_tagline],
+              style_truth: persona[:style_truth],
               style_watchout: persona[:style_watchout],
               style_reset: persona[:style_reset],
               display_example_pro: persona[:display_example_pro]
@@ -221,6 +222,7 @@ module Api
               name: persona_data[:name],
               style_summary: persona_data[:style_summary],
               style_tagline: persona_data[:style_tagline],
+              style_truth: persona_data[:style_truth],
               style_watchout: persona_data[:style_watchout],
               style_reset: persona_data[:style_reset],
               example_pro_male: persona_data[:example_pro_male],
@@ -253,6 +255,7 @@ module Api
               name: persona[:name],
               style_summary: persona[:style_summary],
               style_tagline: persona[:style_tagline],
+              style_truth: persona[:style_truth],
               style_watchout: persona[:style_watchout],
               style_reset: persona[:style_reset],
               display_example_pro: persona[:display_example_pro]

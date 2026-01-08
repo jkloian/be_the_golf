@@ -10,6 +10,7 @@ Be Your Golf is a DISC-style assessment tool tailored for golfers. Users complet
 - A famous pro they "play like" (based on gender)
 - Practice and on-course tips
 - A shareable results URL
+- A shareable image with their golf style (PNG format, square or vertical aspect ratio)
 
 ## Architecture
 
@@ -280,7 +281,8 @@ Get public assessment results.
     "persona": {
       "code": "DC",
       "name": "Attacking Analyst",
-      "display_example_pro": "Jon Rahm"
+      "display_example_pro": "Jon Rahm",
+      "style_truth": "I play with fire and feel. Momentum is my fuel."
     },
     "completed_at": "2025-12-30T10:15:00Z"
   },

@@ -12,6 +12,7 @@ interface ResultsRevealProps {
   showDevBanner?: boolean
   devPersonaCode?: string
   devGender?: string
+  isShareModalOpen?: boolean
 }
 
 // Duration constants using var(--duration-golf) equivalent (300ms)
@@ -25,6 +26,7 @@ export default function ResultsReveal({
   showDevBanner = false,
   devPersonaCode,
   devGender,
+  isShareModalOpen = false,
 }: ResultsRevealProps) {
   const { assessment } = data
   const [showContent, setShowContent] = useState(false)
@@ -107,6 +109,7 @@ export default function ResultsReveal({
             showDevBanner={showDevBanner}
             devPersonaCode={devPersonaCode}
             devGender={devGender}
+            isShareModalOpen={isShareModalOpen}
           />
         </motion.div>
       )}

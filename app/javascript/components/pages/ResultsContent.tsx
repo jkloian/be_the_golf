@@ -16,6 +16,7 @@ interface ResultsContentProps {
   showDevBanner?: boolean
   devPersonaCode?: string
   devGender?: string
+  isShareModalOpen?: boolean
 }
 
 // Get persona color for green glow effect
@@ -53,6 +54,7 @@ export default function ResultsContent({
   showDevBanner = false,
   devPersonaCode,
   devGender,
+  isShareModalOpen = false,
 }: ResultsContentProps) {
   const { t } = useTranslation()
   const { assessment, tips } = data
@@ -69,11 +71,14 @@ export default function ResultsContent({
         }}
       />
 
-      {/* Fixed Medallion at top */}
-      <MedallionHero personaCode={assessment.persona.code} isFixed={true} />
-
-      {/* Spacer for fixed medallion */}
-      <div className="h-32 sm:h-40" />
+      {/* Fixed Medallion at top - hidden when modal is open */}
+      {!isShareModalOpen && (
+        <>
+          <MedallionHero personaCode={assessment.persona.code} isFixed={true} />
+          {/* Spacer for fixed medallion */}
+          <div className="h-32 sm:h-40" />
+        </>
+      )}
 
       <div className="relative z-10 mx-auto max-w-5xl w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Dev Mode Banner */}
