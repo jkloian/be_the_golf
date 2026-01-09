@@ -7,8 +7,9 @@
 
 # For a containerized dev environment, see Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
 
-# Make sure RUBY_VERSION matches the Ruby version in .ruby-version
+# Ruby version - must match .ruby-version (read by CI/CD and passed as build arg)
 ARG RUBY_VERSION=3.4.5
+# Node version - must match .nvmrc (read by CI/CD and passed as build arg)
 ARG NODE_VERSION=24.11.1
 FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 
