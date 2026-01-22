@@ -205,6 +205,8 @@ module Api
           persona = PersonaResolver.resolve(scores, gender, locale)
           persona_code = persona[:code]
         else
+          # Normalize persona code to canonical form (CS→SC, CI→IC, DC→CD)
+          persona_code = PersonaResolver.normalize_persona_code(persona_code)
           # Validate that the provided persona_code exists
           begin
             persona_data = I18n.t("personas.#{persona_code}", locale: locale, raise: true)

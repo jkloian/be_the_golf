@@ -26,7 +26,6 @@ const getIconPath = (personaCode: string): string => {
       // Lightning + wave (Controlled Aggressor)
       return 'M50 18L38 42H45L40 72L60 38H52L55 18ZM25 60C35 55, 40 55, 50 60C60 65, 65 65, 75 60M25 70C35 65, 40 65, 50 70C60 75, 65 75, 75 70'
     case 'CD':
-    case 'DC':
       // Lightning + compass (Attacking Analyst)
       return 'M50 18L40 42H45L42 68L58 38H52L55 18ZM50 50C45 45, 40 50, 50 50C60 50, 55 45, 50 50M50 35L50 40M50 60L50 65M35 50L40 50M60 50L65 50'
     case 'IS':
@@ -63,7 +62,6 @@ const getColors = (personaCode: string): { primary: string; secondary?: string }
     case 'DS':
       return { primary: 'var(--color-disc-drive)', secondary: 'var(--color-disc-steady)' }
     case 'CD':
-    case 'DC':
       return { primary: 'var(--color-disc-control)', secondary: 'var(--color-disc-drive)' }
     case 'IS':
       return { primary: 'var(--color-disc-inspire)', secondary: 'var(--color-disc-steady)' }
@@ -88,7 +86,6 @@ const getPersonaName = (personaCode: string): string => {
     DI: 'Electric Playmaker',
     DS: 'Controlled Aggressor',
     CD: 'Attacking Analyst',
-    DC: 'Attacking Analyst',
     IS: 'Positive Rhythm Player',
     IC: 'Imaginative Planner',
     SC: 'Steady Technician',

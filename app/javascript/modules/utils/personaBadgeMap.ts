@@ -1,6 +1,6 @@
 /**
  * Maps persona codes to their corresponding badge PNG filenames
- * Note: CD and DC both map to the same badge (Attacking Analyst)
+ * Uses canonical forms only (SC, IC, CD) - PersonaResolver normalizes equivalent codes
  */
 export function getPersonaBadgePath(personaCode: string): string {
   const badgeMap: Record<string, string> = {
@@ -11,7 +11,6 @@ export function getPersonaBadgePath(personaCode: string): string {
     DI: 'badge-electric-playmaker.png',
     DS: 'badge-controlled-aggressor.png',
     CD: 'badge-attacking-analyst.png',
-    DC: 'badge-attacking-analyst.png', // Same as CD
     IS: 'badge-positive-rhythm-player.png',
     IC: 'badge-imiginitive-planner.png',
     SC: 'badge-steady-technician.png',

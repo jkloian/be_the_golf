@@ -63,15 +63,6 @@ en:
       style_reset: "Trust the original decision and shift all attention to target and tempo."
       example_pro_male: "Jon Rahm"
       example_pro_female: "Lorena Ochoa"
-    DC:
-      name: "Attacking Analyst"
-      style_summary: "Combines a killer instinct with careful planning. Uses strategy and data to choose when and how to attack."
-      style_tagline: "A calculated yet fearless game blending strategy with decisive attack."
-      style_truth: "I plan with precision, then attack with confidence."
-      style_watchout: "Doubting the plan after committing."
-      style_reset: "Trust the original decision and shift all attention to target and tempo."
-      example_pro_male: "Jon Rahm"
-      example_pro_female: "Lorena Ochoa"
     IS:
       name: "Positive Rhythm Player"
       style_summary: "Friendly, upbeat, and steady. Needs a good vibe and stable tempo; can be a great team partner and momentum player."

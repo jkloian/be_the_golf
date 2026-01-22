@@ -378,12 +378,12 @@ RSpec.describe Api::V1::AssessmentsController, type: :controller do
       expect(json['assessment']['persona']['code']).to be_present
     end
 
-    it 'uses provided persona_code' do
+    it 'uses provided persona_code and normalizes to canonical form' do
       allow(Rails.env).to receive(:development?).and_return(true)
       get :dev_preview, params: { persona_code: 'DC', gender: 'male' }
       expect(response).to have_http_status(:ok)
       json = JSON.parse(response.body)
-      expect(json['assessment']['persona']['code']).to eq('DC')
+      expect(json['assessment']['persona']['code']).to eq('CD')
     end
 
     it 'handles gender parameter' do
@@ -441,7 +441,7 @@ RSpec.describe Api::V1::AssessmentsController, type: :controller do
 
     it 'selects correct example pro based on gender' do
       allow(Rails.env).to receive(:development?).and_return(true)
-      get :dev_preview, params: { persona_code: 'DC', gender: 'female' }
+      get :dev_preview, params: { persona_code: 'CD', gender: 'female' }
       expect(response).to have_http_status(:ok)
       json = JSON.parse(response.body)
       expect(json['assessment']['persona']['display_example_pro']).to be_present

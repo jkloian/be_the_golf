@@ -65,12 +65,6 @@ describe('MedallionHero', () => {
       expect(img).toHaveAttribute('src', '/badges/CD.png')
     })
 
-    it('renders DC persona', () => {
-      const { container } = render(<MedallionHero personaCode="DC" />)
-      const img = container.querySelector('img')
-      expect(img).toHaveAttribute('src', '/badges/DC.png')
-    })
-
     it('renders IS persona', () => {
       const { container } = render(<MedallionHero personaCode="IS" />)
       const img = container.querySelector('img')

@@ -51,5 +51,64 @@ RSpec.describe PersonaResolver do
         expect(result[:display_example_pro]).to eq('Jon Rahm')
       end
     end
+
+    context 'when CS is generated (C primary, S secondary)' do
+      let(:scores) { { C: 70, S: 65, D: 40, I: 35 } }
+
+      it 'normalizes CS to SC' do
+        result = described_class.resolve(scores, 'male', :en)
+        expect(result[:code]).to eq('SC')
+        expect(result[:name]).to eq('Steady Technician')
+        expect(result[:display_example_pro]).to eq('Jim Furyk')
+      end
+    end
+
+    context 'when CI is generated (C primary, I secondary)' do
+      let(:scores) { { C: 70, I: 65, D: 40, S: 35 } }
+
+      it 'normalizes CI to IC' do
+        result = described_class.resolve(scores, 'male', :en)
+        expect(result[:code]).to eq('IC')
+        expect(result[:name]).to eq('Imaginative Planner')
+        expect(result[:display_example_pro]).to eq('Phil Mickelson')
+      end
+    end
+
+    context 'when DC is generated (D primary, C secondary)' do
+      let(:scores) { { D: 70, C: 65, I: 40, S: 35 } }
+
+      it 'normalizes DC to CD' do
+        result = described_class.resolve(scores, 'male', :en)
+        expect(result[:code]).to eq('CD')
+        expect(result[:name]).to eq('Attacking Analyst')
+        expect(result[:display_example_pro]).to eq('Jon Rahm')
+      end
+    end
+  end
+
+  describe '.normalize_persona_code' do
+      it 'normalizes CS to SC' do
+        expect(described_class.normalize_persona_code('CS')).to eq('SC')
+      end
+
+      it 'normalizes CI to IC' do
+        expect(described_class.normalize_persona_code('CI')).to eq('IC')
+      end
+
+      it 'normalizes DC to CD' do
+        expect(described_class.normalize_persona_code('DC')).to eq('CD')
+      end
+
+      it 'returns unchanged for canonical forms' do
+        expect(described_class.normalize_persona_code('SC')).to eq('SC')
+        expect(described_class.normalize_persona_code('IC')).to eq('IC')
+        expect(described_class.normalize_persona_code('CD')).to eq('CD')
+      end
+
+      it 'returns unchanged for other codes' do
+        expect(described_class.normalize_persona_code('D')).to eq('D')
+        expect(described_class.normalize_persona_code('DI')).to eq('DI')
+        expect(described_class.normalize_persona_code('BALANCED')).to eq('BALANCED')
+      end
   end
 end

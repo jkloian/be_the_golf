@@ -12,7 +12,7 @@ FactoryBot.define do
       score_i { 55 }
       score_s { 40 }
       score_c { 65 }
-      persona_code { 'DC' }
+      persona_code { 'CD' }
       persona_name { 'Attacking Analyst' }
       example_pro_male { 'Jon Rahm' }
       example_pro_female { 'Lorena Ochoa' }

@@ -75,12 +75,6 @@ describe('GolfBadge', () => {
       expect(svg).toHaveAttribute('aria-label', 'Attacking Analyst badge')
     })
 
-    it('renders DC persona (Attacking Analyst)', () => {
-      const { container } = render(<GolfBadge personaCode="DC" />)
-      const svg = container.querySelector('svg')
-      expect(svg).toHaveAttribute('aria-label', 'Attacking Analyst badge')
-    })
-
     it('renders IS persona (Positive Rhythm Player)', () => {
       const { container } = render(<GolfBadge personaCode="IS" />)
       const svg = container.querySelector('svg')

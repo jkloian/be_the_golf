@@ -321,24 +321,6 @@ describe('ResultsContent', () => {
       expect(screen.getByText(/Attacking Analyst/i)).toBeInTheDocument()
     })
 
-    it('renders DC persona correctly', () => {
-      const dcData = {
-        ...mockData,
-        assessment: {
-          ...mockData.assessment,
-          persona: {
-            code: 'DC',
-            name: 'Attacking Analyst',
-            display_example_pro: 'Ben Hogan',
-          },
-        },
-      }
-
-      render(<ResultsContent data={dcData} onShare={mockOnShare} />)
-
-      expect(screen.getByText(/Attacking Analyst/i)).toBeInTheDocument()
-    })
-
     it('renders IS persona correctly', () => {
       const isData = {
         ...mockData,

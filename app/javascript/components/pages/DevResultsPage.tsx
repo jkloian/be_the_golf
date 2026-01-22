@@ -11,10 +11,10 @@ import ResultsReveal from './ResultsReveal'
 // Minimum display duration for processing animation (in milliseconds)
 const MIN_PROCESSING_DISPLAY_MS = 4000 // 4 seconds
 
-// Valid persona codes
+// Valid persona codes (canonical forms only)
 const VALID_PERSONA_CODES = [
   'D', 'I', 'S', 'C',
-  'DI', 'DS', 'CD', 'DC',
+  'DI', 'DS', 'CD',
   'IS', 'IC', 'SC',
   'BALANCED'
 ] as const

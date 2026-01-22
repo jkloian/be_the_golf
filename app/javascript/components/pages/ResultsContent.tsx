@@ -34,7 +34,6 @@ function getPersonaColor(personaCode: string): string {
     case 'DS':
       return 'var(--color-disc-drive)'
     case 'CD':
-    case 'DC':
       return 'var(--color-disc-control)'
     case 'IS':
     case 'IC':

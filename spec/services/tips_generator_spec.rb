@@ -187,7 +187,7 @@ RSpec.describe TipsGenerator do
     end
 
     context 'with all combination personas' do
-      %w[DI DS CD DC IS IC SC].each do |combo|
+      %w[DI DS CD IS IC SC].each do |combo|
         it "generates tips for #{combo} persona" do
           scores = { D: 0, I: 0, S: 0, C: 0 }
           scores[combo[0].to_sym] = 70

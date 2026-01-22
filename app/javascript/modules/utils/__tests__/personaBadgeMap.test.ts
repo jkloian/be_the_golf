@@ -32,10 +32,6 @@ describe('getPersonaBadgePath', () => {
       expect(getPersonaBadgePath('CD')).toBe('badge-attacking-analyst.png')
     })
 
-    it('returns correct badge for DC persona (same as CD)', () => {
-      expect(getPersonaBadgePath('DC')).toBe('badge-attacking-analyst.png')
-    })
-
     it('returns correct badge for IS persona', () => {
       expect(getPersonaBadgePath('IS')).toBe('badge-positive-rhythm-player.png')
     })

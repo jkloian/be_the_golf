@@ -1,4 +1,14 @@
 class PersonaResolver
+  # Normalize persona codes to canonical forms
+  # Maps equivalent codes (CS, CI, DC) to their canonical forms (SC, IC, CD)
+  def self.normalize_persona_code(code)
+    {
+      "CS" => "SC",
+      "CI" => "IC",
+      "DC" => "CD"
+    }[code] || code
+  end
+
   def self.resolve(scores, gender, locale = :en)
     sorted_scores = scores.sort_by { |_k, v| -v }
     primary_style, primary_score = sorted_scores[0]
@@ -15,6 +25,9 @@ class PersonaResolver
                      # Two-style combo - sort styles alphabetically for consistency
                      [ primary_style.to_s, secondary_style.to_s ].sort.join
     end
+
+    # Normalize to canonical form (CS→SC, CI→IC, DC→CD)
+    persona_code = normalize_persona_code(persona_code)
 
     # Load persona data from i18n
     persona_data = I18n.t("personas.#{persona_code}", locale: locale, raise: true)
