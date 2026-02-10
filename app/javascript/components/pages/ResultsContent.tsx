@@ -249,7 +249,7 @@ export default function ResultsContent({
                     </h3>
                     {tips.practice.dos.map((tip, index) => (
                       <motion.div
-                        key={`do-${index}`}
+                        key={`practice-do-${tip}`}
                         variants={staggeredList}
                         transition={{ ...transition, delay: index * 0.1 }}
                         className="flex items-start space-x-3 p-3 bg-golf-light/50 rounded-lg"
@@ -276,7 +276,7 @@ export default function ResultsContent({
                     </h3>
                     {tips.practice.donts.map((tip, index) => (
                       <motion.div
-                        key={`dont-${index}`}
+                        key={`practice-dont-${tip}`}
                         variants={staggeredList}
                         transition={{ ...transition, delay: index * 0.1 }}
                         className="flex items-start space-x-3 p-3 bg-golf-light/50 rounded-lg"
@@ -334,7 +334,7 @@ export default function ResultsContent({
                     </h3>
                     {tips.play.dos.map((tip, index) => (
                       <motion.div
-                        key={`do-${index}`}
+                        key={`play-do-${tip}`}
                         variants={staggeredList}
                         transition={{ ...transition, delay: index * 0.1 }}
                         className="flex items-start space-x-3 p-3 bg-golf-light/50 rounded-lg"
@@ -361,7 +361,7 @@ export default function ResultsContent({
                     </h3>
                     {tips.play.donts.map((tip, index) => (
                       <motion.div
-                        key={`dont-${index}`}
+                        key={`play-dont-${tip}`}
                         variants={staggeredList}
                         transition={{ ...transition, delay: index * 0.1 }}
                         className="flex items-start space-x-3 p-3 bg-golf-light/50 rounded-lg"

@@ -60,10 +60,9 @@ export default function ShareableModal({
   // Generate image when modal opens or aspect ratio changes
   useEffect(() => {
     if (isOpen && imageRef.current) {
-      // Reset image when aspect ratio changes
-      setImageDataUrl(null)
-      // Small delay to ensure DOM is ready
+      // Small delay to ensure DOM is ready; reset and generate inside timeout to satisfy no-direct-set-state-in-use-effect
       const timer = setTimeout(() => {
+        setImageDataUrl(null)
         void generateImage()
       }, 100)
       return () => clearTimeout(timer)

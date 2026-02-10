@@ -50,7 +50,7 @@ export async function generateShareableImage(
       )
     })
   } catch (error) {
-    throw new Error(`Failed to generate shareable image: ${error instanceof Error ? error.message : 'Unknown error'}`)
+    throw new Error(`Failed to generate shareable image: ${error instanceof Error ? error.message : 'Unknown error'}`, { cause: error })
   }
 }
 

@@ -74,6 +74,7 @@ export default function DevResultsPage() {
   const [error, setError] = useState<string | null>(null)
   const [showShareModal, setShowShareModal] = useState(false)
   const processingStartTimeRef = useRef<number | null>(null)
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     // Parse query parameters with defaults
@@ -122,8 +123,9 @@ export default function DevResultsPage() {
           const remaining = Math.max(0, MIN_PROCESSING_DISPLAY_MS - elapsed)
           
           if (remaining > 0) {
-            setTimeout(() => {
+            timeoutRef.current = setTimeout(() => {
               setLoading(false)
+              timeoutRef.current = null
             }, remaining)
           } else {
             setLoading(false)
@@ -133,6 +135,9 @@ export default function DevResultsPage() {
     }
 
     void fetchDevData()
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    }
   }, [searchParams, t, i18n.language])
 
   const handleShare = () => {

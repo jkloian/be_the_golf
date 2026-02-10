@@ -20,18 +20,19 @@ export default function ResultsPage() {
   const [error, setError] = useState<string | null>(null)
   const [showShareModal, setShowShareModal] = useState(false)
   const processingStartTimeRef = useRef<number | null>(null)
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
-    if (!publicToken) {
-      setError('Invalid token')
-      setLoading(false)
-      return
-    }
-
-    // Record when processing starts
-    processingStartTimeRef.current = Date.now()
-
     const fetchData = async () => {
+      if (!publicToken) {
+        setError('Invalid token')
+        setLoading(false)
+        return
+      }
+
+      // Record when processing starts
+      processingStartTimeRef.current = Date.now()
+
       try {
         const result = await api.getPublicResult(publicToken, i18n.language)
         setData(result)
@@ -41,10 +42,11 @@ export default function ResultsPage() {
         // Ensure minimum display time has elapsed before hiding processing animation
         const elapsed = Date.now() - (processingStartTimeRef.current || Date.now())
         const remaining = Math.max(0, MIN_PROCESSING_DISPLAY_MS - elapsed)
-        
+
         if (remaining > 0) {
-          setTimeout(() => {
+          timeoutRef.current = setTimeout(() => {
             setLoading(false)
+            timeoutRef.current = null
           }, remaining)
         } else {
           setLoading(false)
@@ -53,6 +55,9 @@ export default function ResultsPage() {
     }
 
     void fetchData()
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    }
   }, [publicToken, i18n.language, t])
 
   const handleShare = () => {
