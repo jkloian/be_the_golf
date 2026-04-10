@@ -5567,9 +5567,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:^25.10.10":
-  version: 25.10.10
-  resolution: "i18next@npm:25.10.10"
+"i18next@npm:^26.0.4":
+  version: 26.0.4
+  resolution: "i18next@npm:26.0.4"
   dependencies:
     "@babel/runtime": "npm:^7.29.2"
   peerDependencies:
@@ -5577,7 +5577,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/6ff601b52363c9c974ef293af4a6de04d9f76b4bf2ad9a56c8546235aaf19ff1a7c2109ddba3a73922d418e208ec5b688e5afb323eba6e27c75d629e93827ae1
+  checksum: 10c0/987046f1eb5670824a25f665ca963633434005e0d93b1da9f7b4cf310771c43d08359a6faa1971c4ee8eff1cdfd36cc833a0d5376f04f75c50d31fc49fbaad91
   languageName: node
   linkType: hard
 
@@ -6682,12 +6682,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lucide-react@npm:^0.563.0":
-  version: 0.563.0
-  resolution: "lucide-react@npm:0.563.0"
+"lucide-react@npm:^1.8.0":
+  version: 1.8.0
+  resolution: "lucide-react@npm:1.8.0"
   peerDependencies:
     react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: 10c0/4a2027be255755d64ce18040062426dec07a5da920c000d9cd330e383fa10716a584c927dc03e91daccc6e05f6f486d4f49d1bd009e5f7763aa6fcf704806554
+  checksum: 10c0/f7398f89a0f5b2cbfd1b7a7f6b2f00b0abd05d4b21d948bbd281ab141c42cdff9f1d2aed4e32b78b4bbdfa78308b6577705698af8bf9945bad23ed7d56e255b4
   languageName: node
   linkType: hard
 
@@ -7390,15 +7390,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-i18next@npm:^16.6.6":
-  version: 16.6.6
-  resolution: "react-i18next@npm:16.6.6"
+"react-i18next@npm:^17.0.2":
+  version: 17.0.2
+  resolution: "react-i18next@npm:17.0.2"
   dependencies:
     "@babel/runtime": "npm:^7.29.2"
     html-parse-stringify: "npm:^3.0.1"
     use-sync-external-store: "npm:^1.6.0"
   peerDependencies:
-    i18next: ">= 25.10.9"
+    i18next: ">= 26.0.1"
     react: ">= 16.8.0"
     typescript: ^5 || ^6
   peerDependenciesMeta:
@@ -7408,7 +7408,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 10c0/7d6660d382a529d4dc56e7a7bbab59689ac0f435b3a18bba81d6bbf52c87b2a41fd5d1bffcf60b92b5e6e2a1ad9443949fcf16329d9c63d582316557199a7d32
+  checksum: 10c0/6bbaeccb919726a7f4fda1e547fa58936f1004e122b99234ac1a65d35077563864af7062c51ab9b8b0190be4cb384cd2ed7aeaa895d2785c1783c39cdae64ecd
   languageName: node
   linkType: hard
 
@@ -7823,16 +7823,16 @@ __metadata:
     eslint: "npm:^10.2.0"
     framer-motion: "npm:^12.38.0"
     html2canvas: "npm:^1.4.1"
-    i18next: "npm:^25.10.10"
+    i18next: "npm:^26.0.4"
     i18next-browser-languagedetector: "npm:^8.2.1"
     identity-obj-proxy: "npm:^3.0.0"
     jest: "npm:^30.3.0"
     jest-environment-jsdom: "npm:^30.3.0"
-    lucide-react: "npm:^0.563.0"
+    lucide-react: "npm:^1.8.0"
     rails_admin: "npm:3.3.0"
     react: "npm:^19.2.5"
     react-dom: "npm:^19.2.5"
-    react-i18next: "npm:^16.6.6"
+    react-i18next: "npm:^17.0.2"
     react-router-dom: "npm:^7.14.0"
     react-share: "npm:^5.3.0"
     rollup: "npm:^4.60.1"
@@ -7840,7 +7840,7 @@ __metadata:
     ts-jest: "npm:^29.4.9"
     typescript: "npm:^5.9.3"
     typescript-eslint: "npm:^8.58.1"
-    vite: "npm:7.3.1"
+    vite: "npm:7.3.2"
     vite-plugin-rails: "npm:^0.6.0"
     vite-plugin-ruby: "npm:5.2.1"
   languageName: unknown
@@ -8680,9 +8680,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:7.3.1":
-  version: 7.3.1
-  resolution: "vite@npm:7.3.1"
+"vite@npm:7.3.2":
+  version: 7.3.2
+  resolution: "vite@npm:7.3.2"
   dependencies:
     esbuild: "npm:^0.27.0"
     fdir: "npm:^6.5.0"
@@ -8731,7 +8731,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10c0/5c7548f5f43a23533e53324304db4ad85f1896b1bfd3ee32ae9b866bac2933782c77b350eb2b52a02c625c8ad1ddd4c000df077419410650c982cd97fde8d014
+  checksum: 10c0/74be36907e208916f18bfec81c8eba18b869f0a170f1ece0a4dcb14874d0f0e7c022fb6c2ad896e3ee6c973fe88f53ac23b4078879ada340d8b263260868b8d4
   languageName: node
   linkType: hard
 
