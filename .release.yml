@@ -1,0 +1,12 @@
+# git-docker-release — see https://github.com/jkloian/git-docker-release
+branches:
+  rc: staging
+  production: master
+assets:
+  command: bin/build-and-upload-assets
+  env:
+    ASSET_VERSION: "{{tag}}"
+docker:
+  extra_build_args:
+    - SKIP_VITE_BUILD=true
+  prepare_command: bin/prepare-docker-release-context

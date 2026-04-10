@@ -1,11 +1,11 @@
 ---
+# Optional GitHub-based release. Primary path: local `bundle exec git-docker-release release`
+# (see README). This workflow is manual-only so pushes of version tags do not depend on runners.
 name: Release
 
 on:  # yamllint disable-line rule:truthy
   workflow_dispatch:
-  push:
-    tags:
-      - 'v*'
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -48,10 +48,8 @@ jobs:
           echo "Branches containing tag commit:"
           echo "$BRANCHES"
 
-          # Output the commit SHA for use in wait-for-tests
           echo "commit_sha=$TAG_COMMIT" >> $GITHUB_OUTPUT
 
-          # Check if staging branch contains this commit
           if echo "$BRANCHES" | grep -q "origin/staging"; then
             echo "branch=staging" >> $GITHUB_OUTPUT
             echo "Tag is on staging branch"
@@ -95,35 +93,11 @@ jobs:
       checks: read
       contents: read
     steps:
-      - name: Wait for Jest tests
+      - name: Wait for CI
         uses: lewagon/wait-on-check-action@v1.6.1
         with:
           ref: ${{ needs.validate-tag.outputs.commit_sha }}
-          check-name: 'jest'
-          wait-interval: 10
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Wait for Ruby security scan
-        uses: lewagon/wait-on-check-action@v1.6.1
-        with:
-          ref: ${{ needs.validate-tag.outputs.commit_sha }}
-          check-name: 'scan_ruby'
-          wait-interval: 10
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Wait for Ruby linting
-        uses: lewagon/wait-on-check-action@v1.6.1
-        with:
-          ref: ${{ needs.validate-tag.outputs.commit_sha }}
-          check-name: 'ruby_lint'
-          wait-interval: 10
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Wait for tests
-        uses: lewagon/wait-on-check-action@v1.6.1
-        with:
-          ref: ${{ needs.validate-tag.outputs.commit_sha }}
-          check-name: 'test'
+          check-name: 'ci'
           wait-interval: 10
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -156,7 +130,6 @@ jobs:
         with:
           images: ghcr.io/${{ github.repository }}
           tags: |
-            type=raw,value=${{ inputs.image_tag }},enable=${{ inputs.image_tag != '' }}
             type=ref,event=tag
             type=ref,event=branch
             type=ref,event=pr
@@ -174,14 +147,65 @@ jobs:
           echo "✓ Ruby version: ${{ steps.versions.outputs.ruby_version }}"
           echo "✓ Node version: ${{ steps.versions.outputs.node_version }}"
 
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '${{ steps.versions.outputs.node_version }}'
+          cache: yarn
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Install dependencies
+        run: |
+          yarn install --frozen-lockfile
+          bundle install
+
+      - name: Precompile assets
+        run: RAILS_ENV=production SECRET_KEY_BASE_DUMMY=1 bin/rails assets:precompile
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Upload Vite assets to S3
+        run: |
+          aws s3 sync public/vite s3://${{ secrets.S3_BUCKET_NAME }}/vite/ --delete
+
+      - name: Upload images to S3
+        run: |
+          aws s3 sync public/images s3://${{ secrets.S3_BUCKET_NAME }}/images/ --delete
+
+      - name: Trim assets before Docker build
+        run: |
+          rm -rf public/images
+          rm -rf public/vite/assets
+
+      - name: Read Docker base image tag
+        id: base_image
+        run: |
+          tag=$(tr -d '[:space:]' < .docker-base-image-tag)
+          echo "tag=${tag}" >> "$GITHUB_OUTPUT"
+          echo "✓ Docker base image tag: ${tag}"
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v7
         with:
           context: .
           push: true
           build-args: |
-            RUBY_VERSION=${{ steps.versions.outputs.ruby_version }}
-            NODE_VERSION=${{ steps.versions.outputs.node_version }}
+            BASE_IMAGE_REPO=ghcr.io/jkloian/rails-react-base
+            BASE_IMAGE_TAG=${{ steps.base_image.outputs.tag }}
+            SKIP_VITE_BUILD=true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha

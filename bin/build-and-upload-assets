@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Build production assets and sync to S3 (same outcome as the former GitHub release job).
+# Used by git-docker-release. Set S3_BUCKET_NAME and AWS credentials (or .env.release).
+set -euo pipefail
+cd "$(dirname "$0")/.."
+export RAILS_ENV=production
+if [[ -n "${ASSET_VERSION:-}" ]]; then
+  :
+elif [[ $# -gt 0 ]]; then
+  export ASSET_VERSION="$1"
+fi
+exec bin/rails assets:build_and_sync_to_s3

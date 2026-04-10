@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Trim large trees from public/ before docker build when assets are on S3 (matches CI release).
+set -euo pipefail
+cd "$(dirname "$0")/.."
+rm -rf public/images public/vite/assets

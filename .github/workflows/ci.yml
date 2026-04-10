@@ -2,78 +2,16 @@ name: CI
 
 on:
   workflow_dispatch:
-  pull_request:
-  push:
-    branches: [ master, staging ]
-    tags-ignore:
-      - '**'
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  jest:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v6
-    - name: Enable Corepack
-      run: corepack enable
-
-    - name: Read Node version
-      id: node_version
-      run: echo "version=$(cat .nvmrc | tr -d '[:space:]')" >> $GITHUB_OUTPUT
-
-    - name: Setup Node.js
-      uses: actions/setup-node@v6
-      with:
-        node-version: '${{ steps.node_version.outputs.version }}'
-        cache: 'yarn'
-
-    - name: Install dependencies
-      run: yarn install --frozen-lockfile
-
-    - name: Run linter
-      run: yarn lint
-    - name: Run unit tests
-      run: yarn test:ci
-  scan_ruby:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
-  ruby_lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Lint code for consistent style
-        run: |
-          bin/rubocop -f github
-          bin/haml-lint
-  test:
+  ci:
     runs-on: ubuntu-latest
     env:
       DATABASE_URL: postgres://postgres:postgres@localhost:10432/five_capitals_test
-      RAILS_ENV: test
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: five_capitals_test
     services:
@@ -89,6 +27,7 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+
     steps:
       - name: Log in to Docker Hub
         continue-on-error: true
@@ -102,32 +41,33 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v6
+
       - name: Enable Corepack
         run: corepack enable
+
       - name: Read Node version
         id: node_version
         run: echo "version=$(cat .nvmrc | tr -d '[:space:]')" >> $GITHUB_OUTPUT
+
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version: '${{ steps.node_version.outputs.version }}'
-          cache: 'yarn'
+          cache: yarn
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+
       - name: Install dependencies
         run: |
           yarn install --frozen-lockfile
           bundle install
+
       - name: Install Playwright browsers
         run: yarn playwright install --with-deps
-      - name: Run tests
-        env:
-          RAILS_ENV: test
-        run: |
-          bin/rails db:test:prepare
-          bundle exec rspec
-          yarn test
-          yarn test:e2e
+
+      - name: Run CI checks
+        run: bin/ci

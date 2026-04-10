@@ -1,6 +1,41 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
+
 require_relative "../config/boot"
 require "active_support/continuous_integration"
+require "git_docker_release/ci_history"
+require "git_docker_release/ci_step_summary"
 
 CI = ActiveSupport::ContinuousIntegration
-require_relative "../config/ci.rb"
+
+if ARGV.delete("--stats")
+  GitDockerRelease::CiHistory.print_last(5)
+  exit 0
+end
+
+start_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+history_written = false
+
+begin
+  require_relative "../config/ci.rb"
+rescue SystemExit => e
+  duration = Process.clock_gettime(Process::CLOCK_MONOTONIC) - start_time
+  status = e.status.to_i.zero? ? "success" : "fail"
+  GitDockerRelease::CiHistory.append_run!(status: status, duration_seconds: duration.round)
+  history_written = true
+  raise
+rescue StandardError
+  duration = Process.clock_gettime(Process::CLOCK_MONOTONIC) - start_time
+  GitDockerRelease::CiHistory.append_run!(status: "fail", duration_seconds: duration.round)
+  history_written = true
+  raise
+ensure
+  unless history_written
+    duration = Process.clock_gettime(Process::CLOCK_MONOTONIC) - start_time
+    GitDockerRelease::CiHistory.append_run!(status: "success", duration_seconds: duration.round)
+  end
+
+  if defined?(CI_STEP_RESULTS)
+    GitDockerRelease::CiStepSummary.print(CI_STEP_RESULTS)
+  end
+end

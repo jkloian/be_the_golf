@@ -11,6 +11,10 @@
 /.env
 /.env.*
 !/.env.example
+!/.env.release.example
+
+# Local CI history for git-docker-release freshness checks (bin/ci)
+/.ci_history.json
 
 # Ignore all logfiles and tempfiles.
 /log/*

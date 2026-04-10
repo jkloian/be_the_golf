@@ -7,52 +7,24 @@
 
 # For a containerized dev environment, see Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
 
-# Ruby version - must match .ruby-version (read by CI/CD and passed as build arg)
-ARG RUBY_VERSION=3.4.5
-# Node version - must match .nvmrc (read by CI/CD and passed as build arg)
-ARG NODE_VERSION=24.11.1
-FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
+# Prebuilt Rails + Node/Yarn base images (see rails-react-base-image repo).
+# Override at build time: docker build --build-arg BASE_IMAGE_TAG=...
+# CI reads .docker-base-image-tag; keep it in sync with .ruby-version / .nvmrc when you bump the base.
+ARG BASE_IMAGE_REPO=ghcr.io/jkloian/rails-react-base
+ARG BASE_IMAGE_TAG=ruby3.4.9-node24.12.0-yarn4.13.0:v1.0.0
+FROM ${BASE_IMAGE_REPO}:${BASE_IMAGE_TAG}-runtime AS base
 
-# Rails app lives here
-WORKDIR /rails
-
-# Install base packages
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libjemalloc2 libvips postgresql-client && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
-
-# Set production environment
-ENV RAILS_ENV="production" \
-    BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development:test"
-
-# Throw-away build stage to reduce size of final image
-FROM base AS build
-
-# Install packages needed to build gems and node modules
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git \
-    libpq-dev node-gyp pkg-config python-is-python3 libyaml-dev && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
-
-# Install JavaScript dependencies
-ARG NODE_VERSION
-ENV PATH=/usr/local/node/bin:$PATH
-RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz -C /tmp/ && \
-    /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node && \
-    PATH=/usr/local/node/bin:$PATH /usr/local/node/bin/corepack enable && \
-    rm -rf /tmp/node-build-master
+FROM ${BASE_IMAGE_REPO}:${BASE_IMAGE_TAG}-build AS build
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
 RUN bundle install && \
-    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
-    bundle exec bootsnap precompile --gemfile
+  rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
+  bundle exec bootsnap precompile --gemfile
 
 # Install node modules
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+COPY package.json yarn.lock .yarnrc.yml ./
+RUN yarn install --immutable
 
 # Copy application code
 COPY . .
@@ -60,35 +32,30 @@ COPY . .
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 
-# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
-RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+# When SKIP_VITE_BUILD is set (e.g. in CI), assets were built on the host and uploaded to S3; skip precompile in image.
+ARG SKIP_VITE_BUILD=false
+RUN if [ "$SKIP_VITE_BUILD" != "true" ]; then \
+      SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile; \
+    fi
 
+# Assets are built and uploaded to S3 during CI/CD; Vite metadata is copied into the final image from build context.
+# Remove node_modules as we no longer need them for asset building
 RUN rm -rf node_modules
 
 
 # Final stage for app image
 FROM base
 
-# Install Node.js for ExecJS runtime (needed for zxcvbn-rails)
-ARG NODE_VERSION
-RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz -C /tmp/ && \
-    /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node && \
-    PATH=/usr/local/node/bin:$PATH /usr/local/node/bin/corepack enable && \
-    rm -rf /tmp/node-build-master && \
-    /usr/local/node/bin/node --version && \
-    test -x /usr/local/node/bin/node
-
-# Copy built artifacts: gems, application
+# Copy built artifacts: gems, application (includes public/vite/.vite when CI precompiled or local SKIP_VITE_BUILD=false)
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /rails /rails
 
-# Set PATH with both Rails bin and Node.js bin directories
-ENV PATH=/rails/bin:/usr/local/node/bin:$PATH
+ENV PATH=/rails/bin:$PATH
 
 # Run and own only the runtime files as a non-root user for security
 RUN groupadd --system --gid 1000 rails && \
-    useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp
+  useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
+  chown -R rails:rails db log storage tmp
 USER 1000:1000
 
 # Entrypoint prepares the database.

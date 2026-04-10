@@ -1,3 +1,11 @@
+GIT
+  remote: git@github.com:jkloian/git-docker-release.git
+  revision: 50cf44b05f29a277c9009982795e020dadc6a438
+  tag: v0.1.1
+  specs:
+    git-docker-release (0.1.1)
+      dotenv (>= 2.8, < 4)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -456,6 +464,7 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   foreman
+  git-docker-release!
   haml
   haml-lint
   image_processing (~> 1.2)
