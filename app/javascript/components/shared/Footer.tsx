@@ -18,15 +18,16 @@ function getAppVersion(): string {
   return 'dev'
 }
 
+const copyrightYear = new Date().getFullYear()
+
 export default function Footer() {
   const appVersion = getAppVersion()
-  const currentYear = new Date().getFullYear()
   const copyrightSymbol = '\u00A9'
 
   return (
     <footer className="w-full py-4 px-4 sm:px-6 text-center border-t border-neutral-border bg-neutral-surface">
       <p className="text-sm text-neutral-textSecondary">
-        Be The Golf {copyrightSymbol} {currentYear} ({appVersion})
+        Be The Golf {copyrightSymbol} {copyrightYear} ({appVersion})
       </p>
     </footer>
   )

@@ -21,10 +21,12 @@
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
 
-    /* Path aliases */
-    "baseUrl": ".",
+    /* TS 6: explicit @types (default types is []) */
+    "types": ["node", "jest"],
+
+    /* Path aliases (no baseUrl — deprecated in TS 6) */
     "paths": {
-      "@/*": ["app/javascript/*"]
+      "@/*": ["./app/javascript/*"]
     }
   },
   "include": ["app/javascript/**/*"],
