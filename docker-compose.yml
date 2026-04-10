@@ -1,40 +1,26 @@
+# use a .env file to populate the variables in this file
+# you can check interpolation with:
+# docker compose config
+#
 services:
-  db:
-    image: postgres:16
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: ${DB_USER:-postgres}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
-      POSTGRES_DB: ${DB_NAME:-be_the_golf_production}
-    ports:
-      - "${DB_PORT:-5432}:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  web:
-    build: .
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails db:migrate && ./bin/thrust ./bin/rails server -b 0.0.0.0"
-    volumes:
-      - .:/rails
-      - bundle_cache:/usr/local/bundle
-      - node_modules:/rails/node_modules
-    ports:
-      - "3000:3000"
+  app:
+    image: ghcr.io/jkloian/be_the_golf:${APP_VERSION:-latest}
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     env_file:
       - .env.production
+    ports:
+      - "${EXTERNAL_PORT}:3000"
     environment:
-      - RAILS_ENV=production
-      - DATABASE_URL=postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@db:5432/${DB_NAME:-be_the_golf_production}
-    depends_on:
-      db:
-        condition: service_healthy
-
-volumes:
-  postgres_data:
-  bundle_cache:
-  node_modules:
+      PATH: '$PATH:/rails/bin'
+      APP_VERSION: ${APP_VERSION:-latest}
+    networks:
+      - be_the_golf_network
+networks:
+  be_the_golf_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${NETWORK_SUBNET}
 
