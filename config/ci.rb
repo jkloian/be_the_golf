@@ -19,7 +19,7 @@ CI.run do
   tracked_step.call "Security: Gem audit", "bin/bundler-audit"
   tracked_step.call "Security: Brakeman code analysis", "bin/brakeman --quiet --no-pager --exit-on-warn --exit-on-error"
 
-  tracked_step.call "Tests: Prepare test database", "bin/rails db:test:prepare"
+  tracked_step.call "Tests: Prepare test database", "RAILS_ENV=test bin/rails db:test:prepare"
   tracked_step.call "Tests: RSpec", "bundle exec rspec"
   tracked_step.call "Tests: Jest", "yarn test:ci"
   tracked_step.call "Tests: E2E", "yarn test:e2e"
