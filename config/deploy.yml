@@ -71,10 +71,9 @@ aliases:
 volumes:
   - "be_the_golf_storage:/rails/storage"
 
-# Bridge fingerprinted assets, like JS and CSS, between versions to avoid
-# hitting 404 on in-flight requests. Combines all files from new and old
-# version inside the asset_path.
-asset_path: /rails/public/assets
+# Bridge fingerprinted Vite assets between deploys (hashed files under public/vite/assets).
+# Vite Ruby production output is public/vite (see config/vite.json); same-origin app serves /vite/assets from here.
+asset_path: /rails/public/vite
 
 
 # Configure the image builder.

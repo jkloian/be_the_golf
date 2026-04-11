@@ -338,15 +338,23 @@ npx playwright test --ui
 
 **Local CI:** Run `./bin/ci` for setup, lint (Ruby, Haml, JavaScript), security (Bundler Audit, Brakeman), tests (RSpec, Jest, Playwright, seeds). Successful runs append to **`.ci_history.json`** (gitignored) so **`bin/release`** can use freshness checks from the `git-docker-release` gem. Use `./bin/ci --stats` to print recent runs.
 
-**Release:** The primary path is local, using the **`git-docker-release`** gem ([`github.com/jkloian/git-docker-release`](https://github.com/jkloian/git-docker-release)). From the app root: **`bin/tag`** (interactive RC / production tags on `staging` / `master`) and **`bin/release`** (assets to S3 when configured, `docker build` with `SKIP_VITE_BUILD=true`, push to GHCR, `git push`). Configuration lives in **`.release.yml`**; copy **`.env.release.example`** to **`.env.release`** for `GHCR_*` and AWS/S3 variables. Asset upload requires the [AWS CLI](https://aws.amazon.com/cli/) on your machine.
+**Release:** The primary path is local, using the **`git-docker-release`** gem ([`github.com/jkloian/git-docker-release`](https://github.com/jkloian/git-docker-release)). From the app root: **`bin/tag`** (interactive RC / production tags on `staging` / `master`) and **`bin/release`** (Docker build, push to GHCR, `git push`). Configuration lives in **`.release.yml`**; copy **`.env.release.example`** to **`.env.release`** for `GHCR_*` and optional AWS/S3 variables.
+
+**Production assets (default):** Vite output is **baked into the Docker image** (`bin/rails assets:precompile` in the Dockerfile). The app serves `/vite/assets/*` from the container; do not set `SKIP_VITE_BUILD=true` or strip `public/vite` before the image build unless you intentionally serve those files from elsewhere.
+
+**Optional S3 mirror:** `bin/build-and-upload-assets` runs `assets:build_and_sync_to_s3` when `S3_BUCKET_NAME` is set (requires the [AWS CLI](https://aws.amazon.com/cli/)). A separate workflow is **CDN + slim image**: upload assets to S3, build the image with `SKIP_VITE_BUILD=true`, and point your CDN at the bucket. This repo’s **`.release.yml`** does not use that pattern by default.
 
 **GitHub Actions:** [`.github/workflows/ci.yml`](.github/workflows/ci.yml) is **manual-only** (`workflow_dispatch`). [`.github/workflows/release.yml`](.github/workflows/release.yml) is an optional GitHub-side build (also manual-only); run CI for that commit first so the release workflow’s wait-for-CI step can see a completed **`ci`** check.
 
 **Dockerfile:** Production images use prebuilt **`ghcr.io/jkloian/rails-react-base`** images. The pinned tag is in **`.docker-base-image-tag`** (keep it aligned with `.ruby-version`, `.nvmrc`, and `packageManager` in `package.json`). Example local build:
 
 ```bash
-docker build -t be_the_golf --build-arg BASE_IMAGE_TAG="$(tr -d '[:space:]' < .docker-base-image-tag)" .
+docker build -t be_the_golf \
+  --build-arg BASE_IMAGE_REPO=ghcr.io/jkloian/rails-react-base \
+  --build-arg BASE_IMAGE_TAG="$(tr -d '[:space:]' < .docker-base-image-tag)" .
 ```
+
+Confirm the image contains Vite output: `docker run --rm be_the_golf ls /rails/public/vite/assets` (expect hashed `.css` / `.js` files).
 
 ## Linting
 

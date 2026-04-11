@@ -7285,6 +7285,7 @@ __metadata:
     jest: "npm:^30.3.0"
     jest-environment-jsdom: "npm:^30.3.0"
     lucide-react: "npm:^1.8.0"
+    postcss: "npm:^8.5.8"
     rails_admin: "npm:3.3.0"
     react: "npm:^19.2.5"
     react-dom: "npm:^19.2.5"

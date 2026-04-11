@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-# check=error=true
+# check=skip=InvalidDefaultArgInFrom;error=true
 
 # This Dockerfile is designed for production, not development. Use with Kamal or build'n'run by hand:
 # docker build -t be_the_golf .
@@ -32,13 +32,12 @@ COPY . .
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 
-# When SKIP_VITE_BUILD is set (e.g. in CI), assets were built on the host and uploaded to S3; skip precompile in image.
+# Set SKIP_VITE_BUILD=true only when serving Vite assets from S3/CDN (omit hashed files from the image).
 ARG SKIP_VITE_BUILD=false
 RUN if [ "$SKIP_VITE_BUILD" != "true" ]; then \
       SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile; \
     fi
 
-# Assets are built and uploaded to S3 during CI/CD; Vite metadata is copied into the final image from build context.
 # Remove node_modules as we no longer need them for asset building
 RUN rm -rf node_modules
 
