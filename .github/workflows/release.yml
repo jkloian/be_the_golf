@@ -94,7 +94,7 @@ jobs:
       contents: read
     steps:
       - name: Wait for CI
-        uses: lewagon/wait-on-check-action@v1.6.1
+        uses: lewagon/wait-on-check-action@v1.8.0
         with:
           ref: ${{ needs.validate-tag.outputs.commit_sha }}
           check-name: 'ci'
