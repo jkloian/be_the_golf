@@ -42,7 +42,7 @@ gem "thruster", require: false
 gem "image_processing", "~> 1.2"
 
 group :development, :test do
-  gem "git-docker-release", git: "git@github.com:jkloian/git-docker-release.git", tag: "v0.1.1"
+  gem "git-docker-release", git: "git@github.com:jkloian/git-docker-release.git", tag: "v0.2.3"
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 

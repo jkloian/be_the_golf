@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:jkloian/git-docker-release.git
-  revision: 50cf44b05f29a277c9009982795e020dadc6a438
-  tag: v0.1.1
+  revision: 42de0e3997ffdbec9b48b49f5a8556c458ee0313
+  tag: v0.2.3
   specs:
-    git-docker-release (0.1.1)
+    git-docker-release (0.2.3)
       dotenv (>= 2.8, < 4)
 
 GEM
