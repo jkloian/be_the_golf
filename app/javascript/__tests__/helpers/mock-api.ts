@@ -56,7 +56,7 @@ export function createMockFetchNetworkError(): MockFetch {
  * Sets up global fetch mock
  */
 export function setupFetchMock(mockFn: MockFetch): void {
-  global.fetch = mockFn as typeof fetch
+  global.fetch = mockFn
 }
 
 /**

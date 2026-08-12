@@ -261,7 +261,7 @@ describe('ResultsPage', () => {
 
     it('handles missing publicToken', () => {
       // Temporarily set publicToken to undefined for this test
-      mockParams.publicToken = undefined as unknown as string
+      mockParams.publicToken = undefined
 
       render(<ResultsPage />)
 

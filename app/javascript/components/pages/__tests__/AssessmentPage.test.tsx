@@ -577,7 +577,7 @@ describe('AssessmentPage', () => {
 
     it('handles missing sessionId gracefully', async () => {
       // Temporarily set sessionId to undefined for this test
-      mockParams.sessionId = undefined as unknown as string
+      mockParams.sessionId = undefined
       const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
 
       render(<AssessmentPage />)

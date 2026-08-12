@@ -113,7 +113,7 @@ describe('ShareableModal', () => {
     // Mock ClipboardItem constructor
     mockClipboardItem.mockReset()
     mockClipboardItem.mockImplementation((items: Record<string, Blob>) => {
-      return items as unknown as ClipboardItem
+      return items
     })
   })
 
