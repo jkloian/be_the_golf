@@ -1,13 +1,34 @@
 module.exports = {
+  // Babel 8 reads top-level targets instead of only preset-env's option.
+  targets: { node: 'current' },
   presets: [
-    ['@babel/preset-env', { 
-      targets: { node: 'current' },
+    ['@babel/preset-env', {
       modules: 'commonjs', // Transform ES modules to CommonJS for Jest
     }],
     ['@babel/preset-react', { runtime: 'automatic' }],
     '@babel/preset-typescript',
   ],
   plugins: [
+    // Babel 8.0.1 can leave TS type arguments on call/new expressions.
+    function stripTsTypeArguments() {
+      const clear = (path) => {
+        path.node.typeArguments = null
+        path.node.typeParameters = null
+      }
+      return {
+        name: 'strip-ts-type-arguments',
+        visitor: {
+          CallExpression: clear,
+          OptionalCallExpression: clear,
+          NewExpression: clear,
+          JSXOpeningElement: clear,
+          TaggedTemplateExpression: clear,
+          TSInstantiationExpression(path) {
+            path.replaceWith(path.node.expression)
+          },
+        },
+      }
+    },
     // Transform import.meta.env to process.env for Jest
     function() {
       return {
@@ -38,4 +59,3 @@ module.exports = {
     }
   ],
 };
-
