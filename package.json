@@ -41,7 +41,7 @@
     "vite": "8.2.1",
     "vite-plugin-rails": "^0.6.0"
   },
-  "packageManager": "yarn@4.13.0",
+  "packageManager": "yarn@4.18.0",
   "resolutions": {
     "vite-plugin-ruby": "5.2.1"
   },
