@@ -48,7 +48,7 @@
   "dependencies": {
     "@emotion/is-prop-valid": "^1.4.0",
     "@eslint/js": "^10.0.1",
-    "framer-motion": "^12.43.0",
+    "framer-motion": "^13.1.0",
     "html2canvas": "^1.4.1",
     "lucide-react": "^1.31.0",
     "rails_admin": "3.3.0",
